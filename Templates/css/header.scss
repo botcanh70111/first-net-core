@@ -1,0 +1,40 @@
+.logo-center {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    & img {
+        height: 100%;
+        width: auto;
+    }
+}
+
+.navigation {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-container {
+        width: 100%;
+        height: 80px;
+        border-top: 1px $borderColor solid;
+        border-bottom: 1px $borderColor solid;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.header {
+    &-menu {
+        
+    }
+
+    &-search {
+        
+    }
+}

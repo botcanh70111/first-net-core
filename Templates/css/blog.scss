@@ -1,0 +1,48 @@
+.blog {
+    &-grid-item {
+        position: relative;
+        & a {
+            color: white;
+            &:hover {
+                color: white;
+                text-decoration: none;
+            }
+        }
+
+        & .grid-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        & .grid-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+
+            & * {
+                color: white;
+                margin-right: 15px;
+            }
+            & *:last-child {
+                margin-right: 0px;
+            }
+        }
+
+        & .grid-tag {
+            text-transform: uppercase;
+        }
+
+        & .grid-tag {
+            
+        }
+
+        & .grid-info {
+            color: white;
+            opacity: 0.8;
+            display: flex;
+        }
+    }
+}

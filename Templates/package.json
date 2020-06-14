@@ -1,0 +1,22 @@
+{
+  "name": "Tan",
+  "version": "1.0.0",
+  "description": "...",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "file-loader": "latest",
+    "node-sass": "latest",
+    "sass-loader": "latest",
+    "webpack": "latest",
+    "webpack-cli": "latest",
+    "path": "latest",
+    "mini-css-extract-plugin": "latest"
+  },
+  "scripts": {
+    "build": "webpack --mode development"
+  },
+  "keywords": [],
+  "author": "...",
+  "license": "ISC"
+}
