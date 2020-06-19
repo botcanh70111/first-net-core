@@ -1,44 +1,79 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require("path");
 const isDevelopment = process.env.NODE_ENV === 'development'
+const HtmlwebpackPlugin = require('html-webpack-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
 
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  entry: ["./css/main.scss"],
+  entry: ["./js/index.js", "./css/main.scss"],
   output: {
-    path: path.resolve(__dirname),
-    publicPath: "."
+    filename: 'app.min.js',
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "/dist/"
   },
   watch: true,
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: { outputPath: 'js/', name: '[name].min.js' }
-          },
-          'ts-loader',
-        ],
-      }, {
+        test: /\.js$/,
+        exclude: /node_module/,
+        loader: 'babel-loader',
+        query: {
+          cacheDirectory: true,
+          presets: ["@babel/preset-env"]
+        }
+      },
+      {
         test: /\.scss$/,
-        exclude: /node_modules/,
         use: [
           {
-            loader: 'file-loader',
-            options: { outputPath: 'css/', name: '[name].min.css' }
+            loader: MiniCssExtractPlugin.loader
           },
-          'sass-loader'
+          {
+            // Interprets CSS
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2
+            }
+          },
+          {
+            // minify CSS và thêm autoprefix
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+
+              // Đặt chế độ tối ưu
+              plugins: isDevelopment
+                ? () => []
+                : () => [
+                  postcssPresetEnv({
+                    browsers: ['>1%']
+                  }),
+                  require('cssnano')()
+                ]
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
         ]
       }
     ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
-    })
-  ]
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    }),
+    new HtmlwebpackPlugin({
+      template: './home.html'
+  })
+  ],
+  devServer: {
+    contentBase: path.join(__dirname),
+    compress: true,
+    port: 8080,
+    watchContentBase: true
+  }
 }

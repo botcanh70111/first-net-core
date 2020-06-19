@@ -1,0 +1,26 @@
+body {
+  background-color: $backgroundBody;
+  font-size: 16px;
+  font-family: $fontPro;
+}
+
+button {
+  font-size: 1.2rem;
+  border-radius: 0;
+  color: black;
+  font-family: $fontKarla;
+}
+
+a {
+  color: black;
+  font-family: $fontKarla;
+  &:hover {
+    opacity: 0.8;
+    text-decoration: none;
+    color: $backgroundBtn;
+  }
+}
+
+p {
+  color: rgba($color: #000000, $alpha: 0.6);
+}

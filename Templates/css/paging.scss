@@ -1,0 +1,47 @@
+.paging {
+  background-color: transparent;
+  color: black;
+  padding: 9px 18px;
+  font-weight: 700;
+  margin-left: 5px;
+
+  &:last-child {
+    margin-right: 5px;
+  }
+
+  &.active {
+    background-color: $backgroundBtn;
+    color: $colorBtn;
+  }
+
+  &-prev {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-right: 15px;
+
+    &.active {
+      color: grey;
+      pointer-events: none;
+    }
+  
+    &::before{
+      content: "←";
+    }
+  }
+
+  &-next {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-left: 15px;
+
+    &.active {
+      color: grey;
+      pointer-events: none;
+    }
+  
+    &::after{
+      content: "→";
+    }
+  }
+}
+
