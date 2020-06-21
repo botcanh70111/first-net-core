@@ -26,7 +26,7 @@
     "webpack-cli": "latest"
   },
   "scripts": {
-    "build": "webpack-dev-server --mode development"
+    "build": "webpack-dev-server --display-error-details --mode development"
   },
   "keywords": [],
   "author": "...",
