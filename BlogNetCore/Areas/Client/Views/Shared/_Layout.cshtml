@@ -18,11 +18,7 @@
 
 <body>
     @*@Html.Partial("_Login", Model.Login)*@
-    @if (!Context.User.Identity.IsAuthenticated)
-    {
-        <partial name="_Register" model="@Model.RegisterForm" />
-    }
-
+    <partial name="_Register" model="@Model.RegisterForm" />
     <partial  name="_Login" model="@Model.Login"/>
     <header>
         <div class="logo-center">

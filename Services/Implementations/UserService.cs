@@ -12,10 +12,11 @@ namespace Services.Implementations
 {
     public class UserService : BaseService<BlogUser, User>, IUserService
     {
-        private readonly IPasswordHasher<IdentityUser> _passwordHasher;
+        private readonly IPasswordHasher<BlogUser> _passwordHasher;
         private readonly UserManager<BlogUser> _identityUserManager;
-        public UserService(ApplicationDbContext context, IModelMapper mapper,
-            IPasswordHasher<IdentityUser> passwordHasher,
+        public UserService(ApplicationDbContext context, 
+            IModelMapper mapper,
+            IPasswordHasher<BlogUser> passwordHasher,
             UserManager<BlogUser> identityUserManager) : base(context, mapper)
         {
             _passwordHasher = passwordHasher;

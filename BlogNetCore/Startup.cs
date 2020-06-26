@@ -45,10 +45,11 @@ namespace BlogNetCore
             //});
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddMvc(options =>
-                options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
+
             // Register services
             services.AddScoped<IUserManager, UserManager>();
             services.AddTransient<IHomeViewModelService, HomeViewModelService>();

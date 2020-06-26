@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Infrastructure;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,7 @@ namespace Services
                 mc.CreateMap<IdentityRole, Role>().ReverseMap();
                 mc.CreateMap<User, User>().ReverseMap()
                     .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-                mc.CreateMap<IdentityUser, User>().ReverseMap()
+                mc.CreateMap<BlogUser, User>().ReverseMap()
                     .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
                 mc.CreateMap<IdentityUserClaim<string>, UserClaim>().ReverseMap();
             });
@@ -37,7 +38,7 @@ namespace Services
             services.AddTransient<ISiteConfigService, SiteConfigService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IPasswordHasher<IdentityUser>, PasswordHasher<IdentityUser>>();
+            services.AddTransient<IPasswordHasher<BlogUser>, PasswordHasher<BlogUser>>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

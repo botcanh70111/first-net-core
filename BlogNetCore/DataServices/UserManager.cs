@@ -33,7 +33,11 @@ namespace BlogNetCore.DataServices
 
             await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
                 principal, 
-                new AuthenticationProperties { IsPersistent = isPersistent });
+                new AuthenticationProperties
+                {
+                    AllowRefresh = true,
+                    IsPersistent = isPersistent 
+                });
         }
 
         public async Task CreateAsync(HttpContext httpContext, RegisterModel register)

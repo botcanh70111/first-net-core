@@ -5,7 +5,7 @@
         {
             <div class="user">
                 <a href="#" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Tan Vu
+                    @Context.User.Identity.Name
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
