@@ -1,0 +1,122 @@
+.blog-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+
+  .blog {
+    &-image {
+      & img,
+      & video {
+        width: 100%;
+        max-height: 50vh;
+        object-fit: cover;
+      }
+    }
+
+    &-content {
+      background-color: $backgroundPanel;
+      padding: 30px;
+    }
+
+    &-post::first-letter {
+      float: left;
+      font-size: 6rem;
+      line-height: 0.68;
+      font-weight: 100;
+      margin: 0.05em 0.1em 0 0;
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    &-social {
+      background-color: $backgroundPanel;
+      padding: 30px;
+      width: 100%;
+      border-top: 1px solid $borderColor;
+      margin-bottom: 30px;
+
+      & * {
+        margin-right: 15px;
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+
+    &-share {
+      display: flex;
+      & * {
+        margin-right: 15px;
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+
+    &-sign {
+      background-color: $backgroundPanel;
+      display: flex;
+      padding: 30px;
+      width: 100%;
+      margin-bottom: 30px;
+
+      & * {
+        margin-right: 30px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      &--content {
+        & h4 {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .blog-next-post {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: $backgroundPanel;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+
+    & * {
+      text-align: right;
+    }
+  }
+
+  .blog-prev-post {
+    background-color: $backgroundPanel;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-related {
+    padding: 30px;
+    width: 100%;
+    background-color: $backgroundPanel;
+  }
+}
+
+blockquote {
+  border-left: 4px solid $backgroundBtn;
+  padding-left: 1.5rem;
+  color: black;
+  margin-bottom: 1.5rem;
+}
+
+cite {
+  font-size: 1.2rem;
+  color: rgba($color: #000000, $alpha: 0.4);
+}

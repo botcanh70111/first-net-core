@@ -1,0 +1,57 @@
+﻿@model UserViewModel
+
+    <div class="row">
+        <div class="col s12">
+            <h4>Edit user</h4>
+        </div>
+
+        <div class="col s12">
+            <form asp-area="Admin" asp-controller="User" asp-action="Update" method="post">
+                @Html.HiddenFor(x => x.User.Id)
+
+                <div>
+                    <label asp-for="@Model.User.PhoneNumber">Phone</label>
+                    <input asp-for="@Model.User.PhoneNumber" name="User.PhoneNumber" />
+                </div>
+                <div>
+                    <label for="AssignedClaims">Select roles</label>
+                    <select multiple name="Roles">
+                        <option value="" disabled>Choose your option</option>
+                        @foreach (var c in Model.AllRoles)
+                        {
+                            var selected = Model.Roles.Select(x => x.Name).Contains(c.Name);
+                            if (!selected)
+                            {
+                                <option value="@c.Id">@c.Name</option>
+                            }
+                            else
+                            {
+                                <option selected value="@c.Id">@c.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label for="AssignedClaims">Select claims</label>
+                    <select multiple name="UserClaims">
+                        <option value="" disabled>Choose your option</option>
+                        @foreach (var c in Model.AllRoleClaims)
+                        {
+                            var selected = Model.UserClaims.Select(x => x.ClaimValue).Contains(c);
+                            if (!selected)
+                            {
+                                <option value="@c">@c</option>
+                            }
+                            else
+                            {
+                                <option selected value="@c">@c</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>

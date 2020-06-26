@@ -1,0 +1,26 @@
+﻿@model Services.Models.SiteConfig
+
+<div class="row">
+    <div class="col s12">
+        <div>
+            <h4>Update Logo</h4>
+        </div>
+        <form asp-area="Admin" asp-controller="SiteConfig" asp-action="UpdateLogo" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="Value" value="@Model.Value" />
+            <div class="">
+                <label asp-for="@Model.Name"></label>
+                <input asp-for="@Model.Name" />
+            </div>
+            <div class="">
+                <label asp-for="@Model.Value"></label>
+                <input type="file" name="Image" />
+            </div>
+            <br />
+            <div class="">
+                <button type="submit" class="waves-effect waves-light btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

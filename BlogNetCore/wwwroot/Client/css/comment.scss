@@ -1,0 +1,12 @@
+.comment {
+  background-color: $backgroundPanel;
+  padding: 30px;
+  width: 100%;
+
+  .comment-form {
+    & > * {
+      display: block;
+      margin-bottom: 15px;
+    }
+  }
+}

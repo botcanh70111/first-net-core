@@ -1,0 +1,144 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-BlogNetCore-1279C7C9-0DBE-4949-8C0B-CF8BDC9BA1D3</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <!--<IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\css\**" />
+    <Compile Remove="wwwroot\js\**" />
+    <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\css\**" />
+    <Content Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\css\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\css\**" />
+    <None Remove="wwwroot\js\**" />
+    <None Remove="wwwroot\lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Vendors\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Admin\adminApp.min.js" />
+    <None Include="wwwroot\Admin\css\base.scss" />
+    <None Include="wwwroot\Admin\css\main.scss" />
+    <None Include="wwwroot\Admin\css\navbar.scss" />
+    <None Include="wwwroot\Admin\home.html" />
+    <None Include="wwwroot\Admin\index.html" />
+    <None Include="wwwroot\Admin\js\index.js" />
+    <None Include="wwwroot\Admin\main.css" />
+    <None Include="wwwroot\Client\app.min.js" />
+    <None Include="wwwroot\Client\author.html" />
+    <None Include="wwwroot\Client\blog.html" />
+    <None Include="wwwroot\Client\css\blog-page.scss" />
+    <None Include="wwwroot\Client\css\blog.scss" />
+    <None Include="wwwroot\Client\css\button.scss" />
+    <None Include="wwwroot\Client\css\comment.scss" />
+    <None Include="wwwroot\Client\css\dropdown.scss" />
+    <None Include="wwwroot\Client\css\elements.scss" />
+    <None Include="wwwroot\Client\css\footer.scss" />
+    <None Include="wwwroot\Client\css\form.scss" />
+    <None Include="wwwroot\Client\css\header.scss" />
+    <None Include="wwwroot\Client\css\main.scss" />
+    <None Include="wwwroot\Client\css\menu.scss" />
+    <None Include="wwwroot\Client\css\paging.scss" />
+    <None Include="wwwroot\Client\css\promo.scss" />
+    <None Include="wwwroot\Client\css\root.scss" />
+    <None Include="wwwroot\Client\css\variables.scss" />
+    <None Include="wwwroot\Client\home.html" />
+    <None Include="wwwroot\Client\images\grid.jpg" />
+    <None Include="wwwroot\Client\images\rosenstein.png" />
+    <None Include="wwwroot\Client\images\zeen-chin- %281%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %2810%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %2811%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %282%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %283%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %284%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %285%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %286%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %287%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %288%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin- %289%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin-.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin-005.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin-5.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin-8 %281%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin-8 %282%29.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin-8.jpg" />
+    <None Include="wwwroot\Client\images\zeen-chin-steamilk7.jpg" />
+    <None Include="wwwroot\Client\index.html" />
+    <None Include="wwwroot\Client\js\index.js" />
+    <None Include="wwwroot\Client\js\scroll.js" />
+    <None Include="wwwroot\Client\js\slick.js" />
+    <None Include="wwwroot\Client\layout.html" />
+    <None Include="wwwroot\Client\main.css" />
+    <None Include="wwwroot\images\grid.jpg" />
+    <None Include="wwwroot\images\rosenstein.png" />
+    <None Include="wwwroot\images\zeen-chin- %281%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %2810%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %2811%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %282%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %283%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %284%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %285%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %286%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %287%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %288%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin- %289%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin-.jpg" />
+    <None Include="wwwroot\images\zeen-chin-005.jpg" />
+    <None Include="wwwroot\images\zeen-chin-5.jpg" />
+    <None Include="wwwroot\images\zeen-chin-8 %281%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin-8 %282%29.jpg" />
+    <None Include="wwwroot\images\zeen-chin-8.jpg" />
+    <None Include="wwwroot\images\zeen-chin-steamilk7.jpg" />
+    <None Include="wwwroot\Vendors\bootstrap\css\all.css" />
+    <None Include="wwwroot\Vendors\bootstrap\css\bootstrap-theme.min.css" />
+    <None Include="wwwroot\Vendors\bootstrap\css\bootstrap.min.css" />
+    <None Include="wwwroot\Vendors\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-brands-400.eot" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-brands-400.ttf" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-brands-400.woff" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-regular-400.eot" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-regular-400.ttf" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-regular-400.woff" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-solid-900.eot" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-solid-900.ttf" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-solid-900.woff" />
+    <None Include="wwwroot\Vendors\bootstrap\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Vendors\materialize\css\materialize.min.css" />
+    <None Include="wwwroot\Vendors\materialize\js\materialize.min.js" />
+    <None Include="wwwroot\Vendors\slick\ajax-loader.gif" />
+    <None Include="wwwroot\Vendors\slick\fonts\slick.eot" />
+    <None Include="wwwroot\Vendors\slick\fonts\slick.svg" />
+    <None Include="wwwroot\Vendors\slick\fonts\slick.ttf" />
+    <None Include="wwwroot\Vendors\slick\fonts\slick.woff" />
+    <None Include="wwwroot\Vendors\slick\slick-theme.css" />
+    <None Include="wwwroot\Vendors\slick\slick.css" />
+    <None Include="wwwroot\Vendors\slick\slick.js" />
+    <None Include="wwwroot\webpack.config.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+</Project>

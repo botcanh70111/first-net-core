@@ -1,0 +1,26 @@
+﻿@model IEnumerable<RoleClaims>
+
+<div class="row">
+    <br />
+    <div class="col s12">
+        <a asp-area="Admin" asp-controller="Role" asp-action="Detail" class="btn">Create</a>
+    </div>
+    <br />
+    <div class="col s12">
+        <table class="striped">
+            <tr>
+                <th>Role</th>
+                <th>Permissions</th>
+                <th>Action</th>
+            </tr>
+            @foreach(var r in Model)
+            {
+                <tr>
+                    <td>@r.Role.Name</td>
+                    <td>@string.Join(", ", r.Claims)</td>
+                    <td><a asp-area="Admin" asp-controller="Role" asp-action="Detail" asp-route-roleId="@r.Role.Id"><i class="material-icons">edit</i></a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

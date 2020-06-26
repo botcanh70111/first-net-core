@@ -14,6 +14,57 @@
 </head>
 
 <body>
+    <div class="row top-login">
+        <div class="col-xs-12 login">
+            <div class="">
+                <a href="#" data-toggle="modal" data-target="#loginForm">Login</a>
+            </div>
+            <div class="user">
+                <a href="#" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Tan Vu
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a href="#" class="dropdown-item">Action</a>
+                  <a href="#" class="dropdown-item">Another action</a>
+                  <a href="#" class="dropdown-item">Something else here</a>
+                </div>
+              </div>
+        </div>
+
+        <div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form class="modal-content">
+                    <div class="modal-header">
+                        <a href="javascript:void(0)" type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            style="float: right; font-size: 2rem;">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                        <h4 class="modal-title" id="exampleModalLabel">Login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="textbox" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="textbox" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Remember">
+                                <input type="checkbox" name="Remember" id="Remember">
+                                Remember me?
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="logo-center">
             <img src="./images/rosenstein.png" alt="">
@@ -25,66 +76,66 @@
                         <div class="header-menu">
                             <ul class="menu title">
                                 <li><a href="#">Blogs</a>
-                                  <ul class="menu-child">
-                                    <li>
-                                      <a href="#">
-                                        Most recents
-                                        <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                      </a>
-                                      <ul class="menu-child">
-                                        <li><a href="#">Fashion</a></li>
-                                        <li><a href="#">Travel</a></li>
-                                        <li><a href="#">Food</a></li>
-                                        <li><a href="#">Beauty</a></li>
-                                      </ul>
-                                    </li>
-                                    <li><a href="#">Favorite</a></li>
-                                    <li>
-                                      <a href="#">Group by tag
-                                        <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                      </a>
-                                      <ul class="menu-child">
-                                        <li><a href="#">Fashion</a></li>
-                                        <li><a href="#">Travel</a></li>
-                                        <li><a href="#">Food</a></li>
-                                        <li><a href="#">Beauty</a></li>
-                                      </ul>
-                                    </li>
-                                    <li>
-                                      <a href="#">Group by date
-                                        <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                      </a>
-                                      <ul class="menu-child">
+                                    <ul class="menu-child">
                                         <li>
-                                          <a href="#">June
-                                            <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                          </a>
-                                          <ul class="menu-child">
-                                            <li><a href="#">Fashion</a></li>
-                                            <li><a href="#">Travel</a></li>
-                                            <li><a href="#">Food</a></li>
-                                            <li><a href="#">Beauty</a></li>
-                                          </ul>
+                                            <a href="#">
+                                                Most recents
+                                                <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
+                                            </a>
+                                            <ul class="menu-child">
+                                                <li><a href="#">Fashion</a></li>
+                                                <li><a href="#">Travel</a></li>
+                                                <li><a href="#">Food</a></li>
+                                                <li><a href="#">Beauty</a></li>
+                                            </ul>
                                         </li>
-                                        <li><a href="#">May</a></li>
-                                        <li><a href="#">April</a></li>
-                                        <li><a href="#">March</a></li>
-                                        <li><a href="#">Older</a></li>
-                                      </ul>
-                                    </li>
-                                  </ul>
+                                        <li><a href="#">Favorite</a></li>
+                                        <li>
+                                            <a href="#">Group by tag
+                                                <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
+                                            </a>
+                                            <ul class="menu-child">
+                                                <li><a href="#">Fashion</a></li>
+                                                <li><a href="#">Travel</a></li>
+                                                <li><a href="#">Food</a></li>
+                                                <li><a href="#">Beauty</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Group by date
+                                                <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
+                                            </a>
+                                            <ul class="menu-child">
+                                                <li>
+                                                    <a href="#">June
+                                                        <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
+                                                    </a>
+                                                    <ul class="menu-child">
+                                                        <li><a href="#">Fashion</a></li>
+                                                        <li><a href="#">Travel</a></li>
+                                                        <li><a href="#">Food</a></li>
+                                                        <li><a href="#">Beauty</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">May</a></li>
+                                                <li><a href="#">April</a></li>
+                                                <li><a href="#">March</a></li>
+                                                <li><a href="#">Older</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li><a href="#">About us</a></li>
                                 <li><a href="#">Contact</a></li>
                                 <li><a href="#">More information</a>
-                                  <ul class="menu-child">
-                                    <li><a href="#">Brooklyn</a></li>
-                                    <li><a href="#">Dangal</a></li>
-                                    <li><a href="#">Flipped</a></li>
-                                    <li><a href="#">Cast away</a></li>
-                                  </ul>
+                                    <ul class="menu-child">
+                                        <li><a href="#">Brooklyn</a></li>
+                                        <li><a href="#">Dangal</a></li>
+                                        <li><a href="#">Flipped</a></li>
+                                        <li><a href="#">Cast away</a></li>
+                                    </ul>
                                 </li>
-                              </ul>
+                            </ul>
                         </div>
                         <div class="header-search">
                             <input type="text" name="" id="" class="textbox" placeholder="Search...">

@@ -103,3 +103,21 @@
         }
     }
 }
+
+.top-login {
+    margin: 0;
+    padding: 5px;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: flex-end;
+
+    .login {
+        display: flex;
+        justify-content: flex-end;
+
+        * {
+            color: white;
+        }
+    }
+}

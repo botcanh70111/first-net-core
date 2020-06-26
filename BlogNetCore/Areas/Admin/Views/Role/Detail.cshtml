@@ -1,0 +1,49 @@
+﻿@model RoleViewModel
+@{
+    var label = "Create";
+    if (Model.Role != null && !string.IsNullOrEmpty(Model.Role.Id)) { label = "Edit"; }
+}
+<div class="row">
+    <div class="col s12">
+        <h4>@label role</h4>
+    </div>
+    <div class="col s12">
+        <form asp-area="Admin" asp-controller="Role" asp-action="CreateOrUpdate" method="post">
+            @Html.HiddenFor(x => x.Role.Id)
+            
+            <div>
+                <label asp-for="@Model.Role.Name"></label>
+                <input asp-for="@Model.Role.Name" />
+            </div>
+            <div>
+                <label asp-for="@Model.Role.NormalizedName"></label>
+                <input asp-for="@Model.Role.NormalizedName" />
+            </div>
+            <div>
+                <label asp-for="@Model.Role.ConcurrencyStamp"></label>
+                <input asp-for="@Model.Role.ConcurrencyStamp" />
+            </div>
+            <div>
+                <label for="AssignedClaims">Selet claims</label>
+                <select multiple name="AssignedClaims">
+                    <option value="" disabled>Choose your option</option>
+                    @foreach (var c in Model.AllRoleClaims)
+                    {
+                        var selected = Model.AssignedClaims.Contains(c);
+                        if (!selected)
+                        {
+                            <option value="@c">@c</option>
+                        }
+                        else
+                        {
+                            <option selected value="@c">@c</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div>
+                <button type="submit">@label</button>
+            </div>
+        </form>
+    </div>
+</div>

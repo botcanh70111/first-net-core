@@ -107,6 +107,7 @@ li .collapsible .avatar {
 
 .badge-div {
     position: relative;
+    color: inherit;
     .badge {
         position: absolute;
         top: -20px;
@@ -115,5 +116,24 @@ li .collapsible .avatar {
         min-width: 0 !important;
         color: white;
         border-radius: 50%;
+    }
+}
+
+.nav-background {
+    position: relative;
+    img.nav-img {
+        z-index: -1;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .collapsible {
+        *:not(.material-icons) {
+            color: white;
+            background-color: rgba($color: #000000, $alpha: 0.2);
+        }
     }
 }

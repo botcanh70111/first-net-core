@@ -1,0 +1,257 @@
+﻿<html>
+
+<head>
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- // font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/Admin/main.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col s12 m12 l9 offset-l3">
+            <div id="notification" class="dropdown-content notification">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Add a dropdown list to any button. Make sure that the data-target attribute matches the id
+                            in the ul> tag
+                            <p><small>8:53PM 21/6/2020</small></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Add a dropdown list to any button. Make sure that the data-target attribute matches the id
+                            in the ul> tag
+                            <p><small>8:53PM 21/6/2020</small></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Add a dropdown list to any button. Make sure that the data-target attribute matches the id
+                            in the ul> tag
+                            <p><small>8:53PM 21/6/2020</small></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Add a dropdown list to any button. Make sure that the data-target attribute matches the id
+                            in the ul> tag
+                            <p><small>8:53PM 21/6/2020</small></p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="sidenav sidenav-fixed nav-background" id="side-bar">
+                <img src="~/images/zeen-chin- (6).jpg" class="nav-img" alt="">
+                <li class="li-border-bot li-logo">Logo</li>
+                <li class="li-border-bot flex">
+                    <ul class="collapsible full-width full-height">
+                        <li>
+                            <div class="collapsible-header avatar">
+                                <img src="~/images/zeen-chin- (1).jpg" alt="">
+                                Tan Vu
+                                <i class="material-icons li-right">arrow_drop_down</i>
+                            </div>
+                            <div class="collapsible-body">
+                                <ul class="collapsible nav">
+                                    <li class="nav-item">
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">person</i>
+                                            <a href="">My Profile</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">edit</i>
+                                            <a href="">Edit Profile</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">arrow_drop_down
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">settings</i>
+                                            <a href="">Settings</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">folder</i>
+                                <span>Posts</span>
+                                <i class="material-icons li-right">arrow_drop_down</i>
+                            </div>
+                            <div class="collapsible-body">
+                                <ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">post_add</i>
+                                            <a href="">Create</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">account_tree</i>
+                                            <a href="">Manage</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">group</i>Users
+                                <i class="material-icons li-right">arrow_drop_down</i>
+                            </div>
+                            <div class="collapsible-body">
+                                <ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">person_add_alt_1</i>
+                                            <a href="">Add User</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">supervisor_account</i>
+                                            <a asp-area="Admin" asp-controller="User" asp-action="Index">Manage</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">menu</i>Navigation
+                                <i class="material-icons li-right">arrow_drop_down</i>
+                            </div>
+                            <div class="collapsible-body">
+                                <ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">playlist_add</i>
+                                            <a href="">Add Menu</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">list</i>
+                                            <a href="">Manage</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">language</i>Site Configs
+                                <i class="material-icons li-right">arrow_drop_down</i>
+                            </div>
+                            <div class="collapsible-body">
+                                <ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">playlist_add</i>
+                                            <a asp-action="Logo" asp-controller="SiteConfig" asp-area="Admin">Logo</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">border_bottom</i>
+                                            <a asp-action="Footer" asp-controller="SiteConfig" asp-area="Admin">Footer</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">share</i>
+                                            <a asp-action="Social" asp-controller="SiteConfig" asp-area="Admin">Social</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="collapsible-header">
+                                <i class="material-icons">accessible</i>Roles
+                                <i class="material-icons li-right">arrow_drop_down</i>
+                            </div>
+                            <div class="collapsible-body">
+                                <ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">playlist_add</i>
+                                            <a asp-action="Index" asp-controller="Role" asp-area="Admin">Roles</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">border_bottom</i>
+                                            <a asp-action="Footer" asp-controller="SiteConfig" asp-area="Admin">Footer</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header">
+                                            <i class="material-icons">share</i>
+                                            <a asp-action="Social" asp-controller="SiteConfig" asp-area="Admin">Social</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="desk-nav">
+                <div class="nav-toggle">
+                    <a href="#" id="collapseMenu" data-target="side-bar" class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input id="searchbox" type="text" class="validate">
+                        <label for="searchbox">Search ...</label>
+                    </div>
+                    <div class="">
+                        <a href="#" class="dropdown-trigger badge-div" data-target='notification'>
+                            <span class="badge red">4</span>
+                            <i class="material-icons">notifications</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Content goes here -->
+        <div class="row">
+
+            <div class="col s12 l3">
+                <!-- Promo Content 1 goes here -->
+            </div>
+            <div class="col s12 m12 l9 card">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="~/Admin/adminApp.min.js"></script>
+</body>
+
+</html>
