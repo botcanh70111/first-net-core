@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlogNetCore.Data.Migrations
+namespace BlogNetCore.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
@@ -29,6 +29,9 @@ namespace BlogNetCore.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    FirstName = table.Column<string>(maxLength: 256, nullable: true),
+                    LastName = table.Column<string>(maxLength: 256, nullable: true),
+                    BirthDay = table.Column<DateTime>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
@@ -153,6 +156,37 @@ namespace BlogNetCore.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Menus",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    UrlLink = table.Column<string>(maxLength: 255, nullable: true),
+                    ParentId = table.Column<Guid>(nullable: true),
+                    Order = table.Column<int>(nullable: true),
+                    Active = table.Column<bool>(nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menus", x => new { x.Id });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SiteConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
+                    Value = table.Column<string>(maxLength: 255, nullable: true),
+                    Order = table.Column<int>(nullable: true),
+                    Type = table.Column<string>(maxLength: 200, nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteConfigs", x => new { x.Id });
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -215,6 +249,12 @@ namespace BlogNetCore.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Menus");
+
+            migrationBuilder.DropTable(
+                name: "SiteConfigs");
         }
     }
 }

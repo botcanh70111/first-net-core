@@ -29,7 +29,7 @@
                     <option value="" disabled>Choose your option</option>
                     @foreach (var c in Model.AllRoleClaims)
                     {
-                        var selected = Model.AssignedClaims.Contains(c);
+                        var selected = Model.AssignedClaims != null && Model.AssignedClaims.Contains(c);
                         if (!selected)
                         {
                             <option value="@c">@c</option>

@@ -13,13 +13,17 @@ namespace Infrastructure
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options =>
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    options.UseSqlServer("Server=.\\SQLEXPRESS;Database=blognetcore;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
+                }
+            );
 
             services.AddDefaultIdentity<BlogUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

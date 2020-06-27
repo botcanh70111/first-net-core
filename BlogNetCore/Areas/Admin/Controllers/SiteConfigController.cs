@@ -1,4 +1,5 @@
 ﻿using BlogNetCore.Areas.Admin.Models.FormModels;
+using BlogNetCore.Attributes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
+    [UserAuthorizeAttributes(claims: PermissionClaims.EditConfigs)]
     public class SiteConfigController : BaseAdminController
     {
         private IWebHostEnvironment _hostingEnvironment;
@@ -23,6 +25,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
         public IActionResult Logo()
         {
             var model = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Logo).FirstOrDefault();
+            if (model == null) model = new Services.Models.SiteConfig();
             return View(model);
         }
 

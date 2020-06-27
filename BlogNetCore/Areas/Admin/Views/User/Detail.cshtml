@@ -19,7 +19,7 @@
                         <option value="" disabled>Choose your option</option>
                         @foreach (var c in Model.AllRoles)
                         {
-                            var selected = Model.Roles.Select(x => x.Name).Contains(c.Name);
+                            var selected = Model.Roles != null && Model.Roles.Select(x => x.Name).Contains(c.Name);
                             if (!selected)
                             {
                                 <option value="@c.Id">@c.Name</option>
@@ -37,7 +37,7 @@
                         <option value="" disabled>Choose your option</option>
                         @foreach (var c in Model.AllRoleClaims)
                         {
-                            var selected = Model.UserClaims.Select(x => x.ClaimValue).Contains(c);
+                            var selected = Model.UserClaims != null && Model.UserClaims.Select(x => x.ClaimValue).Contains(c);
                             if (!selected)
                             {
                                 <option value="@c">@c</option>

@@ -23,7 +23,10 @@
     <header>
         <div class="logo-center">
             <a asp-controller="Home" asp-action="Index">
-                <img src="@Model.LogoConfig.Value" alt="">
+                @if (Model.LogoConfig != null)
+                {
+                    <img src="@Model.LogoConfig.Value" alt="">
+                }
             </a>
         </div>
         <nav class="navigation-container">
@@ -245,14 +248,17 @@
         <div class="row">
             <div class="col-sm-12 flex-center">
                 <ul class="footer-nav">
-                    @foreach (var f in Model.FooterConfigs)
+                    @if (Model.FooterConfigs != null)
                     {
-                        <li><a href="@f.Value">@f.Name</a></li>
+                        foreach (var f in Model.FooterConfigs)
+                        {
+                            <li><a href="@f.Value">@f.Name</a></li>
+                        }
                     }
                     @*<li><a href="">Disclaimer</a></li>
-                    <li><a href="">Terms & Conditions</a></li>
-                    <li><a href="">Privacy policy</a></li>
-                    <li><a href="">Community</a></li>*@
+        <li><a href="">Terms & Conditions</a></li>
+        <li><a href="">Privacy policy</a></li>
+        <li><a href="">Community</a></li>*@
                 </ul>
             </div>
             <div class="col-sm-12">

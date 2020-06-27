@@ -1,10 +1,13 @@
 ﻿using BlogNetCore.Areas.Admin.Models.FormModels;
+using BlogNetCore.Attributes;
 using BlogNetCore.DataServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Services.Constants;
 using Services.Interfaces;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
+    [UserAuthorizeAttributes(claims: PermissionClaims.ViewUsers)]
     public class UserController : BaseAdminController
     {
         private readonly IUserService _userService;
