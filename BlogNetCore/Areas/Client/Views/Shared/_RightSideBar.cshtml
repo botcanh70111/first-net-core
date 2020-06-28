@@ -1,0 +1,130 @@
+﻿@model BlogNetCore.Client.Models.LayoutViewModel
+
+<div class="col-md-4 col-sm-12">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <h4 class="title">Let's Social</h4>
+                <div class="flex-center">
+                    @if (Model.SocialConfigs != null)
+                    {
+                        foreach (var s in Model.SocialConfigs)
+                        {
+                            <a class="social-icon" href="@s.Value"><i class="@s.Name"></i></a>
+                        }
+                    }
+
+                    @*<a class="social-icon" href=""><i class="fab fa-facebook-f"></i></a>
+        <a class="social-icon" href=""><i class="fab fa-twitter"></i></a>
+        <a class="social-icon" href=""><i class="fab fa-instagram"></i></a>
+        <a class="social-icon" href=""><i class="fab fa-youtube"></i></a>
+        <a class="social-icon" href=""><i class="fab fa-linkedin"></i></a>*@
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12">
+            <div class="panel">
+                <h4 class="title">Latest Stories</h4>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="blog-item">
+                            <div class="blog-item__mini-thumb">
+                                <a href="" class="item-image">
+                                    <img src="./images/zeen-chin- (9).jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-item__mini-detail">
+                                <h4 class="title">
+                                    This is fashion title
+                                </h4>
+                                <div class="item-info">
+                                    <span>Jun 14, 2020</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="blog-item">
+                            <div class="blog-item__mini-thumb">
+                                <a href="" class="item-image">
+                                    <img src="./images/zeen-chin- (9).jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-item__mini-detail">
+                                <h4 class="title">
+                                    This is long fashion title
+                                </h4>
+                                <div class="item-info">
+                                    <span>Jun 14, 2020</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="blog-item">
+                            <div class="blog-item__mini-thumb">
+                                <a href="" class="item-image">
+                                    <img src="./images/zeen-chin- (9).jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-item__mini-detail">
+                                <h4 class="title">
+                                    This is very long fashion title
+                                </h4>
+                                <div class="item-info">
+                                    <span>Jun 14, 2020</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="panel">
+                <h4 class="title">Tags</h4>
+                <div class="flex-start">
+                    <a class="tag" href="">Fashion</a>
+                    <a class="tag" href="">Design</a>
+                    <a class="tag" href="">Girls</a>
+                    <a class="tag" href="">Travel</a>
+                    <a class="tag" href="">Education</a>
+                    <a class="tag" href="">Sex</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row sticky-top">
+        <div class="col-sm-12">
+            <form class="panel">
+                <h4 class="title">News letter</h4>
+                <p>
+                    Subscribe to our newsletter and get our newest updates right on your inbox.
+                </p>
+                <input type="text" name="" id="" class="textbox full-width" placeholder="Your email">
+                <div class="br"></div>
+                <label>
+                    <input type="checkbox" name="newsLetter">
+                    <a href=""> I agree to the terms & conditions</a>
+                </label>
+                <div class="br"></div>
+                <button class="btn btn-default full-width">Subscribe</button>
+            </form>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="panel">
+                <h4 class="title">Instagram</h4>
+                <p>
+                    No data available.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

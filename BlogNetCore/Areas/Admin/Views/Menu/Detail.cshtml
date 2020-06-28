@@ -2,6 +2,16 @@
 
 <div class="row">
     <div class="col s12">
+        @if (Model.Menu.Id == null || Model.Menu.Id == Guid.Empty)
+        {
+            <h4>Create menu</h4>
+        }
+        else
+        {
+            <h4>Edit menu</h4>
+        }
+    </div>
+    <div class="col s12">
         <form method="post" asp-controller="Menu"
               asp-action="@(Model.Menu.Id == null || Guid.Empty == Model.Menu.Id ? "Create" : "Update")">
             @Html.Hidden("Id", Model.Menu.Id)

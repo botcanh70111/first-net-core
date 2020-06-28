@@ -6,6 +6,7 @@ namespace BlogNetCore.DataServices.Interfaces
 {
     public interface IViewModelFactory
     {
+        TService GetService<TService>();
         Lazy<IHomeViewModelService> HomeViewModelService { get; set; }
         Lazy<IRoleViewModelService> RoleViewModelService { get; set; }
         Lazy<IUserViewModelService> UserViewModelService { get; set; }

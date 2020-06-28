@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using BlogNetCore.Client.Models;
 using BlogNetCore.DataServices.Interfaces;
+using BlogNetCore.DataServices.Interfaces.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +20,7 @@ namespace BlogNetCore.Areas.Client.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = _viewModelFactory.HomeViewModelService.Value.CreateViewModel();
+            var viewModel = _viewModelFactory.GetService<IHomeViewModelService>().CreateViewModel();
             return View(viewModel);
         }
 

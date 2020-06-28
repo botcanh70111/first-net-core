@@ -1,6 +1,7 @@
 ﻿using BlogNetCore.Areas.Admin.Models.FormModels;
 using BlogNetCore.Attributes;
 using BlogNetCore.DataServices.Interfaces;
+using BlogNetCore.DataServices.Interfaces.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
 using Services.Interfaces;
@@ -26,7 +27,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Detail(string roleId)
         {
-            var model = _viewModelFactory.RoleViewModelService.Value.CreateViewModel(roleId);
+            var model = _viewModelFactory.GetService<IRoleViewModelService>().CreateViewModel(roleId);
             return View(model);
         }
 

@@ -31,7 +31,6 @@ namespace Services.Implementations
             var entity = _mapper.Map<T>(config);
             var update = _context.Set<T>().Update(entity);
             var updatedEntity = update.Entity;
-            //update.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             if (forceSave)
             {
                 _context.SaveChanges();

@@ -1,6 +1,7 @@
 ﻿using BlogNetCore.Areas.Admin.Models;
 using BlogNetCore.Attributes;
 using BlogNetCore.DataServices.Interfaces;
+using BlogNetCore.DataServices.Interfaces.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
 using Services.Interfaces;
@@ -28,7 +29,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Detail(Guid? id = null)
         {
-            var viewModel = _viewModelFactory.MenuViewModelService.Value.CreateViewModel(id);
+            var viewModel = _viewModelFactory.GetService<IMenuViewModelService>().CreateViewModel(id);
             return View(viewModel);
         }
 
