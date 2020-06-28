@@ -1,57 +1,106 @@
-﻿@model UserViewModel
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
 
-    <div class="row">
-        <div class="col s12">
+@model UserViewModel
+
+<div class="row">
+    <div class="col s12">
+        @if (string.IsNullOrEmpty(Model.User.Id))
+        {
+            <h4>Create user</h4>
+        }
+        else
+        {
             <h4>Edit user</h4>
-        </div>
+        }
+    </div>
 
-        <div class="col s12">
-            <form asp-area="Admin" asp-controller="User" asp-action="Update" method="post">
-                @Html.HiddenFor(x => x.User.Id)
+    <div class="col s12">
+        <form asp-area="Admin" asp-controller="User" asp-action="@(string.IsNullOrEmpty(Model.User.Id) ? "CreateUser" : "Update")" method="post">
+            @Html.HiddenFor(x => x.User.Id)
+
+            @if (string.IsNullOrEmpty(Model.User.Id))
+            {
+                <div>
+                    <label asp-for="@Model.User.UserName">Username</label>
+                    <input asp-for="@Model.User.UserName" name="User.UserName" />
+                </div>
 
                 <div>
-                    <label asp-for="@Model.User.PhoneNumber">Phone</label>
-                    <input asp-for="@Model.User.PhoneNumber" name="User.PhoneNumber" />
+                    <label asp-for="@Model.User.Email">Email</label>
+                    <input asp-for="@Model.User.Email" name="User.Email" />
                 </div>
+
                 <div>
-                    <label for="AssignedClaims">Select roles</label>
-                    <select multiple name="Roles">
-                        <option value="" disabled>Choose your option</option>
-                        @foreach (var c in Model.AllRoles)
-                        {
-                            var selected = Model.Roles != null && Model.Roles.Select(x => x.Name).Contains(c.Name);
-                            if (!selected)
-                            {
-                                <option value="@c.Id">@c.Name</option>
-                            }
-                            else
-                            {
-                                <option selected value="@c.Id">@c.Name</option>
-                            }
-                        }
-                    </select>
+                    <label asp-for="@Model.User.FirstName">First Name</label>
+                    <input asp-for="@Model.User.FirstName" name="User.FirstName" />
                 </div>
+
                 <div>
-                    <label for="AssignedClaims">Select claims</label>
-                    <select multiple name="UserClaims">
-                        <option value="" disabled>Choose your option</option>
-                        @foreach (var c in Model.AllRoleClaims)
-                        {
-                            var selected = Model.UserClaims != null && Model.UserClaims.Select(x => x.ClaimValue).Contains(c);
-                            if (!selected)
-                            {
-                                <option value="@c">@c</option>
-                            }
-                            else
-                            {
-                                <option selected value="@c">@c</option>
-                            }
-                        }
-                    </select>
+                    <label asp-for="@Model.User.LastName">Last Name</label>
+                    <input asp-for="@Model.User.LastName" name="User.LastName" />
                 </div>
+
+                <div>
+                    <label asp-for="@Model.User.BirthDay">Birth Day</label>
+                    <input asp-for="@Model.User.BirthDay" name="User.BirthDay" />
+                </div>
+
+                <div>
+                    <label for="Password">Password</label>
+                    <input type="password" name="Password" />
+                </div>
+
+                <div>
+                    <label for="ConfirmPassword">Confirm Password</label>
+                    <input type="password" name="ConfirmPassword" />
+                </div>
+            }
+
+
+            <div>
+                <label for="AssignedClaims">Select roles</label>
+                <select multiple name="Roles">
+                    <option value="" disabled>Choose your option</option>
+                    @foreach (var c in Model.AllRoles)
+                    {
+                        var selected = Model.Roles != null && Model.Roles.Select(x => x.Name).Contains(c.Name);
+                        if (!selected)
+                        {
+                            <option value="@c.Id">@c.Name</option>
+                        }
+                        else
+                        {
+                            <option selected value="@c.Id">@c.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div>
+                <label for="AssignedClaims">Select claims</label>
+                <select multiple name="UserClaims">
+                    <option value="" disabled>Choose your option</option>
+                    @foreach (var c in Model.AllRoleClaims)
+                    {
+                        var selected = Model.UserClaims != null && Model.UserClaims.Select(x => x.ClaimValue).Contains(c);
+                        if (!selected)
+                        {
+                            <option value="@c">@c</option>
+                        }
+                        else
+                        {
+                            <option selected value="@c">@c</option>
+                        }
+                    }
+                </select>
+            </div>
+            @if ((string.IsNullOrEmpty(Model.User.Id) && userManager.HasPermission(Context, PermissionClaims.CreateUser))
+                ||(!string.IsNullOrEmpty(Model.User.Id) && userManager.HasPermission(Context, PermissionClaims.EditUser)))
+            {
                 <div>
                     <button type="submit">Save</button>
                 </div>
-            </form>
-        </div>
+            }
+        </form>
     </div>
+</div>

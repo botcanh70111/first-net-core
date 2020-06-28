@@ -32,9 +32,20 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        [UserAuthorizeAttributes(claims: PermissionClaims.CreateRoles + "," + PermissionClaims.EditRoles)]
         public IActionResult CreateOrUpdate(RoleFormModel form)
         {
             _roleService.CreateOrUpdate(form.Role, form.AssignedClaims);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        [UserAuthorizeAttributes(claims: PermissionClaims.DeleteRoles)]
+        public IActionResult Delete(string id)
+        {
+            _roleService.Delete(id);
 
             return RedirectToAction("Index");
         }

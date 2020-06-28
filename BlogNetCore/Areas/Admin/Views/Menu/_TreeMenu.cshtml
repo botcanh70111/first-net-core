@@ -1,0 +1,35 @@
+﻿@model Menu
+
+<li style="position: relative">
+    <div class="collapsible-header">
+        @if (Model.Active ?? false)
+        {
+        <i class="material-icons" style="color: lightseagreen">check</i>
+        }
+        else
+        {
+        <i class="material-icons" style="color: red">clear</i>
+        }
+        @Model.Name - @Model.UrlLink
+        @if (Model.ChildMenus != null && Model.ChildMenus.Any())
+        {
+            <i class="material-icons">arrow_drop_down</i>
+        }
+
+        <a style="position: absolute; right: 15px" asp-action="Detail" asp-route-id="@Model.Id"><i class="material-icons">edit</i></a>
+    </div>
+
+    @if (Model.ChildMenus != null && Model.ChildMenus.Any())
+    {
+        <div class="collapsible-body">
+            <ul class="collapsible">
+
+                @foreach (var m in Model.ChildMenus)
+                {
+                    <partial name="_TreeMenu" model="@m" />
+                    <partial />
+                }
+            </ul>
+        </div>
+    }
+</li>

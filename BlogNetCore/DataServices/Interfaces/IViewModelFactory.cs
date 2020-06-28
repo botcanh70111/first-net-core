@@ -9,5 +9,6 @@ namespace BlogNetCore.DataServices.Interfaces
         Lazy<IHomeViewModelService> HomeViewModelService { get; set; }
         Lazy<IRoleViewModelService> RoleViewModelService { get; set; }
         Lazy<IUserViewModelService> UserViewModelService { get; set; }
+        Lazy<IMenuViewModelService> MenuViewModelService { get; set; }
     }
 }

@@ -26,32 +26,19 @@ namespace Services.Implementations
         public void Update(User user, IEnumerable<string> roles, IEnumerable<string> userClaims)
         {
             var entityUser = _context.Users.FirstOrDefault(x => x.Id == user.Id);
+
             entityUser.PhoneNumber = user.PhoneNumber;
+            entityUser.FirstName = user.FirstName;
+            entityUser.LastName = user.LastName;
+            entityUser.Avatar = user.Avatar;
+            entityUser.BirthDay = user.BirthDay;
+
             _context.Users.Update(entityUser);
 
             _context.UserRoles.RemoveRange(_context.UserRoles.Where(x => x.UserId == user.Id));
-            if (roles != null && roles.Count() > 0)
-            {
-                var rolesList = new List<IdentityUserRole<string>>();
-                foreach(var r in roles)
-                {
-                    rolesList.Add(new IdentityUserRole<string> { UserId = user.Id, RoleId = r });
-                }
-
-                _context.UserRoles.AddRange(rolesList);
-            }
-
             _context.UserClaims.RemoveRange(_context.UserClaims.Where(x => x.UserId == user.Id && x.ClaimType == ClaimTypes.Role));
-            if (userClaims != null && userClaims.Count() > 0)
-            {
-                var userClaimsList = new List<IdentityUserClaim<string>>();
-                foreach (var c in userClaims)
-                {
-                    userClaimsList.Add(new IdentityUserClaim<string> { UserId = user.Id, ClaimType = ClaimTypes.Role, ClaimValue =  c});
-                }
 
-                _context.UserClaims.AddRange(userClaimsList);
-            }
+            AddRoleClaimForUser(user.Id, roles, userClaims);
 
             _context.SaveChanges();
         }
@@ -136,6 +123,54 @@ namespace Services.Implementations
             else
             {
                 return null;
+            }
+        }
+
+        public async Task<UserRolesClaims> RegisterUserWithPermission(User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims)
+        {
+            var newUser = new BlogUser();
+            newUser.UserName = user.UserName;
+            newUser.Email = user.Email;
+            newUser.FirstName = user.FirstName;
+            newUser.LastName = user.LastName;
+
+            var result = await _identityUserManager.CreateAsync(newUser, password);
+            if (result.Succeeded)
+            {
+                AddRoleClaimForUser(newUser.Id, roles, userClaims);
+
+                _context.SaveChanges();
+
+                return GetProfile(newUser);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void AddRoleClaimForUser(string userId, IEnumerable<string> roles, IEnumerable<string> userClaims)
+        {
+            if (roles != null && roles.Count() > 0)
+            {
+                var rolesList = new List<IdentityUserRole<string>>();
+                foreach (var r in roles)
+                {
+                    rolesList.Add(new IdentityUserRole<string> { UserId = userId, RoleId = r });
+                }
+
+                _context.UserRoles.AddRange(rolesList);
+            }
+
+            if (userClaims != null && userClaims.Count() > 0)
+            {
+                var userClaimsList = new List<IdentityUserClaim<string>>();
+                foreach (var c in userClaims)
+                {
+                    userClaimsList.Add(new IdentityUserClaim<string> { UserId = userId, ClaimType = ClaimTypes.Role, ClaimValue = c });
+                }
+
+                _context.UserClaims.AddRange(userClaimsList);
             }
         }
     }

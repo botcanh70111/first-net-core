@@ -1,0 +1,41 @@
+﻿@using Services.Constants
+@model IEnumerable<Services.Models.SiteConfig>
+
+@{ 
+    var type = ViewData["Type"].ToString();
+}
+    <div class="row">
+        <div class="col s12">
+            <div>
+                <h4>Manage @type</h4>
+                <a asp-action="Detail" asp-route-type="@type">Create</a>
+            </div>
+            <table>
+                <tr>
+                    <th>@(type == Constants.SiteConfigTypes.Footer ? "Name" : "Icon class")</th>
+                    <th>Url link</th>
+                    <th>Order</th>
+                    <th>Actions</th>
+                </tr>
+
+                @foreach (var f in Model)
+                {
+                    <tr>
+                        <td>@f.Name</td>
+                        <td>@f.Value</td>
+                        <td>@f.Order</td>
+                        <td style="display: flex">
+                            <a asp-action="Detail" asp-route-id="@f.Id" asp-route-type="@f.Type">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <form asp-action="Delete" method="post">
+                                <input type="hidden" name="type" value="@type" />
+                                <input type="hidden" name="id" value="@f.Id" />
+                                <button class="none-style" style="color: red" type="submit"><i class="material-icons">delete</i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>

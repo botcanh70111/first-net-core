@@ -16,7 +16,7 @@ namespace Infrastructure
                 options =>
                 {
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                    options.UseSqlServer("Server=.\\SQLEXPRESS;Database=blognetcore;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
+                    options.UseSqlServer("Server=.\\SQLEXPRESS;Database=blognetcorev2;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
                 }
             );
 

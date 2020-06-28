@@ -16,10 +16,10 @@ namespace BlogNetCore.DataServices.Implementations.Client
 
         public LayoutViewModel CreateLayoutViewModel(LayoutViewModel viewModel)
         {
-            var siteConfigs = _siteConfigService.GetAll();
-            viewModel.LogoConfig = siteConfigs.FirstOrDefault(x => x.Type == Constants.SiteConfigTypes.Logo);
-            viewModel.SocialConfigs = siteConfigs.Where(x => x.Type == Constants.SiteConfigTypes.Social);
-            viewModel.FooterConfigs = siteConfigs.Where(x => x.Type == Constants.SiteConfigTypes.Footer);
+            viewModel.LogoConfig = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Logo)
+                .FirstOrDefault(x => x.Type == Constants.SiteConfigTypes.Logo);
+            viewModel.SocialConfigs = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Social);
+            viewModel.FooterConfigs = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Footer);
 
             return viewModel;
         }

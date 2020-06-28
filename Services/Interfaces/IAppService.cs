@@ -14,6 +14,6 @@ namespace Services.Interfaces
         TModel GetById(object id);
         TModel Create(TModel model, bool forceSave = true);
         TModel Update(TModel model, bool forceSave = true);
-        bool Delete(Guid id, bool forceSave = true);
+        bool Delete(object id, bool forceSave = true);
     }
 }

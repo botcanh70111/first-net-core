@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Services.Models
 {
@@ -10,5 +11,7 @@ namespace Services.Models
         public Guid? ParentId { get; set; }
         public int? Order { get; set; }
         public bool? Active { get; set; }
+
+        public IEnumerable<Menu> ChildMenus { get; set; }
     }
 }

@@ -6,6 +6,7 @@
 <head>
     <title>@Model.Title</title>
     <link rel="stylesheet" href="~/Vendors/bootstrap/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="~/Vendors/bootstrap/css/all.css">
     <link rel="stylesheet" href="~/Vendors/slick/slick.css">
     <link rel="stylesheet" href="~/Vendors/slick/slick-theme.css">
@@ -19,7 +20,7 @@
 <body>
     @*@Html.Partial("_Login", Model.Login)*@
     <partial name="_Register" model="@Model.RegisterForm" />
-    <partial  name="_Login" model="@Model.Login"/>
+    <partial name="_Login" model="@Model.Login" />
     <header>
         <div class="logo-center">
             <a asp-controller="Home" asp-action="Index">
@@ -29,89 +30,7 @@
                 }
             </a>
         </div>
-        <nav class="navigation-container">
-            <div class="container full-height">
-                <div class="row full-height">
-                    <div class="col-sm-12 navigation">
-                        <div class="header-menu">
-                            <ul class="menu title">
-                                <li>
-                                    <a href="#">Blogs</a>
-                                    <ul class="menu-child">
-                                        <li>
-                                            <a href="#">
-                                                Most recents
-                                                <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                            </a>
-                                            <ul class="menu-child">
-                                                <li><a href="#">Fashion</a></li>
-                                                <li><a href="#">Travel</a></li>
-                                                <li><a href="#">Food</a></li>
-                                                <li><a href="#">Beauty</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Favorite</a></li>
-                                        <li>
-                                            <a href="#">
-                                                Group by tag
-                                                <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                            </a>
-                                            <ul class="menu-child">
-                                                <li><a href="#">Fashion</a></li>
-                                                <li><a href="#">Travel</a></li>
-                                                <li><a href="#">Food</a></li>
-                                                <li><a href="#">Beauty</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Group by date
-                                                <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                            </a>
-                                            <ul class="menu-child">
-                                                <li>
-                                                    <a href="#">
-                                                        June
-                                                        <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
-                                                    </a>
-                                                    <ul class="menu-child">
-                                                        <li><a href="#">Fashion</a></li>
-                                                        <li><a href="#">Travel</a></li>
-                                                        <li><a href="#">Food</a></li>
-                                                        <li><a href="#">Beauty</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">May</a></li>
-                                                <li><a href="#">April</a></li>
-                                                <li><a href="#">March</a></li>
-                                                <li><a href="#">Older</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li>
-                                    <a href="#">More information</a>
-                                    <ul class="menu-child">
-                                        <li><a href="#">Brooklyn</a></li>
-                                        <li><a href="#">Dangal</a></li>
-                                        <li><a href="#">Flipped</a></li>
-                                        <li><a href="#">Cast away</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="header-search">
-                            <input type="text" name="" id="" class="textbox" placeholder="Search...">
-                            <div class="search-icon">
-                                <i class="fa fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        @await Component.InvokeAsync("Navigation")
     </header>
 
     <div class="container regular-padding">
@@ -255,10 +174,6 @@
                             <li><a href="@f.Value">@f.Name</a></li>
                         }
                     }
-                    @*<li><a href="">Disclaimer</a></li>
-        <li><a href="">Terms & Conditions</a></li>
-        <li><a href="">Privacy policy</a></li>
-        <li><a href="">Community</a></li>*@
                 </ul>
             </div>
             <div class="col-sm-12">
@@ -270,6 +185,7 @@
     </footer>
 
     <div class="move-on-top flex-center"><i class="fas fa-caret-up"></i></div>
+
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
             integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
             crossorigin="anonymous"></script>

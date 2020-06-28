@@ -1,0 +1,21 @@
+﻿@model Menu
+
+<li>
+    <a href="@Model.UrlLink">
+        @Model.Name
+        @if (Model.ChildMenus.Any() && Model.ParentId.HasValue && Model.ParentId != Guid.Empty)
+        {
+            <span class="menu-icon"><i class="fa fa-caret-right"></i></span>
+        }
+    </a>
+
+    @if (Model.ChildMenus.Any())
+    {
+        <ul class="menu-child">
+            @foreach (var m in Model.ChildMenus)
+            {
+                <partial name="~/Areas/Client/Views/Shared/Components/Navigation/_Menu.cshtml" model="@m"/>
+            }
+        </ul>
+    }
+</li>

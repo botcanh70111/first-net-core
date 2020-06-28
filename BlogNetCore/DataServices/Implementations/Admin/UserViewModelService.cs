@@ -19,13 +19,17 @@ namespace BlogNetCore.DataServices.Implementations.Admin
 
         public UserViewModel CreateViewModel(object contentKey = null)
         {
-            var user = _userService.GetProfile((string)contentKey);
             var viewModel = new UserViewModel();
-            viewModel.User = user.User;
-            viewModel.Roles = user.Roles.Select(x => x.Role);
-            viewModel.UserClaims = user.UserClaims;
             viewModel.AllRoleClaims = PermissionClaims.AllRoleClaims();
             viewModel.AllRoles = _roleService.GetAll();
+            if (contentKey != null)
+            {
+                var user = _userService.GetProfile((string)contentKey);
+                viewModel.User = user.User;
+                viewModel.Roles = user.Roles.Select(x => x.Role);
+                viewModel.UserClaims = user.UserClaims;
+            }
+
             return viewModel;
         }
     }

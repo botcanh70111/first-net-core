@@ -38,6 +38,7 @@ namespace Services
             services.AddTransient<ISiteConfigService, SiteConfigService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IPasswordHasher<BlogUser>, PasswordHasher<BlogUser>>();
         }
 

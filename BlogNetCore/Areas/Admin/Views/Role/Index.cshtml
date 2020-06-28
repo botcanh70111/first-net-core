@@ -1,11 +1,18 @@
-﻿@model IEnumerable<RoleClaims>
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@model IEnumerable<RoleClaims>
 
 <div class="row">
     <br />
-    <div class="col s12">
-        <a asp-area="Admin" asp-controller="Role" asp-action="Detail" class="btn">Create</a>
-    </div>
-    <br />
+    @if (userManager.HasPermission(Context, PermissionClaims.CreateRoles))
+    {
+        <div class="col s12">
+            <a asp-area="Admin" asp-controller="Role" asp-action="Detail" class="btn">Create</a>
+        </div>
+        <br />
+    }
+
     <div class="col s12">
         <table class="striped">
             <tr>
@@ -13,12 +20,26 @@
                 <th>Permissions</th>
                 <th>Action</th>
             </tr>
-            @foreach(var r in Model)
+            @foreach (var r in Model)
             {
                 <tr>
                     <td>@r.Role.Name</td>
                     <td>@string.Join(", ", r.Claims)</td>
-                    <td><a asp-area="Admin" asp-controller="Role" asp-action="Detail" asp-route-roleId="@r.Role.Id"><i class="material-icons">edit</i></a></td>
+                    <td style="display: flex">
+                        @if (userManager.HasPermission(Context, PermissionClaims.EditRoles))
+                        {
+                            <a asp-area="Admin" asp-controller="Role" asp-action="Detail" asp-route-roleId="@r.Role.Id">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        }
+                        @if (userManager.HasPermission(Context, PermissionClaims.DeleteRoles))
+                        {
+                            <form asp-action="Delete" method="post">
+                                <input type="hidden" name="id" value="@r.Role.Id" />
+                                <button class="none-style" style="color: red" type="submit"><i class="material-icons">delete</i></button>
+                            </form>
+                        }
+                    </td>
                 </tr>
             }
         </table>

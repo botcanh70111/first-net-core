@@ -39,7 +39,7 @@ namespace Services.Implementations
             return _mapper.Map<TModel>(updatedEntity);
         }
 
-        public virtual bool Delete(Guid id, bool forceSave = true)
+        public virtual bool Delete(object id, bool forceSave = true)
         {
             try
             {

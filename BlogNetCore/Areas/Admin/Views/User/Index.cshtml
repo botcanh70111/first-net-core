@@ -1,28 +1,40 @@
-﻿@model IEnumerable<User>
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
 
-<div class="row">
-    <br />
-    <div class="col s12">
-        <a asp-area="Admin" asp-controller="User" asp-action="Detail" class="btn">Create</a>
-    </div>
-    <br />
-    <div class="col s12">
-        <table class="striped">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Verified</th>
-                <th>Action</th>
-            </tr>
-            @foreach (var r in Model)
-            {
+@model IEnumerable<User>
+
+    <div class="row">
+        <br />
+        @if (userManager.HasPermission(Context, PermissionClaims.CreateUser))
+        {
+            <div class="col s12">
+                <a asp-area="Admin" asp-controller="User" asp-action="Detail" class="btn">Create</a>
+            </div>
+            <br />
+        }
+
+        <div class="col s12">
+            <table class="striped">
                 <tr>
-                    <td>@r.UserName</td>
-                    <td>@r.Email</td>
-                    <td>@r.EmailConfirmed</td>
-                    <td><a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-userId="@r.Id"><i class="material-icons">edit</i></a></td>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Verified</th>
+                    <th>Action</th>
                 </tr>
-            }
-        </table>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td>@r.UserName</td>
+                        <td>@r.Email</td>
+                        <td>@r.EmailConfirmed</td>
+                        <td>
+                            @if (userManager.HasPermission(Context, PermissionClaims.EditUser))
+                            {
+                                <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-userId="@r.Id"><i class="material-icons">edit</i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
-</div>

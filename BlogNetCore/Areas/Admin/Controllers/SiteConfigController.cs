@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
 using Services.Interfaces;
+using Services.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -51,7 +53,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
                     model.Image.CopyTo(stream);
                 }
 
-                logo.Value = "images/" + model.Image.FileName;
+                logo.Value = "/images/" + model.Image.FileName;
             }
 
             if (model.Id == null || model.Id == Guid.Empty)
@@ -66,14 +68,48 @@ namespace BlogNetCore.Areas.Admin.Controllers
             return RedirectToAction("Logo");
         }
 
-        public IActionResult Footer()
+        public IActionResult Index(string type)
         {
-            return View();
+            var model = _siteConfigService.GetConfigsByType(type);
+            if (model == null) model = new List<SiteConfig>();
+            ViewData["Type"] = type;
+            return View(model);
         }
 
-        public IActionResult Social()
+        public IActionResult Detail(Guid? id, string type)
         {
-            return View();
+            SiteConfig model;
+            if (id != null)
+            {
+                model = _siteConfigService.GetById(id);
+            }
+            else
+            {
+                model = new SiteConfig();
+            }
+            ViewData["Type"] = type;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateOrUpdate(SiteConfig config)
+        {
+            if (config.Id == null || config.Id == Guid.Empty)
+                _siteConfigService.Create(config);
+            else
+            {
+                _siteConfigService.Update(config);
+            }
+            return RedirectToAction("Index", new { type = config.Type });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Guid id, string type)
+        {
+            var model = _siteConfigService.Delete(id);
+            return RedirectToAction("Index", new { type = type });
         }
     }
 }

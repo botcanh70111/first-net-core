@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Services.Interfaces;
 using Services.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -12,10 +13,13 @@ namespace BlogNetCore.DataServices
 {
     public interface IUserManager
     {
+        bool HasPermission(HttpContext httpContext, string permission);
         void SignIn(HttpContext httpContext, UserRolesClaims profile, bool isPersistent);
         Task CreateAsync(HttpContext httpContext, RegisterModel register);
         void SignOut(HttpContext httpContext);
+        bool Validate(string email, string userName, string password, string confirmPassword);
     }
+
     public class UserManager : IUserManager
     {
         private readonly IUserService _userService;
@@ -23,6 +27,20 @@ namespace BlogNetCore.DataServices
         public UserManager(IUserService userService)
         {
             _userService = userService;
+        }
+
+        public bool HasPermission(HttpContext httpContext, string permission)
+        {
+            var claims = httpContext.User.Claims;
+            if (claims.Where(x => x.Value == permission).Any())
+                return true;
+
+            return false;
+        }
+
+        public bool Validate(string email, string userName, string password, string confirmPassword)
+        {
+            return true;
         }
 
         public async void SignIn(HttpContext httpContext, UserRolesClaims profile, bool isPersistent)
@@ -42,15 +60,18 @@ namespace BlogNetCore.DataServices
 
         public async Task CreateAsync(HttpContext httpContext, RegisterModel register)
         {
-            var newUser = new User();
-            newUser.Email = register.Email;
-            newUser.UserName = register.UserName;
-            newUser.FirstName = register.FirstName;
-            newUser.LastName = register.LastName;
-            var user = await _userService.RegisterUser(newUser, register.Password);
-            if (user != null)
+            if (Validate(register.Email, register.UserName, register.Password, register.ConfirmPassword))
             {
-                SignIn(httpContext, user, true);
+                var newUser = new User();
+                newUser.Email = register.Email;
+                newUser.UserName = register.UserName;
+                newUser.FirstName = register.FirstName;
+                newUser.LastName = register.LastName;
+                var user = await _userService.RegisterUser(newUser, register.Password);
+                if (user != null)
+                {
+                    SignIn(httpContext, user, true);
+                }
             }
         }
 

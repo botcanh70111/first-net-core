@@ -7,11 +7,12 @@ namespace BlogNetCore.DataServices.Implementations
 {
     public class ViewModelFactory : IViewModelFactory
     {
-        public ViewModelFactory(Lazy<IHomeViewModelService> homeViewModelService, Lazy<IRoleViewModelService> roleViewModelService, Lazy<IUserViewModelService> userViewModelService)
+        public ViewModelFactory(Lazy<IHomeViewModelService> homeViewModelService, Lazy<IRoleViewModelService> roleViewModelService, Lazy<IUserViewModelService> userViewModelService, Lazy<IMenuViewModelService> menuViewModelService)
         {
             HomeViewModelService = homeViewModelService;
             RoleViewModelService = roleViewModelService;
             UserViewModelService = userViewModelService;
+            MenuViewModelService = menuViewModelService;
         }
 
         // Client services
@@ -20,5 +21,6 @@ namespace BlogNetCore.DataServices.Implementations
         // Admin services
         public Lazy<IRoleViewModelService> RoleViewModelService { get; set; }
         public Lazy<IUserViewModelService> UserViewModelService { get; set; }
+        public Lazy<IMenuViewModelService> MenuViewModelService { get; set; }
     }
 }

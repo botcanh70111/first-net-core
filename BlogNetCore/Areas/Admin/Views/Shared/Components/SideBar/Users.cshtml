@@ -1,0 +1,33 @@
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@if (userManager.HasPermission(Context, PermissionClaims.ViewUsers))
+{
+
+    <li>
+        <div class="collapsible-header">
+            <i class="material-icons">group</i>Users
+            <i class="material-icons li-right">arrow_drop_down</i>
+        </div>
+        <div class="collapsible-body">
+            <ul class="collapsible">
+                @if (userManager.HasPermission(Context, PermissionClaims.CreateUser))
+                {
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">person_add_alt_1</i>
+                            <a href="">Add User</a>
+                        </div>
+                    </li>
+                }
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">supervisor_account</i>
+                        <a asp-area="Admin" asp-controller="User" asp-action="Index">Manage</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+}

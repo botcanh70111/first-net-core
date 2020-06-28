@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -52,6 +53,7 @@ namespace BlogNetCore
 
             // Register services
             services.AddScoped<IUserManager, UserManager>();
+            services.AddTransient<IMenuViewModelService, MenuViewModelService>();
             services.AddTransient<IHomeViewModelService, HomeViewModelService>();
             services.AddTransient<IRoleViewModelService, RoleViewModelService>();
             services.AddTransient<IUserViewModelService, UserViewModelService>();

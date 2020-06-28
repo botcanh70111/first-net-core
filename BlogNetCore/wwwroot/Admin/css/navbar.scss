@@ -21,6 +21,12 @@ ul.nav {
         align-items: center;
         justify-content: center;
         font-weight: 700;
+
+        img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+        }
     }
 
     &-border-bot {

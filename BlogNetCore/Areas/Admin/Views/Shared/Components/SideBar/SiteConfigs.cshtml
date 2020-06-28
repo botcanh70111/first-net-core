@@ -1,0 +1,35 @@
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+
+@if (userManager.HasPermission(Context, PermissionClaims.EditConfigs))
+{
+    <li>
+        <div class="collapsible-header">
+            <i class="material-icons">language</i>Site Configs
+            <i class="material-icons li-right">arrow_drop_down</i>
+        </div>
+        <div class="collapsible-body">
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">playlist_add</i>
+                        <a asp-action="Logo" asp-controller="SiteConfig" asp-area="Admin">Logo</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">border_bottom</i>
+                        <a asp-action="Index" asp-controller="SiteConfig" asp-area="Admin" asp-route-type="@Constants.SiteConfigTypes.Footer">Footer</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">share</i>
+                        <a asp-action="Index" asp-controller="SiteConfig" asp-area="Admin" asp-route-type="@Constants.SiteConfigTypes.Social">Social</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+}

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Menu>
+
+<nav class="navigation-container">
+    <div class="container full-height">
+        <div class="row full-height">
+            <div class="col-sm-12 navigation">
+                <div class="header-menu">
+                    <ul class="menu title">
+                        @foreach (var m in Model)
+                        {
+                            <partial name="~/Areas/Client/Views/Shared/Components/Navigation/_Menu.cshtml" model="@m" />
+                        }
+                    </ul>
+                </div>
+                <div class="header-search">
+                    <input type="text" name="" id="" class="textbox" placeholder="Search...">
+                    <div class="search-icon">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

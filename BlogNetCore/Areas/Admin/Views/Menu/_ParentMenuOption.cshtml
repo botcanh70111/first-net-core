@@ -1,0 +1,25 @@
+﻿@model Menu
+@{
+    var oldParentId = ViewData["ParentId"] != null ? (Guid?)ViewData["ParentId"] : null;
+    var selected = Model.Id == oldParentId;
+    var prefix = ViewData["Prefix"] ?? "";
+}
+
+@if (!selected)
+{
+    <option value="@Model.Id">@prefix @Model.Name</option>
+}
+else
+{
+    <option selected value="@Model.Id">@prefix @Model.Name</option>
+}
+
+@if (Model.ChildMenus != null && Model.ChildMenus.Any())
+{
+    ViewData["Prefix"] = prefix + "-";
+    foreach (var m in Model.ChildMenus)
+    {
+        <partial name="_ParentMenuOption" model="m" 
+                 view-data='@new ViewDataDictionary(ViewData)'/>
+    }
+}

@@ -1,0 +1,45 @@
+﻿@model MenuViewModel
+
+<div class="row">
+    <div class="col s12">
+        <form method="post" asp-controller="Menu"
+              asp-action="@(Model.Menu.Id == null || Guid.Empty == Model.Menu.Id ? "Create" : "Update")">
+            @Html.Hidden("Id", Model.Menu.Id)
+
+            <div>
+                <label asp-for="@Model.Menu.Name"></label>
+                <input asp-for="@Model.Menu.Name" name="Name" />
+            </div>
+            <div>
+                <label asp-for="@Model.Menu.UrlLink"></label>
+                <input asp-for="@Model.Menu.UrlLink" name="UrlLink" />
+            </div>
+            <div>
+                <label asp-for="@Model.Menu.Order"></label>
+                <input asp-for="@Model.Menu.Order" name="Order" />
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" @(Model.Menu.Active ?? false ? "checked" : "") value="true" name="Active" />
+                    <span>Active</span>
+                </label>
+            </div>
+
+            <div>
+                <label for="ParentId">Select Parent</label>
+
+                <select multiple name="ParentId">
+                    <option value="" disabled>Choose your option</option>
+                    @foreach (var c in Model.AllMenus)
+                    {
+                        <partial name="_ParentMenuOption" model="c" 
+                                 view-data='@new ViewDataDictionary(ViewData) { { "ParentId", Model.Menu.ParentId } }' />
+                    }
+                </select>
+            </div>
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

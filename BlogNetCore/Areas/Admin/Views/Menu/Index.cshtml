@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Menu>
+
+<div class="row">
+    <br />
+    <div class="col s12">
+        <a asp-area="Admin" asp-controller="Menu" asp-action="Detail" class="btn">Create</a>
+    </div>
+    <br />
+
+    <div class="col s12">
+        <ul class="collapsible">
+            @foreach (var m in Model)
+            {
+                <partial name="_TreeMenu" model="@m" />
+            }
+        </ul>
+    </div>
+</div>

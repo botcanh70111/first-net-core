@@ -1,4 +1,7 @@
-﻿@model RoleViewModel
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@model RoleViewModel
 @{
     var label = "Create";
     if (Model.Role != null && !string.IsNullOrEmpty(Model.Role.Id)) { label = "Edit"; }
@@ -10,7 +13,7 @@
     <div class="col s12">
         <form asp-area="Admin" asp-controller="Role" asp-action="CreateOrUpdate" method="post">
             @Html.HiddenFor(x => x.Role.Id)
-            
+
             <div>
                 <label asp-for="@Model.Role.Name"></label>
                 <input asp-for="@Model.Role.Name" />
@@ -41,9 +44,14 @@
                     }
                 </select>
             </div>
-            <div>
-                <button type="submit">@label</button>
-            </div>
+
+            @if (userManager.HasPermission(Context, PermissionClaims.EditRoles))
+            {
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            }
+
         </form>
     </div>
 </div>
