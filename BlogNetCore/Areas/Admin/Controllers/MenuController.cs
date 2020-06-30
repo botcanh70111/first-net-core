@@ -7,6 +7,8 @@ using Services.Constants;
 using Services.Interfaces;
 using Services.Models;
 using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
@@ -23,7 +25,8 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var menus = _menuService.GetGroupMenus(false);
+            var ownerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            var menus = _menuService.GetGroupMenus(false, x => x.OwnerId == ownerId);
             return View(menus);
         }
 
@@ -36,6 +39,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Menu menu)
         {
+            menu.OwnerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
             _menuService.Create(menu);
             return RedirectToAction("Index");
         }
@@ -44,6 +48,13 @@ namespace BlogNetCore.Areas.Admin.Controllers
         public IActionResult Update(Menu menu)
         {
             _menuService.Update(menu);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            _menuService.Delete(id);
             return RedirectToAction("Index");
         }
     }

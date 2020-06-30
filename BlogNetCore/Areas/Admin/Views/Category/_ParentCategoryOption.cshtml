@@ -1,0 +1,24 @@
+﻿@model Category
+@{
+    var oldParentId = ViewData["ParentId"] != null ? (Guid?)ViewData["ParentId"] : null;
+    var selected = Model.Id == oldParentId;
+    var prefix = ViewData["Prefix"] ?? "";
+}
+
+@if (!selected)
+{
+    <option value="@Model.Id">@prefix @Model.Name</option>
+}
+else
+{
+    <option selected value="@Model.Id">@prefix @Model.Name</option>
+}
+
+@if (Model.ChildCategories != null && Model.ChildCategories.Any())
+{
+    ViewData["Prefix"] = prefix + "-";
+    foreach (var c in Model.ChildCategories)
+    {
+        <partial name="_ParentCategoryOption" model="@c" view-data='@new ViewDataDictionary(ViewData)'/>
+    }
+}

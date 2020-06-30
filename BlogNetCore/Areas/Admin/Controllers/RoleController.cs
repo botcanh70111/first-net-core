@@ -5,10 +5,11 @@ using BlogNetCore.DataServices.Interfaces.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
 using Services.Interfaces;
+using static Services.Constants.Constants;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
-    [UserAuthorizeAttributes(claims: PermissionClaims.ViewRoles)]
+    [UserAuthorizeAttributes(claims: PermissionClaims.ViewRoles, userType: UserTypes.Admin)]
     public class RoleController : BaseAdminController
     {
         private readonly IRoleService _roleService;

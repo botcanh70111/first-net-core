@@ -1,14 +1,17 @@
-﻿@model Menu
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@model Menu
 
 <li style="position: relative">
     <div class="collapsible-header">
         @if (Model.Active ?? false)
         {
-        <i class="material-icons" style="color: lightseagreen">check</i>
+            <i class="material-icons" style="color: lightseagreen">check</i>
         }
         else
         {
-        <i class="material-icons" style="color: red">clear</i>
+            <i class="material-icons" style="color: red">clear</i>
         }
         @Model.Name - @Model.UrlLink
         @if (Model.ChildMenus != null && Model.ChildMenus.Any())
@@ -16,7 +19,16 @@
             <i class="material-icons">arrow_drop_down</i>
         }
 
-        <a style="position: absolute; right: 15px" asp-action="Detail" asp-route-id="@Model.Id"><i class="material-icons">edit</i></a>
+        <div class="flex" style="position: absolute; right: 15px">
+            <a asp-action="Detail" asp-route-id="@Model.Id"><i class="material-icons">edit</i></a>
+            @if (userManager.HasPermission(Context, PermissionClaims.DeleteBlog))
+            {
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button class="none-style" style="color: red" type="submit"><i class="material-icons">delete</i></button>
+                </form>
+            }
+        </div>
     </div>
 
     @if (Model.ChildMenus != null && Model.ChildMenus.Any())

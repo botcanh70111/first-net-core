@@ -25,6 +25,9 @@ namespace Services
             {
                 mc.AddProfile(new MappingProfile());
                 mc.CreateMap<IdentityRole, Role>().ReverseMap();
+                mc.CreateMap<Tags, Tag>().ReverseMap();
+                mc.CreateMap<Categories, Category>().ReverseMap();
+                mc.CreateMap<Blogs, Blog>().ReverseMap();
                 mc.CreateMap<User, User>().ReverseMap()
                     .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
                 mc.CreateMap<BlogUser, User>().ReverseMap()
@@ -39,6 +42,10 @@ namespace Services
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<ITagService, TagService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IBlogService, BlogService>();
+
             services.AddTransient<IPasswordHasher<BlogUser>, PasswordHasher<BlogUser>>();
         }
 

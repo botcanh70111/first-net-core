@@ -1,5 +1,7 @@
 ﻿using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Services.Constants;
 using Services.Interfaces;
 using Services.Mappers;
 using Services.Models;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static Services.Constants.Constants;
 
 namespace Services.Implementations
 {
@@ -126,13 +129,15 @@ namespace Services.Implementations
             }
         }
 
-        public async Task<UserRolesClaims> RegisterUserWithPermission(User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims)
+        public async Task<UserRolesClaims> RegisterUserWithPermission(HttpContext httpContext, User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims)
         {
             var newUser = new BlogUser();
             newUser.UserName = user.UserName;
             newUser.Email = user.Email;
             newUser.FirstName = user.FirstName;
             newUser.LastName = user.LastName;
+            newUser.UserType = UserTypes.BlogEditor;
+            newUser.SupervisorId = httpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
 
             var result = await _identityUserManager.CreateAsync(newUser, password);
             if (result.Succeeded)

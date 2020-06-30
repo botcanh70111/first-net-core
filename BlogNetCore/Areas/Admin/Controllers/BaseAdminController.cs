@@ -5,7 +5,7 @@ using Services.Constants;
 namespace BlogNetCore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [UserAuthorizeAttributes(claims: PermissionClaims.AccessAdminMode)]
+    [UserAuthorizeAttributes(claims: PermissionClaims.AccessAdminMode + "," + PermissionClaims.AccessBloggerMode)] 
     public abstract class BaseAdminController : Controller
     {
     }

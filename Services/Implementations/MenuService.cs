@@ -15,6 +15,17 @@ namespace Services.Implementations
         {
         }
 
+        public override bool Delete(object id, bool forceSave = true)
+        {
+            var children = _context.Menus.Where(x => x.ParentId == (Guid)id);
+            if (children.Any())
+            {
+                foreach (var x in children) x.ParentId = null;
+                _context.Menus.UpdateRange(children);
+            }
+            return base.Delete(id, forceSave);
+        }
+
         public IEnumerable<Menu> GetGroupMenus(bool onlyActive = true, Expression<Func<Menus, bool>> predicate = null)
         {
             if (predicate == null) predicate = x => true;

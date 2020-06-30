@@ -30,4 +30,14 @@ document.addEventListener('DOMContentLoaded', function () {
       b.className = "waves-effect waves-light btn";
     }
   })
+
+  // CK editor
+  var ckEditors = document.querySelectorAll(".jsCkEditor");
+  ckEditors.forEach(function(e, i) {
+    e.setAttribute("id", "ckeditorelement" + i)
+    ClassicEditor.create(document.querySelector('#ckeditorelement' + i))
+    .catch( error => {
+        console.error( error );
+    } );
+  })
 });

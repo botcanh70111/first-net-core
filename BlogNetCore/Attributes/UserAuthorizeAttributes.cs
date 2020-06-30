@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using static Services.Constants.Constants;
 
 namespace BlogNetCore.Attributes
 {
@@ -11,6 +12,7 @@ namespace BlogNetCore.Attributes
     public class UserAuthorizeAttributes : ActionFilterAttribute
     {
         private readonly bool _isAuthorize;
+        private readonly string _userType;
         private readonly string _claims;
         private readonly string _claimType;
 
@@ -24,10 +26,12 @@ namespace BlogNetCore.Attributes
             _claims = claims;
         }
 
-        public UserAuthorizeAttributes(string claimType, string claims)
+        public UserAuthorizeAttributes(string claimType = "", string claims = "", string userType = "", bool isAuthorize = false)
         {
             _claims = claims;
             _claimType = claimType;
+            _userType = userType;
+            _isAuthorize = isAuthorize;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -36,7 +40,20 @@ namespace BlogNetCore.Attributes
             {
                 if (!context.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Forbidden);
+                    context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(_userType))
+            {
+                var userType = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.System).Value;
+                if (userType == _userType || userType == UserTypes.Admin)
+                {
+                    return;
+                } 
+                else
+                {
+                    context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
                 }
             }
 
@@ -46,7 +63,7 @@ namespace BlogNetCore.Attributes
                 var userClaims = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value);
                 if (!claims.Intersect(userClaims).Any())
                 {
-                    context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Forbidden);
+                    context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
                 } 
             }
 
@@ -58,7 +75,7 @@ namespace BlogNetCore.Attributes
                 {
                     if (!userClaims.Where(x => x.Type == _claimType && x.Value == c.Trim()).Any())
                     {
-                        context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Forbidden);
+                        context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
                     }
                 }
             }

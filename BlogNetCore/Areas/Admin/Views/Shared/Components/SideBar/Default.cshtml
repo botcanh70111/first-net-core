@@ -40,6 +40,12 @@
             @* Blogs *@
             @await Component.InvokeAsync("SideBar", new { viewName = "Blogs" })
 
+            @* Tags *@
+            @await Component.InvokeAsync("SideBar", new { viewName = "Tags" })
+
+            @* Categories *@
+            @await Component.InvokeAsync("SideBar", new { viewName = "Categories" })
+
             @* Users *@
             @await Component.InvokeAsync("SideBar", new { viewName = "Users" })
 

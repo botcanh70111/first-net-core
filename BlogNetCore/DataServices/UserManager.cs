@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Services.Constants;
 using Services.Interfaces;
 using Services.Models;
 using System.Collections.Generic;
@@ -84,9 +85,13 @@ namespace BlogNetCore.DataServices
         {
             List<Claim> claims = new List<Claim>();
 
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.User.Id.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.User.UserName));
+            claims.Add(new Claim(BlogClaimTypes.Id, user.User.Id.ToString()));
+            claims.Add(new Claim(BlogClaimTypes.SupervisorId, string.IsNullOrEmpty(user.User.SupervisorId) ? user.User.Id.ToString() : user.User.SupervisorId.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.User.FirstName + " " + user.User.LastName));
             claims.Add(new Claim(ClaimTypes.Email, user.User.Email));
+            claims.Add(new Claim(ClaimTypes.System, user.User.UserType ?? ""));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.User.UserName));
+
             claims.AddRange(GetUserRoleClaims(user));
             return claims;
         }

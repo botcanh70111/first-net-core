@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Services.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Services.Interfaces
         UserRolesClaims GetProfile(string email, string password);
         UserRolesClaims GetProfile(string userId);
         Task<UserRolesClaims> RegisterUser(User user, string password);
-        Task<UserRolesClaims> RegisterUserWithPermission(User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims);
+
+        // Admin mode
+        Task<UserRolesClaims> RegisterUserWithPermission(HttpContext httpContext, User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims);
     }
 }

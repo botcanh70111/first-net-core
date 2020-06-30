@@ -1,0 +1,44 @@
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@model IEnumerable<Tag>
+
+    <div class="row">
+        <br />
+        <div class="col s12">
+            <a asp-area="Admin" asp-controller="Tag" asp-action="Detail" class="btn">Create</a>
+        </div>
+        <br />
+
+        <div class="col s12">
+            <table class="striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Alias</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td>@r.Name</td>
+                        <td>@r.TagUrl</td>
+                        <td style="display: flex">
+                            @if (userManager.HasPermission(Context, PermissionClaims.EditBlog))
+                            {
+                                <a asp-area="Admin" asp-controller="Tag" asp-action="Detail" asp-route-id="@r.Id">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            }
+                            @if (userManager.HasPermission(Context, PermissionClaims.DeleteBlog))
+                            {
+                                <form asp-action="Delete" method="post">
+                                    <input type="hidden" name="id" value="@r.Id" />
+                                    <button class="none-style" style="color: red" type="submit"><i class="material-icons">delete</i></button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>

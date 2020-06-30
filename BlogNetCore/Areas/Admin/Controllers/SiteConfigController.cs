@@ -1,33 +1,34 @@
 ﻿using BlogNetCore.Areas.Admin.Models.FormModels;
 using BlogNetCore.Attributes;
-using Microsoft.AspNetCore.Hosting;
+using BlogNetCore.DataServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
 using Services.Interfaces;
 using Services.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Security.Claims;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
     [UserAuthorizeAttributes(claims: PermissionClaims.EditConfigs)]
     public class SiteConfigController : BaseAdminController
     {
-        private IWebHostEnvironment _hostingEnvironment;
+        private IFileHandler _fileHandler;
         private ISiteConfigService _siteConfigService;
 
-        public SiteConfigController(IWebHostEnvironment hostingEnvironment, ISiteConfigService siteConfigService)
+        public SiteConfigController(IFileHandler fileHandler, ISiteConfigService siteConfigService)
         {
-            _hostingEnvironment = hostingEnvironment;
+            _fileHandler = fileHandler;
             _siteConfigService = siteConfigService;
         }
 
         public IActionResult Logo()
         {
-            var model = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Logo).FirstOrDefault();
-            if (model == null) model = new Services.Models.SiteConfig();
+            var ownerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            var model = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Logo, x => x.OwnerId == ownerId).FirstOrDefault();
+            if (model == null) model = new SiteConfig();
             return View(model);
         }
 
@@ -36,7 +37,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
         public IActionResult UpdateLogo(LogoModel model)
         {
             var filePath = model.Value;
-            var logo = new Services.Models.SiteConfig
+            var logo = new SiteConfig
             {
                 Id = model.Id,
                 Name = model.Name,
@@ -46,14 +47,8 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
             if (model.Image != null && model.Image.Length > 0)
             {
-                filePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", model.Image.FileName);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    model.Image.CopyTo(stream);
-                }
-
-                logo.Value = "/images/" + model.Image.FileName;
+                var fileName = _fileHandler.SaveFile(model.Image, new List<string> { "images", "logos" });
+                logo.Value = fileName;
             }
 
             if (model.Id == null || model.Id == Guid.Empty)
@@ -70,7 +65,8 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Index(string type)
         {
-            var model = _siteConfigService.GetConfigsByType(type);
+            var ownerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            var model = _siteConfigService.GetConfigsByType(type, x => x.OwnerId == ownerId);
             if (model == null) model = new List<SiteConfig>();
             ViewData["Type"] = type;
             return View(model);
@@ -95,6 +91,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrUpdate(SiteConfig config)
         {
+            config.OwnerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
             if (config.Id == null || config.Id == Guid.Empty)
                 _siteConfigService.Create(config);
             else

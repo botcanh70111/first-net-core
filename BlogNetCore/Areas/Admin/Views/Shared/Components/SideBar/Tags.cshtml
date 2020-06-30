@@ -1,0 +1,22 @@
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@if (userManager.HasPermission(Context, PermissionClaims.EditBlog) || userManager.HasPermission(Context, PermissionClaims.CreateBlog))
+{
+    <li>
+        <div class="collapsible-header">
+            <i class="material-icons">local_offer</i>Tags
+            <i class="material-icons li-right">arrow_drop_down</i>
+        </div>
+        <div class="collapsible-body">
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">playlist_add</i>
+                        <a asp-action="Index" asp-controller="Tag" asp-area="Admin">Tags</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+}

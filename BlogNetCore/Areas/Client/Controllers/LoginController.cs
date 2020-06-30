@@ -33,7 +33,6 @@ namespace BlogNetCore.Areas.Client.Controllers
             }
         }
 
-        [HttpPost]
         public IActionResult Logout()
         {
             _userManager.SignOut(HttpContext);

@@ -1,0 +1,58 @@
+﻿@model CategoryViewModel
+
+    <div class="row">
+        <div class="col s12">
+            @if (Model.Category.Id == null || Model.Category.Id == Guid.Empty)
+            {
+                <h4>Create Category</h4>
+            }
+            else
+            {
+                <h4>Edit Category</h4>
+            }
+        </div>
+        @if (ViewBag.Error != null)
+        {
+            <div class="col s12">
+                <p class="red-text text-lighten-1">@ViewBag.Error</p>
+            </div>
+        }
+        <div class="col s12">
+            <form method="post" asp-controller="Category" asp-action="CreateOrUpdate">
+                @Html.Hidden("Id", Model.Category.Id)
+
+                <div>
+                    <label asp-for="@Model.Category.Name"></label>
+                    <input asp-for="@Model.Category.Name" name="Name" />
+                </div>
+                <div>
+                    <label asp-for="@Model.Category.CategoryUrl"></label>
+                    <input asp-for="@Model.Category.CategoryUrl" name="CategoryUrl" />
+                </div>
+                <div>
+                    <label asp-for="@Model.Category.Description"></label>
+                    <input asp-for="@Model.Category.Description" name="Description" />
+                </div>
+                <div>
+                    <label asp-for="@Model.Category.Content"></label>
+                    <textarea class="jsCkEditor" name="Content" rows="10"></textarea>
+                </div>
+
+                <div>
+                    <label for="ParentId">Select Parent</label>
+
+                    <select multiple name="ParentId">
+                        <option value="" disabled>Choose your option</option>
+                        @foreach (var c in Model.AllCategories)
+                        {
+                            <partial name="_ParentCategoryOption" model="c"
+                                     view-data='@new ViewDataDictionary(ViewData) { { "ParentId", Model.Category.ParentId } }' />
+                        }
+                    </select>
+                </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>

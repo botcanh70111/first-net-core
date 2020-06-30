@@ -1,0 +1,39 @@
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@model Category
+
+<li style="position: relative">
+    <div class="collapsible-header">
+        @Model.Name
+        @if (Model.ChildCategories != null && Model.ChildCategories.Any())
+        {
+            <i class="material-icons">arrow_drop_down</i>
+        }
+
+        <div class="flex" style="position: absolute; right: 15px">
+            <a asp-action="Detail" asp-route-id="@Model.Id"><i class="material-icons">edit</i></a>
+            @if (userManager.HasPermission(Context, PermissionClaims.DeleteBlog))
+            {
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button class="none-style" style="color: red" type="submit"><i class="material-icons">delete</i></button>
+                </form>
+            }
+        </div>
+    </div>
+
+    @if (Model.ChildCategories != null && Model.ChildCategories.Any())
+    {
+        <div class="collapsible-body">
+            <ul class="collapsible">
+
+                @foreach (var c in Model.ChildCategories)
+                {
+                    <partial name="_TreeCategory" model="@c" />
+                    <partial />
+                }
+            </ul>
+        </div>
+    }
+</li>

@@ -2,6 +2,7 @@
 using Services.Mappers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Implementations
 {
@@ -26,7 +27,7 @@ namespace Services.Implementations
             return _mapper.Map<TModel>(addedEntity);
         }
 
-        public TModel Update(TModel config, bool forceSave = true)
+        public virtual TModel Update(TModel config, bool forceSave = true)
         {
             var entity = _mapper.Map<T>(config);
             var update = _context.Set<T>().Update(entity);
@@ -56,9 +57,10 @@ namespace Services.Implementations
             }
         }
 
-        public virtual IEnumerable<TModel> GetAll()
+        public virtual IEnumerable<TModel> GetAll(System.Linq.Expressions.Expression<Func<T, bool>> predicate = null)
         {
-            var query = _context.Set<T>();
+            if (predicate == null) predicate = x => true;
+            var query = _context.Set<T>().Where(predicate);
             return _mapper.Map<IEnumerable<TModel>>(query);
         }
 

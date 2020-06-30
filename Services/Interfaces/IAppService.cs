@@ -10,7 +10,7 @@ namespace Services.Interfaces
     /// <typeparam name="TModel">Model</typeparam>
     public interface IAppService<T, TModel>
     {
-        IEnumerable<TModel> GetAll();
+        IEnumerable<TModel> GetAll(System.Linq.Expressions.Expression<Func<T, bool>> predicate = null);
         TModel GetById(object id);
         TModel Create(TModel model, bool forceSave = true);
         TModel Update(TModel model, bool forceSave = true);

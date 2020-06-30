@@ -11,6 +11,7 @@ namespace Services.Models
         public Guid? ParentId { get; set; }
         public int? Order { get; set; }
         public bool? Active { get; set; }
+        public string OwnerId { get; set; }
 
         public IEnumerable<Menu> ChildMenus { get; set; }
     }

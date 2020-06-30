@@ -6,6 +6,7 @@ namespace Services.Constants
     public static class PermissionClaims
     {
         public const string AccessAdminMode = "AccessAdminMode";
+        public const string AccessBloggerMode = "AccessBloggerMode";
         public const string EditConfigs = "EditConfigs";
 
         public const string ViewUsers = "ViewUsers";
@@ -28,6 +29,7 @@ namespace Services.Constants
             return new List<string>
             {
                 "AccessAdminMode",
+                "AccessBloggerMode",
                 "EditConfigs",
 
                 "ViewUsers",

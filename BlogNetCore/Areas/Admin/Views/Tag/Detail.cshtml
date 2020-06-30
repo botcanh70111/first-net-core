@@ -1,0 +1,44 @@
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@model Tag
+
+@{
+    var label = "Create";
+    if (Model.Id != null && Model.Id != Guid.Empty) { label = "Edit"; }
+}
+
+    <div class="row">
+        <div class="col s12">
+            <h4>@label tag</h4>
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="col s12">
+                <p class="red-text text-lighten-1">@ViewBag.Error</p>
+            </div>
+        }
+        <div class="col s12">
+            <form asp-area="Admin" asp-controller="Tag" asp-action="CreateOrUpdate" method="post">
+                @Html.HiddenFor(x => x.Id)
+
+                <div>
+                    <label asp-for="@Model.Name"></label>
+                    <input asp-for="@Model.Name" />
+                </div>
+                <div>
+                    <label asp-for="@Model.TagUrl"></label>
+                    <input asp-for="@Model.TagUrl" />
+                </div>
+
+                @if (userManager.HasPermission(Context, PermissionClaims.EditBlog))
+                {
+                    <div>
+                        <button type="submit">Save</button>
+                    </div>
+                }
+
+            </form>
+        </div>
+    </div>

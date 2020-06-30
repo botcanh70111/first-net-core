@@ -16,5 +16,7 @@ namespace Infrastructure.Data
         [Required]
         [StringLength(200)]
         public string Type { get; set; }
+        [StringLength(450)]
+        public string OwnerId { get; set; }
     }
 }

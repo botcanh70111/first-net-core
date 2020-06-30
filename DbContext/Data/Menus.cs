@@ -15,5 +15,7 @@ namespace Infrastructure.Data
         public Guid? ParentId { get; set; }
         public int? Order { get; set; }
         public bool? Active { get; set; }
+        [StringLength(450)]
+        public string OwnerId { get; set; }
     }
 }

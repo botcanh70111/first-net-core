@@ -53,10 +53,12 @@ namespace BlogNetCore
 
             // Register services
             services.AddScoped<IUserManager, UserManager>();
+            services.AddTransient<IFileHandler, FileHandler>();
             services.AddTransient<IMenuViewModelService, MenuViewModelService>();
             services.AddTransient<IHomeViewModelService, HomeViewModelService>();
             services.AddTransient<IRoleViewModelService, RoleViewModelService>();
             services.AddTransient<IUserViewModelService, UserViewModelService>();
+            services.AddTransient<ICategoryViewModelService, CategoryViewModelService>();
             services.AddTransient<IViewModelFactory, ViewModelFactory>();
             services.AddTransient(typeof(Lazy<>), typeof(LazyLoader<>));
         }
