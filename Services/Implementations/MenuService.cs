@@ -47,5 +47,18 @@ namespace Services.Implementations
 
             return rootLevel;
         }
+
+        public IEnumerable<Menu> GetGroupMenusByOwnerId(string ownerId, bool onlyActive = true, Expression<Func<Menus, bool>> predicate = null)
+        {
+            if (predicate == null) predicate = x => true;
+            var menus = _context.Menus
+                .Where(x => !onlyActive || (x.Active ?? false))
+                .Where(x => x.OwnerId == ownerId)
+                .Where(predicate)
+                .OrderBy(x => x.Order);
+
+            var menuModels = _mapper.Map<IEnumerable<Menu>>(menus);
+            return GroupMenus(menuModels);
+        }
     }
 }

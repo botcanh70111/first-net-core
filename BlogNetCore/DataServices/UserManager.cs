@@ -19,15 +19,28 @@ namespace BlogNetCore.DataServices
         Task CreateAsync(HttpContext httpContext, RegisterModel register);
         void SignOut(HttpContext httpContext);
         bool Validate(string email, string userName, string password, string confirmPassword);
+        string SupervisorId { get; }
+        string UserId { get; }
+        string UserName { get; }
+        string FullName { get; }
+        string Email { get; }
     }
 
     public class UserManager : IUserManager
     {
         private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public string SupervisorId => _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+        public string UserId => _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.Id).Value;
+        public string UserType => _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.UserType).Value;
+        public string UserName => _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+        public string FullName => _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value;
+        public string Email => _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
 
-        public UserManager(IUserService userService)
+        public UserManager(IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public bool HasPermission(HttpContext httpContext, string permission)
@@ -85,11 +98,11 @@ namespace BlogNetCore.DataServices
         {
             List<Claim> claims = new List<Claim>();
 
+            claims.Add(new Claim(BlogClaimTypes.UserType, user.User.UserType ?? ""));
             claims.Add(new Claim(BlogClaimTypes.Id, user.User.Id.ToString()));
             claims.Add(new Claim(BlogClaimTypes.SupervisorId, string.IsNullOrEmpty(user.User.SupervisorId) ? user.User.Id.ToString() : user.User.SupervisorId.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, user.User.FirstName + " " + user.User.LastName));
             claims.Add(new Claim(ClaimTypes.Email, user.User.Email));
-            claims.Add(new Claim(ClaimTypes.System, user.User.UserType ?? ""));
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.User.UserName));
 
             claims.AddRange(GetUserRoleClaims(user));

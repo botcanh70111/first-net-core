@@ -17,10 +17,10 @@ namespace BlogNetCore.DataServices.Implementations.Admin
             _roleService = roleService;
         }
 
-        public UserViewModel CreateViewModel(object contentKey = null)
+        public UserViewModel CreateViewModel(string ownerId, object contentKey = null)
         {
             var viewModel = new UserViewModel();
-            viewModel.AllRoleClaims = PermissionClaims.AllRoleClaims();
+            viewModel.AllRoleClaims = PermissionClaims.AllRoleBloggerClaims();
             viewModel.AllRoles = _roleService.GetAll();
             if (contentKey != null)
             {

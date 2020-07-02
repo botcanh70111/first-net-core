@@ -14,7 +14,7 @@ namespace BlogNetCore.DataServices.Implementations.Admin
             _menuService = menuService;
         }
 
-        public MenuViewModel CreateViewModel(object contentKey = null)
+        public MenuViewModel CreateViewModel(string ownerId, object contentKey = null)
         {
             var viewModel = new MenuViewModel();
 
@@ -28,7 +28,7 @@ namespace BlogNetCore.DataServices.Implementations.Admin
                 viewModel.Menu = new Services.Models.Menu();
             }
 
-            var allMenu = _menuService.GetGroupMenus(false, x => (contentKey == null || x.Id != (Guid)contentKey));
+            var allMenu = _menuService.GetGroupMenusByOwnerId(ownerId, false, x => (contentKey == null || x.Id != (Guid)contentKey));
             viewModel.AllMenus = allMenu;
 
             return viewModel;

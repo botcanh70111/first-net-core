@@ -22,10 +22,11 @@
         <div class="col s12">
             <form asp-area="Admin" asp-controller="Tag" asp-action="CreateOrUpdate" method="post">
                 @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.OwnerId)
 
                 <div>
                     <label asp-for="@Model.Name"></label>
-                    <input asp-for="@Model.Name" />
+                    <input asp-for="@Model.Name" required/>
                 </div>
                 <div>
                     <label asp-for="@Model.TagUrl"></label>

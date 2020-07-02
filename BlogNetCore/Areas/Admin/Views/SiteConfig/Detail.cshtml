@@ -8,6 +8,7 @@
         <form asp-area="Admin" asp-controller="SiteConfig" asp-action="CreateOrUpdate" method="post">
             @Html.AntiForgeryToken()
             <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="OwnerId" value="@Model.OwnerId" />
             <input type="hidden" name="Type" value="@(ViewData["Type"].ToString())" />
 
             <div class="">

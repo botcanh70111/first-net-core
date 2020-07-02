@@ -2,6 +2,6 @@
 {
     public interface IViewModelService<TViewModel>
     {
-        TViewModel CreateViewModel(object contentKey = null);
+        TViewModel CreateViewModel(string ownerId, object contentKey = null);
     }
 }

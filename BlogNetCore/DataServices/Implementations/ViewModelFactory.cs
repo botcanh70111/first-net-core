@@ -7,13 +7,14 @@ namespace BlogNetCore.DataServices.Implementations
 {
     public class ViewModelFactory : IViewModelFactory
     {
-        public ViewModelFactory(Lazy<IHomeViewModelService> homeViewModelService, Lazy<IRoleViewModelService> roleViewModelService, Lazy<IUserViewModelService> userViewModelService, Lazy<IMenuViewModelService> menuViewModelService, Lazy<ICategoryViewModelService> categoryViewModelService)
+        public ViewModelFactory(Lazy<IHomeViewModelService> homeViewModelService, Lazy<IRoleViewModelService> roleViewModelService, Lazy<IUserViewModelService> userViewModelService, Lazy<IMenuViewModelService> menuViewModelService, Lazy<ICategoryViewModelService> categoryViewModelService, Lazy<IBlogViewModelService> blogViewModelService)
         {
             HomeViewModelService = homeViewModelService;
             RoleViewModelService = roleViewModelService;
             UserViewModelService = userViewModelService;
             MenuViewModelService = menuViewModelService;
             CategoryViewModelService = categoryViewModelService;
+            BlogViewModelService = blogViewModelService;
         }
 
         // Client services
@@ -24,6 +25,7 @@ namespace BlogNetCore.DataServices.Implementations
         private Lazy<IUserViewModelService> UserViewModelService { get; set; }
         private Lazy<IMenuViewModelService> MenuViewModelService { get; set; }
         private Lazy<ICategoryViewModelService> CategoryViewModelService { get; set; }
+        private Lazy<IBlogViewModelService> BlogViewModelService { get; set; }
 
         public TService GetService<TService>()
         {
@@ -32,6 +34,7 @@ namespace BlogNetCore.DataServices.Implementations
             if (typeof(TService) == typeof(IUserViewModelService)) return (TService)UserViewModelService.Value;
             if (typeof(TService) == typeof(IMenuViewModelService)) return (TService)MenuViewModelService.Value;
             if (typeof(TService) == typeof(ICategoryViewModelService)) return (TService)CategoryViewModelService.Value;
+            if (typeof(TService) == typeof(IBlogViewModelService)) return (TService)BlogViewModelService.Value;
 
             return default;
         }

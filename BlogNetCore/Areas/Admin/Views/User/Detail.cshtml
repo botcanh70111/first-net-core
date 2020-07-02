@@ -18,17 +18,18 @@
     <div class="col s12">
         <form asp-area="Admin" asp-controller="User" asp-action="@(string.IsNullOrEmpty(Model.User.Id) ? "CreateUser" : "Update")" method="post">
             @Html.HiddenFor(x => x.User.Id)
+            @Html.HiddenFor(x => x.User.SupervisorId)
 
             @if (string.IsNullOrEmpty(Model.User.Id))
             {
                 <div>
                     <label asp-for="@Model.User.UserName">Username</label>
-                    <input asp-for="@Model.User.UserName" name="User.UserName" />
+                    <input asp-for="@Model.User.UserName" name="User.UserName" required/>
                 </div>
 
                 <div>
                     <label asp-for="@Model.User.Email">Email</label>
-                    <input asp-for="@Model.User.Email" name="User.Email" />
+                    <input asp-for="@Model.User.Email" name="User.Email" required />
                 </div>
 
                 <div>
@@ -48,12 +49,12 @@
 
                 <div>
                     <label for="Password">Password</label>
-                    <input type="password" name="Password" />
+                    <input type="password" name="Password" required/>
                 </div>
 
                 <div>
                     <label for="ConfirmPassword">Confirm Password</label>
-                    <input type="password" name="ConfirmPassword" />
+                    <input type="password" name="ConfirmPassword" required/>
                 </div>
             }
 

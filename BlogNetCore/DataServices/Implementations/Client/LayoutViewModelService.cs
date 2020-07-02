@@ -14,12 +14,12 @@ namespace BlogNetCore.DataServices.Implementations.Client
             _siteConfigService = siteConfigService;
         }
 
-        public LayoutViewModel CreateLayoutViewModel(LayoutViewModel viewModel)
+        public LayoutViewModel CreateLayoutViewModel(LayoutViewModel viewModel, string ownerId)
         {
-            viewModel.LogoConfig = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Logo)
+            viewModel.LogoConfig = _siteConfigService.GetConfigsByTypeAndOwnerId(Constants.SiteConfigTypes.Logo, ownerId)
                 .FirstOrDefault(x => x.Type == Constants.SiteConfigTypes.Logo);
-            viewModel.SocialConfigs = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Social);
-            viewModel.FooterConfigs = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Footer);
+            viewModel.SocialConfigs = _siteConfigService.GetConfigsByTypeAndOwnerId(Constants.SiteConfigTypes.Social, ownerId);
+            viewModel.FooterConfigs = _siteConfigService.GetConfigsByTypeAndOwnerId(Constants.SiteConfigTypes.Footer, ownerId);
 
             return viewModel;
         }

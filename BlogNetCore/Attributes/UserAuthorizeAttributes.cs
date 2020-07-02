@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore.Internal;
+using Services.Constants;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -36,6 +37,12 @@ namespace BlogNetCore.Attributes
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            var userClaims = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value);
+            if (userClaims.Contains(PermissionClaims.FullAdminRight))
+            {
+                return;
+            }
+
             if (_isAuthorize)
             {
                 if (!context.HttpContext.User.Identity.IsAuthenticated)
@@ -46,7 +53,7 @@ namespace BlogNetCore.Attributes
 
             if (!string.IsNullOrEmpty(_userType))
             {
-                var userType = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.System).Value;
+                var userType = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.UserType)?.Value;
                 if (userType == _userType || userType == UserTypes.Admin)
                 {
                     return;
@@ -56,26 +63,27 @@ namespace BlogNetCore.Attributes
                     context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
                 }
             }
-
-            if (!string.IsNullOrEmpty(_claims) && string.IsNullOrEmpty(_claimType))
+            else
             {
-                var claims = _claims.Split(',').Select(x => x.Trim()).ToList();
-                var userClaims = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value);
-                if (!claims.Intersect(userClaims).Any())
+                if (!string.IsNullOrEmpty(_claims) && string.IsNullOrEmpty(_claimType))
                 {
-                    context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
-                } 
-            }
-
-            if (!string.IsNullOrEmpty(_claims) && !string.IsNullOrEmpty(_claimType))
-            {
-                var claims = _claims.Split(',').ToList();
-                var userClaims = context.HttpContext.User.Claims;
-                foreach(var c in claims)
-                {
-                    if (!userClaims.Where(x => x.Type == _claimType && x.Value == c.Trim()).Any())
+                    var claims = _claims.Split(',').Select(x => x.Trim()).ToList();
+                    if (!claims.Intersect(userClaims).Any())
                     {
                         context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(_claims) && !string.IsNullOrEmpty(_claimType))
+                {
+                    var claims = _claims.Split(',').ToList();
+                    var userClaimsTypes = context.HttpContext.User.Claims;
+                    foreach (var c in claims)
+                    {
+                        if (!userClaimsTypes.Where(x => x.Type == _claimType && x.Value == c.Trim()).Any())
+                        {
+                            context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Unauthorized);
+                        }
                     }
                 }
             }

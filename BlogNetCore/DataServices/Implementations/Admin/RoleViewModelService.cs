@@ -14,7 +14,7 @@ namespace BlogNetCore.DataServices.Implementations.Admin
             _roleService = roleService;
         }
 
-        public RoleViewModel CreateViewModel(object contentKey = null)
+        public RoleViewModel CreateViewModel(string ownerId, object contentKey = null)
         {
             var viewModel = new RoleViewModel();
 

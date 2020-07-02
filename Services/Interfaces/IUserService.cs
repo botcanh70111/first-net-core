@@ -14,6 +14,7 @@ namespace Services.Interfaces
         Task<UserRolesClaims> RegisterUser(User user, string password);
 
         // Admin mode
-        Task<UserRolesClaims> RegisterUserWithPermission(HttpContext httpContext, User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims);
+        Task<UserRolesClaims> RegisterUserWithPermission(User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims, string supervisorId);
+        IEnumerable<User> GetUsersBySupervisorId(string supervisorId);
     }
 }

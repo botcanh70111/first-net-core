@@ -1,3 +1,5 @@
+using AutoMapper;
+using BlogNetCore.Areas.Admin.Models.FormModels;
 using BlogNetCore.DataServices;
 using BlogNetCore.DataServices.Implementations;
 using BlogNetCore.DataServices.Implementations.Admin;
@@ -9,11 +11,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
+using Services.Models;
 using System;
 
 namespace BlogNetCore
@@ -38,7 +40,12 @@ namespace BlogNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             var servicesConfig = new ServicesConfiguration();
-            servicesConfig.ConfigureServices(services, Configuration);
+            Action<IMapperConfigurationExpression> mapperConfig = configure =>
+            {
+               configure.CreateMap<Blog, BlogFormModel>().ReverseMap();
+            };
+
+            servicesConfig.ConfigureServices(services, Configuration, mapperConfig);
             //services.Configure<IISOptions>(options =>
             //{
             //    options.ForwardClientCertificate = false;
@@ -53,12 +60,14 @@ namespace BlogNetCore
 
             // Register services
             services.AddScoped<IUserManager, UserManager>();
+            services.AddTransient<ICookieService, CookieService>();
             services.AddTransient<IFileHandler, FileHandler>();
             services.AddTransient<IMenuViewModelService, MenuViewModelService>();
             services.AddTransient<IHomeViewModelService, HomeViewModelService>();
             services.AddTransient<IRoleViewModelService, RoleViewModelService>();
             services.AddTransient<IUserViewModelService, UserViewModelService>();
             services.AddTransient<ICategoryViewModelService, CategoryViewModelService>();
+            services.AddTransient<IBlogViewModelService, BlogViewModelService>();
             services.AddTransient<IViewModelFactory, ViewModelFactory>();
             services.AddTransient(typeof(Lazy<>), typeof(LazyLoader<>));
         }

@@ -15,10 +15,11 @@
         <form method="post" asp-controller="Menu"
               asp-action="@(Model.Menu.Id == null || Guid.Empty == Model.Menu.Id ? "Create" : "Update")">
             @Html.Hidden("Id", Model.Menu.Id)
+            @Html.Hidden("Id", Model.Menu.OwnerId)
 
             <div>
                 <label asp-for="@Model.Menu.Name"></label>
-                <input asp-for="@Model.Menu.Name" name="Name" />
+                <input asp-for="@Model.Menu.Name" name="Name" required/>
             </div>
             <div>
                 <label asp-for="@Model.Menu.UrlLink"></label>
@@ -38,8 +39,8 @@
             <div>
                 <label for="ParentId">Select Parent</label>
 
-                <select multiple name="ParentId">
-                    <option value="" disabled>Choose your option</option>
+                <select name="ParentId">
+                    <option value="">Choose your option</option>
                     @foreach (var c in Model.AllMenus)
                     {
                         <partial name="_ParentMenuOption" model="c" 

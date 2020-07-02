@@ -10,12 +10,13 @@ using Services.Implementations;
 using Services.Interfaces;
 using Services.Mappers;
 using Services.Models;
+using System;
 
 namespace Services
 {
     public class ServicesConfiguration
     {
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, Action<IMapperConfigurationExpression> mapperConfig)
         {
             var infrastructureConfig = new InfrastructureConfiguration();
             infrastructureConfig.ConfigureServices(services, configuration);
@@ -23,6 +24,7 @@ namespace Services
             // Register service
             var mappingConfig = new MapperConfiguration(mc =>
             {
+                mapperConfig(mc);
                 mc.AddProfile(new MappingProfile());
                 mc.CreateMap<IdentityRole, Role>().ReverseMap();
                 mc.CreateMap<Tags, Tag>().ReverseMap();

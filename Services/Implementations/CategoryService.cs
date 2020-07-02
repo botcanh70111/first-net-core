@@ -49,15 +49,15 @@ namespace Services.Implementations
             return rootLevel;
         }
 
-        public bool IsExisted(Guid id, string name, Guid parentId)
+        public bool IsExisted(Guid id, string name, Guid parentId, string ownerId)
         {
-            return _context.Categories.FirstOrDefault(x => (x.Name == name && x.Id != id)
+            return _context.Categories.FirstOrDefault(x => x.Name == name && x.Id != id && x.OwnerId == ownerId
             && ((parentId == Guid.Empty && x.ParentId == null ) || x.ParentId == parentId)) != null;
         }
 
-        public bool IsUrlExisted(Guid id, string url, Guid parentId)
+        public bool IsUrlExisted(Guid id, string url, Guid parentId, string ownerId)
         {
-            return _context.Categories.FirstOrDefault(x => (x.CategoryUrl == url && x.Id != id)
+            return _context.Categories.FirstOrDefault(x => x.CategoryUrl == url && x.Id != id && x.OwnerId == ownerId
             && ((parentId == Guid.Empty && x.ParentId == null) || x.ParentId == parentId)) != null;
         }
 
@@ -80,8 +80,20 @@ namespace Services.Implementations
             else
                 model.CategoryUrl = model.CategoryUrl.ToAliasUrl();
 
-            if (IsUrlExisted(model.Id, model.CategoryUrl, model.ParentId ?? Guid.Empty))
+            if (IsUrlExisted(model.Id, model.CategoryUrl, model.ParentId ?? Guid.Empty, model.OwnerId))
                 model.CategoryUrl = model.CategoryUrl + "-" + DateTime.Now.Ticks;
+        }
+
+        public IEnumerable<Category> GetGroupCategoriesByOwnerId(string ownerId, Expression<Func<Categories, bool>> predicate = null)
+        {
+            if (predicate == null) predicate = x => true;
+            
+            var categories = _context.Categories
+                .Where(x => x.OwnerId == ownerId)
+                .Where(predicate);
+
+            var categoryModels = _mapper.Map<IEnumerable<Category>>(categories);
+            return GroupCategories(categoryModels);
         }
     }
 }

@@ -20,10 +20,11 @@
         <div class="col s12">
             <form method="post" asp-controller="Category" asp-action="CreateOrUpdate">
                 @Html.Hidden("Id", Model.Category.Id)
+                @Html.Hidden("Id", Model.Category.OwnerId)
 
                 <div>
                     <label asp-for="@Model.Category.Name"></label>
-                    <input asp-for="@Model.Category.Name" name="Name" />
+                    <input asp-for="@Model.Category.Name" name="Name" required/>
                 </div>
                 <div>
                     <label asp-for="@Model.Category.CategoryUrl"></label>
@@ -41,8 +42,8 @@
                 <div>
                     <label for="ParentId">Select Parent</label>
 
-                    <select multiple name="ParentId">
-                        <option value="" disabled>Choose your option</option>
+                    <select name="ParentId">
+                        <option value="">Choose your option</option>
                         @foreach (var c in Model.AllCategories)
                         {
                             <partial name="_ParentCategoryOption" model="c"

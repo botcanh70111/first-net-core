@@ -1,0 +1,77 @@
+﻿@model BlogNetCore.Areas.Admin.Models.BlogModel
+
+<div class="row">
+    <br />
+    <div class="col s12">
+        <h4>@(Model.Blog.Id == Guid.Empty ? "Create" : "Edit") Blog</h4>
+    </div>
+    @if (ViewBag.Error != null)
+    {
+        <div class="col s12">
+            <p class="red-text text-lighten-1">@ViewBag.Error</p>
+        </div>
+    }
+    <br />
+    <div class="col s12">
+        <form asp-action="CreateOrUpdate" asp-controller="Blog" asp-area="Admin" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="Id" value="@Model.Blog.Id" />
+            <div>
+                <label asp-for="@Model.Blog.Name"></label>
+                <input asp-for="@Model.Blog.Name" name="Name" required/>
+            </div>
+            <div>
+                <label asp-for="@Model.Blog.BlogUrl"></label>
+                <input asp-for="@Model.Blog.BlogUrl" name="BlogUrl" />
+            </div>
+            <div>
+                <label for="Image"></label>
+                <input type="file" name="Image" />
+            </div>
+            <div>
+                <label asp-for="@Model.Blog.Description"></label>
+                <input asp-for="@Model.Blog.Description" name="Description" />
+            </div>
+            <br />
+            <div>
+                <label asp-for="@Model.Blog.Content">Content</label>
+                <textarea class="jsCkEditor" name="Content" rows="30">
+                    @Model.Blog.Content
+                </textarea>
+            </div>
+            <div>
+                <label for="BlogTagIds">Select Tags</label>
+
+                <select name="BlogTagIds" multiple>
+                    <option value="" disabled>Choose your option</option>
+                    @foreach (var t in Model.Tags)
+                    {
+                        if (Model.Blog.BlogTagIds != null && Model.Blog.BlogTagIds.Contains(t.Id))
+                        {
+                            <option value="@t.Id" selected>@t.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@t.Id">@t.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div>
+                <label for="CategoryId">Select Category</label>
+
+                <select name="CategoryId">
+                    <option value="">Choose your option</option>
+                    @foreach (var c in Model.Categories)
+                    {
+                        <partial name="_ParentCategoryOption" model="c"
+                                 view-data='@new ViewDataDictionary(ViewData) { { "ParentId", Model.Blog.CategoryId } }' />
+                    }
+                </select>
+            </div>
+
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

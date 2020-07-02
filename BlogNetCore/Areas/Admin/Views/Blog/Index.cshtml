@@ -1,0 +1,40 @@
+﻿@using Services.Constants
+@inject BlogNetCore.DataServices.IUserManager userManager
+
+@model IEnumerable<Blog>
+
+<div class="row">
+    <br />
+    <div class="col s12">
+        <a asp-area="Admin" asp-controller="Blog" asp-action="Detail" class="btn">Create</a>
+    </div>
+    <br />
+
+    <div class="col s12">
+        <ul class="collapsible">
+            @foreach (var b in Model)
+            {
+                <li style="position: relative">
+                    <div class="collapsible-header">
+                        <div>
+                            <p>@b.Name</p>
+                            <small>
+                                @b.Description
+                            </small>
+                        </div>
+                        <div class="flex" style="position: absolute; right: 15px">
+                            <a asp-action="Detail" asp-route-id="@b.Id"><i class="material-icons">edit</i></a>
+                            @if (userManager.HasPermission(Context, PermissionClaims.DeleteBlog))
+                            {
+                                <form asp-action="Delete" method="post">
+                                    <input type="hidden" name="id" value="@b.Id" />
+                                    <button class="none-style" style="color: red" type="submit"><i class="material-icons">delete</i></button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

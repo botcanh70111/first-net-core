@@ -10,10 +10,10 @@ namespace BlogNetCore.DataServices.Implementations.Client
         {
         }
 
-        public HomeViewModel CreateViewModel(object contentKey = null)
+        public HomeViewModel CreateViewModel(string ownerId, object contentKey = null)
         {
             var viewModel = new HomeViewModel();
-            var layoutViewModel = CreateLayoutViewModel(viewModel);
+            CreateLayoutViewModel(viewModel, ownerId);
             
             return viewModel;
         }

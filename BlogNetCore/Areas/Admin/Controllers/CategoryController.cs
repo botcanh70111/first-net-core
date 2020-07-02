@@ -1,4 +1,5 @@
 ﻿using BlogNetCore.Attributes;
+using BlogNetCore.DataServices;
 using BlogNetCore.DataServices.Interfaces;
 using BlogNetCore.DataServices.Interfaces.Admin;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +7,6 @@ using Services.Constants;
 using Services.Interfaces;
 using Services.Models;
 using System;
-using System.Linq;
-using System.Security.Claims;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
@@ -17,7 +16,9 @@ namespace BlogNetCore.Areas.Admin.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IViewModelFactory _viewModelFactory;
 
-        public CategoryController(ICategoryService categoryService, IViewModelFactory viewModelFactory)
+        public CategoryController(ICategoryService categoryService, 
+            IViewModelFactory viewModelFactory,
+            IUserManager userManager) : base(userManager)
         {
             _categoryService = categoryService;
             _viewModelFactory = viewModelFactory;
@@ -25,39 +26,41 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var ownerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            var ownerId = _userManager.SupervisorId;
             var model = _categoryService.GetGroupCategories(x => x.OwnerId == ownerId);
             return View(model);
         }
 
         public IActionResult Detail(Guid? id)
         {
-            var model = _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(id);
+            var ownerId = _userManager.SupervisorId;
+            var model = _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(ownerId, id);
             return View(model);
         }
 
         public IActionResult CreateOrUpdate(Category category)
         {
-            if (_categoryService.IsExisted(category.Id, category.Name, category.ParentId ?? Guid.Empty))
+            var ownerId = _userManager.SupervisorId;
+            if (_categoryService.IsExisted(category.Id, category.Name, category.ParentId ?? Guid.Empty, _userManager.SupervisorId))
             {
                 ViewBag.Error = "This category name is already exist";
 
                 var model = category.Id == Guid.Empty ?
-                    _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel()
-                    : _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(category.Id);
+                    _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(ownerId)
+                    : _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(ownerId, category.Id);
                 return View("Detail", model);
             }
 
-            if (_categoryService.IsUrlExisted(category.Id, category.CategoryUrl, category.ParentId ?? Guid.Empty))
+            if (_categoryService.IsUrlExisted(category.Id, category.CategoryUrl, category.ParentId ?? Guid.Empty, _userManager.SupervisorId))
             {
                 ViewBag.Error = "This category url is already exist";
                 var model = category.Id == Guid.Empty ?
-                    _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel()
-                    : _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(category.Id);
+                    _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(ownerId)
+                    : _viewModelFactory.GetService<ICategoryViewModelService>().CreateViewModel(ownerId, category.Id);
                 return View("Detail", model);
             }
 
-            category.OwnerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            category.OwnerId = _userManager.SupervisorId;
             if (category.Id == null || category.Id == Guid.Empty)
             {
                 _categoryService.Create(category);

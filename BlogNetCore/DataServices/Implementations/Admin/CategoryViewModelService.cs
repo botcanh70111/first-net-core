@@ -14,7 +14,7 @@ namespace BlogNetCore.DataServices.Implementations.Admin
             _categoryService = categoryService;
         }
 
-        public CategoryViewModel CreateViewModel(object contentKey = null)
+        public CategoryViewModel CreateViewModel(string ownerId, object contentKey = null)
         {
             var model = new CategoryViewModel();
             
@@ -27,7 +27,7 @@ namespace BlogNetCore.DataServices.Implementations.Admin
                 model.Category = new Services.Models.Category();
             }
             
-            model.AllCategories = _categoryService.GetGroupCategories(x => (contentKey == null || x.Id != (Guid)contentKey));
+            model.AllCategories = _categoryService.GetGroupCategoriesByOwnerId(ownerId, x => (contentKey == null || x.Id != (Guid)contentKey));
             return model;
         }
     }

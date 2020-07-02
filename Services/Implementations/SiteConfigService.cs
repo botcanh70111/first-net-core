@@ -22,5 +22,11 @@ namespace Services.Implementations
             var configs = _context.SiteConfigs.Where(x => x.Type == type).Where(predicate).OrderBy(x => x.Order);
             return _mapper.Map<IEnumerable<SiteConfig>>(configs);
         }
+
+        public IEnumerable<SiteConfig> GetConfigsByTypeAndOwnerId(string type, string ownerId)
+        {
+            var configs = _context.SiteConfigs.Where(x => x.Type == type && x.OwnerId == ownerId).OrderBy(x => x.Order);
+            return _mapper.Map<IEnumerable<SiteConfig>>(configs);
+        }
     }
 }

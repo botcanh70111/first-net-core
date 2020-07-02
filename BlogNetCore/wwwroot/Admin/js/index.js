@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
   // CK editor
+  
   var ckEditors = document.querySelectorAll(".jsCkEditor");
   ckEditors.forEach(function(e, i) {
     e.setAttribute("id", "ckeditorelement" + i)

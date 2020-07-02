@@ -18,7 +18,7 @@ namespace Infrastructure.Data
         [MaxLength(256)]
         [Required]
         public string BlogUrl {get;set;}
-        public Guid CategoryId {get;set;}
+        public Guid? CategoryId {get;set;}
         [Required]
         public DateTime Created {get;set;}
         [MaxLength(450)]
@@ -35,5 +35,8 @@ namespace Infrastructure.Data
         public string EditedBy { get; set; }
         [Required]
         public long Views { get; set; }
+        [MaxLength(450)]
+        [Required]
+        public string BloggerId { get; set; }
     }
 }

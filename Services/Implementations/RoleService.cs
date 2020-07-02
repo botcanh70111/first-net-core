@@ -25,21 +25,25 @@ namespace Services.Implementations
         {
             if (string.IsNullOrEmpty(role.Id) && !IsExisted(role.Name))
             {
-                role.Id = role.Name.ToLower() + System.DateTime.Now.ToString();
+                role.Id = role.Name.ToLower() + System.DateTime.Now.Ticks;
                 var newRole = Create(role, false);
-                var newClaims = new List<IdentityRoleClaim<string>>();
-                foreach(var c in claims)
+                
+                if (claims != null)
                 {
-                    newClaims.Add(new IdentityRoleClaim<string> { ClaimType = ClaimTypes.Role, ClaimValue = c, RoleId = newRole.Id });
+                    var newClaims = new List<IdentityRoleClaim<string>>();
+                    foreach (var c in claims)
+                    {
+                        newClaims.Add(new IdentityRoleClaim<string> { ClaimType = ClaimTypes.Role, ClaimValue = c, RoleId = newRole.Id });
+                    }
+                    _context.RoleClaims.AddRange(newClaims);
                 }
-
-                _context.RoleClaims.AddRange(newClaims);
+                
                 _context.SaveChanges();
                 return newRole;
             } 
             else
             {
-                var roleEntity = GetById(role.Id);
+                var roleEntity = _context.Roles.FirstOrDefault(r => r.Id == role.Id);
                 if (roleEntity.Name != role.Name && !IsExisted(role.Name))
                 {
                     roleEntity.Name = role.Name;
@@ -47,27 +51,38 @@ namespace Services.Implementations
 
                 roleEntity.NormalizedName = role.NormalizedName;
                 roleEntity.ConcurrencyStamp = role.ConcurrencyStamp;
-                var updatedRole = Update(roleEntity);
-                var oldClaims = _context.RoleClaims.Where(x => x.RoleId == updatedRole.Id);
+                var updatedRole = _context.Roles.Update(roleEntity);
+                var oldClaims = _context.RoleClaims.Where(x => x.RoleId == updatedRole.Entity.Id);
                 _context.RoleClaims.RemoveRange(oldClaims);
-                var newClaims = new List<IdentityRoleClaim<string>>();
-                foreach (var c in claims)
+
+                if (claims != null)
                 {
-                    newClaims.Add(new IdentityRoleClaim<string> { ClaimType = ClaimTypes.Role, ClaimValue = c, RoleId = updatedRole.Id });
+                    var newClaims = new List<IdentityRoleClaim<string>>();
+                    foreach (var c in claims)
+                    {
+                        newClaims.Add(new IdentityRoleClaim<string> { ClaimType = ClaimTypes.Role, ClaimValue = c, RoleId = updatedRole.Entity.Id });
+                    }
+
+                    _context.RoleClaims.AddRange(newClaims);
                 }
 
-                _context.RoleClaims.AddRange(newClaims);
                 _context.SaveChanges();
-                return updatedRole;
+                return _mapper.Map<Role>(updatedRole.Entity);
             }
         }
 
         public RoleClaims GetRoleClaims(string roleId)
         {
-            var roleClaims = _context.Roles
-                .Join(_context.RoleClaims.DefaultIfEmpty(), r => r.Id, c => c.RoleId, (r, c) => new { Role = r, Claims = c})
-                .ToLookup(x => x.Role).Select(x => new { Role = x.Key, Claims = x.Select(c => c.Claims) })
-                .FirstOrDefault(x => x.Role.Id == roleId);
+            var roleClaims = (from role in _context.Roles
+                              join claim in _context.RoleClaims on role.Id equals claim.RoleId into RoleClaims
+                              from rc in RoleClaims.DefaultIfEmpty()
+                              select new
+                              {
+                                  Role = role,
+                                  RoleClaims = rc
+                              }).ToLookup(x => x.Role)
+                             .Select(x => new { Role = x.Key, Claims = x.Select(x => x.RoleClaims).Where(c => c != null).ToList() })
+                             .FirstOrDefault(x => x.Role.Id == roleId);
 
             var model = new RoleClaims();
             model.Role = _mapper.Map<Role>(roleClaims.Role);
@@ -78,13 +93,15 @@ namespace Services.Implementations
 
         public IEnumerable<RoleClaims> GetAllRoleClaims()
         {
-            var roleClaims = _context.Roles
-                .Join(_context.RoleClaims.DefaultIfEmpty(),
-                    r => r.Id, c => c.RoleId, (r, c) => new { Role = r, Claims = c })
-                .ToLookup(x => x.Role).Select(x => new { Role = x.Key, Claims = x.Select(c => c.Claims) });
+            var roleClaims = (from role in _context.Roles
+                              join claim in _context.RoleClaims on role.Id equals claim.RoleId into RoleClaims
+                              from rc in RoleClaims.DefaultIfEmpty()
+                              select new { Role = role, RoleClaims = rc }
+                             ).ToLookup(x => x.Role)
+                             .Select(x => new { Role = x.Key, Claims = x.Select(c => c.RoleClaims).Where(c => c != null).ToList() });
 
             var convertedRoleClaims = roleClaims.Select(x => 
-                new RoleClaims { Role = _mapper.Map<Role>(x.Role), Claims = x.Claims.Select(c => c.ClaimValue) });
+                new RoleClaims { Role = _mapper.Map<Role>(x.Role), Claims = x.Claims != null ? x.Claims.Select(c => c.ClaimValue) : new List<string>() });
 
             return convertedRoleClaims;
         }

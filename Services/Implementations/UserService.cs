@@ -85,21 +85,24 @@ namespace Services.Implementations
         {
             var profile = new UserRolesClaims();
             var userRoles = _context.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId);
-            var roles = _context.Roles
-                .Where(x => userRoles.Contains(x.Id))
-                .Join(_context.RoleClaims.DefaultIfEmpty(),
-                    r => r.Id, rc => rc.RoleId, (r, rc) => new { Role = r, RoleClaims = rc }
-                )
-                .ToLookup(x => x.Role)
-                .Select(x => new { Role = x.Key, RoleClaims = x.Select(x => x.RoleClaims) });
-
+            var roles = (from role in _context.Roles
+                         where userRoles.Contains(role.Id)
+                         join claim in _context.RoleClaims on role.Id equals claim.RoleId into RoleClaims
+                         from rc in RoleClaims.DefaultIfEmpty()
+                         select new
+                         {
+                             Role = role,
+                             Claims = rc
+                         }).ToLookup(x => x.Role)
+                         .Select(x => new { Role = x.Key, Claims = x.Select(c => c.Claims).Where(c => c != null).ToList() });
+                
             var userClaims = _context.UserClaims.Where(x => x.UserId == user.Id);
             var roleClaims = new List<RoleClaims>();
             foreach (var r in roles)
             {
                 var roleClaim = new RoleClaims();
                 roleClaim.Role = _mapper.Map<Role>(r.Role);
-                roleClaim.Claims = r.RoleClaims.Select(x => x.ClaimValue);
+                roleClaim.Claims = r.Claims.Select(x => x.ClaimValue);
                 roleClaims.Add(roleClaim);
             }
 
@@ -129,7 +132,7 @@ namespace Services.Implementations
             }
         }
 
-        public async Task<UserRolesClaims> RegisterUserWithPermission(HttpContext httpContext, User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims)
+        public async Task<UserRolesClaims> RegisterUserWithPermission(User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims, string supervisorId)
         {
             var newUser = new BlogUser();
             newUser.UserName = user.UserName;
@@ -137,7 +140,7 @@ namespace Services.Implementations
             newUser.FirstName = user.FirstName;
             newUser.LastName = user.LastName;
             newUser.UserType = UserTypes.BlogEditor;
-            newUser.SupervisorId = httpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            newUser.SupervisorId = supervisorId;
 
             var result = await _identityUserManager.CreateAsync(newUser, password);
             if (result.Succeeded)
@@ -177,6 +180,12 @@ namespace Services.Implementations
 
                 _context.UserClaims.AddRange(userClaimsList);
             }
+        }
+
+        public IEnumerable<User> GetUsersBySupervisorId(string supervisorId)
+        {
+            var users = _context.Users.Where(x => x.SupervisorId == supervisorId);
+            return _mapper.Map<IEnumerable<User>>(users);
         }
     }
 }

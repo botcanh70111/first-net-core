@@ -1,5 +1,6 @@
 ﻿using BlogNetCore.Areas.Admin.Models.FormModels;
 using BlogNetCore.Attributes;
+using BlogNetCore.DataServices;
 using BlogNetCore.DataServices.Interfaces;
 using BlogNetCore.DataServices.Interfaces.Admin;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,9 @@ namespace BlogNetCore.Areas.Admin.Controllers
     {
         private readonly IRoleService _roleService;
         private readonly IViewModelFactory _viewModelFactory;
-        public RoleController(IRoleService roleService, IViewModelFactory viewModelFactory)
+        public RoleController(IRoleService roleService, 
+            IViewModelFactory viewModelFactory,
+            IUserManager userManager) : base(userManager)
         {
             _roleService = roleService;
             _viewModelFactory = viewModelFactory;
@@ -28,7 +31,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Detail(string roleId)
         {
-            var model = _viewModelFactory.GetService<IRoleViewModelService>().CreateViewModel(roleId);
+            var model = _viewModelFactory.GetService<IRoleViewModelService>().CreateViewModel(null, roleId);
             return View(model);
         }
 

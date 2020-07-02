@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using BlogNetCore.Client.Models;
+using BlogNetCore.DataServices;
 using BlogNetCore.DataServices.Interfaces;
 using BlogNetCore.DataServices.Interfaces.Client;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +15,27 @@ namespace BlogNetCore.Areas.Client.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IViewModelFactory _viewModelFactory;
 
-        public HomeController(ILogger<HomeController> logger, IViewModelFactory viewModelFactory)
+        public HomeController(ILogger<HomeController> logger, 
+            IViewModelFactory viewModelFactory,
+            IUserManager userManager,
+            ICookieService cookieService) : base(userManager, cookieService)
         {
             _logger = logger;
             _viewModelFactory = viewModelFactory;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string bloggerId = null)
         {
-            var viewModel = _viewModelFactory.GetService<IHomeViewModelService>().CreateViewModel();
+            if (bloggerId != null)
+            {
+                _cookieService.Set(CookieKeys.BloggerIdKey, bloggerId);
+            }
+            else
+            {
+                bloggerId = _cookieService.BloggerId;
+            }
+
+            var viewModel = _viewModelFactory.GetService<IHomeViewModelService>().CreateViewModel(bloggerId);
             return View(viewModel);
         }
 

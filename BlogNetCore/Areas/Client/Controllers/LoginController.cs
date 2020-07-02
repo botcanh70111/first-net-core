@@ -8,13 +8,12 @@ namespace BlogNetCore.Areas.Client.Controllers
 {
     public class LoginController : BaseClientController
     {
-        private readonly IUserManager _userManager;
         private readonly IUserService _userService;
 
         public LoginController(IUserManager userManager, 
-            IUserService userService)
+            IUserService userService,
+            ICookieService cookieService) : base(userManager, cookieService)
         {
-            _userManager = userManager;
             _userService = userService;
         }
 

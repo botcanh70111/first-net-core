@@ -1,5 +1,6 @@
 ﻿using BlogNetCore.Areas.Admin.Models.FormModels;
 using BlogNetCore.Attributes;
+using BlogNetCore.DataServices;
 using BlogNetCore.DataServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
@@ -8,7 +9,6 @@ using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
@@ -18,7 +18,9 @@ namespace BlogNetCore.Areas.Admin.Controllers
         private IFileHandler _fileHandler;
         private ISiteConfigService _siteConfigService;
 
-        public SiteConfigController(IFileHandler fileHandler, ISiteConfigService siteConfigService)
+        public SiteConfigController(IFileHandler fileHandler, 
+            ISiteConfigService siteConfigService,
+            IUserManager userManager) : base(userManager)
         {
             _fileHandler = fileHandler;
             _siteConfigService = siteConfigService;
@@ -26,7 +28,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Logo()
         {
-            var ownerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            var ownerId = _userManager.SupervisorId;
             var model = _siteConfigService.GetConfigsByType(Constants.SiteConfigTypes.Logo, x => x.OwnerId == ownerId).FirstOrDefault();
             if (model == null) model = new SiteConfig();
             return View(model);
@@ -65,7 +67,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         public IActionResult Index(string type)
         {
-            var ownerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            var ownerId = _userManager.SupervisorId;
             var model = _siteConfigService.GetConfigsByType(type, x => x.OwnerId == ownerId);
             if (model == null) model = new List<SiteConfig>();
             ViewData["Type"] = type;
@@ -91,7 +93,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrUpdate(SiteConfig config)
         {
-            config.OwnerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
+            config.OwnerId = _userManager.SupervisorId; ;
             if (config.Id == null || config.Id == Guid.Empty)
                 _siteConfigService.Create(config);
             else

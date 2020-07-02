@@ -6,8 +6,6 @@ using BlogNetCore.DataServices.Interfaces.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Services.Constants;
 using Services.Interfaces;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BlogNetCore.Areas.Admin.Controllers
@@ -16,26 +14,26 @@ namespace BlogNetCore.Areas.Admin.Controllers
     public class UserController : BaseAdminController
     {
         private readonly IUserService _userService;
-        private readonly IUserManager _userManager;
         private readonly IViewModelFactory _viewModelFactory;
 
-        public UserController(IUserService userService, IUserManager userManager, IViewModelFactory viewModelFactory)
+        public UserController(IUserService userService, 
+            IUserManager userManager, 
+            IViewModelFactory viewModelFactory) : base(userManager)
         {
             _userService = userService;
-            _userManager = userManager;
             _viewModelFactory = viewModelFactory;
         }
 
         public IActionResult Index()
         {
-            var ownerId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == BlogClaimTypes.SupervisorId).Value;
-            var users = _userService.GetAll(x => x.SupervisorId == ownerId);
+            var ownerId = _userManager.SupervisorId;
+            var users = _userService.GetUsersBySupervisorId(ownerId);
             return View(users);
         }
 
         public IActionResult Detail(string userId)
         {
-            var viewModel = _viewModelFactory.GetService<IUserViewModelService>().CreateViewModel(userId);
+            var viewModel = _viewModelFactory.GetService<IUserViewModelService>().CreateViewModel(null, userId);
             return View(viewModel);
         }
 
@@ -55,7 +53,8 @@ namespace BlogNetCore.Areas.Admin.Controllers
         {
             if (_userManager.Validate(form.User.Email, form.User.UserName, form.Password, form.ConfirmPassword))
             {
-                await _userService.RegisterUserWithPermission(HttpContext, form.User, form.Password, form.Roles, form.UserClaims);
+                var supervisorId = _userManager.SupervisorId;
+                await _userService.RegisterUserWithPermission(form.User, form.Password, form.Roles, form.UserClaims, supervisorId);
             }
 
             return RedirectToAction("Index");
