@@ -9,5 +9,6 @@ namespace Services.Interfaces
     {
         IEnumerable<Blog> GetBlogsByBloggerId(string bloggerId);
         bool IsUrlExisted(string blogUrl, Guid id, string bloggerId);
+        BlogInfo GetBlogBySlug(string slug, string bloggerId);
     }
 }

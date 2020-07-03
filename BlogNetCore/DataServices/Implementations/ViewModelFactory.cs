@@ -7,8 +7,9 @@ namespace BlogNetCore.DataServices.Implementations
 {
     public class ViewModelFactory : IViewModelFactory
     {
-        public ViewModelFactory(Lazy<IHomeViewModelService> homeViewModelService, Lazy<IRoleViewModelService> roleViewModelService, Lazy<IUserViewModelService> userViewModelService, Lazy<IMenuViewModelService> menuViewModelService, Lazy<ICategoryViewModelService> categoryViewModelService, Lazy<IBlogViewModelService> blogViewModelService)
+        public ViewModelFactory(Lazy<ILayoutViewModelService> layoutViewModelService, Lazy<IHomeViewModelService> homeViewModelService, Lazy<IRoleViewModelService> roleViewModelService, Lazy<IUserViewModelService> userViewModelService, Lazy<IMenuViewModelService> menuViewModelService, Lazy<ICategoryViewModelService> categoryViewModelService, Lazy<IBlogViewModelService> blogViewModelService)
         {
+            LayoutViewModelService = layoutViewModelService;
             HomeViewModelService = homeViewModelService;
             RoleViewModelService = roleViewModelService;
             UserViewModelService = userViewModelService;
@@ -18,6 +19,7 @@ namespace BlogNetCore.DataServices.Implementations
         }
 
         // Client services
+        private Lazy<ILayoutViewModelService> LayoutViewModelService { get; set; }
         private Lazy<IHomeViewModelService> HomeViewModelService { get; set; }
 
         // Admin services
@@ -29,6 +31,7 @@ namespace BlogNetCore.DataServices.Implementations
 
         public TService GetService<TService>()
         {
+            if (typeof(TService) == typeof(ILayoutViewModelService)) return (TService)LayoutViewModelService.Value;
             if (typeof(TService) == typeof(IHomeViewModelService)) return (TService)HomeViewModelService.Value;
             if (typeof(TService) == typeof(IRoleViewModelService)) return (TService)RoleViewModelService.Value;
             if (typeof(TService) == typeof(IUserViewModelService)) return (TService)UserViewModelService.Value;

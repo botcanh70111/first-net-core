@@ -1,35 +1,23 @@
-﻿@model BlogNetCore.Client.Models.LayoutViewModel
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
-    <title>@Model.Title</title>
-    <link rel="stylesheet" href="~/Vendors/bootstrap/css/bootstrap.min.css">
+    <title>@(ViewBag.Title == null ? "Tan's Blog" : ViewBag.Title)</title>
 
+    <link rel="stylesheet" href="~/Vendors/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Vendors/bootstrap/css/all.css">
     <link rel="stylesheet" href="~/Vendors/slick/slick.css">
     <link rel="stylesheet" href="~/Vendors/slick/slick-theme.css">
-
-    <!-- <link rel="stylesheet" href="./vendors/css/bootstrap-theme.min.css"> -->
     <link rel="stylesheet" href="~/Client/main.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Karla&family=Source+Serif+Pro&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    @*@Html.Partial("_Login", Model.Login)*@
-    <partial name="_Register" model="@Model.RegisterForm" />
-    <partial name="_Login" model="@Model.Login" />
+    @await Component.InvokeAsync("Layout", new { viewName = "LoginModal" })
+    @await Component.InvokeAsync("Layout", new { viewName = "RegisterModal" })
     <header>
-        <div class="logo-center">
-            <a asp-controller="Home" asp-action="Index">
-                @if (Model.LogoConfig != null)
-                {
-                    <img src="@Model.LogoConfig.Value" alt="">
-                }
-            </a>
-        </div>
+        @await Component.InvokeAsync("Layout", new { viewName = "Logo" })
         @await Component.InvokeAsync("Navigation")
     </header>
 
@@ -39,31 +27,11 @@
                 @RenderBody()
             </div>
 
-            <!-- Right side -->
-            <partial name="_RightSideBar" model="@Model"/>
+            @await Component.InvokeAsync("Layout", new { viewName = "RightSide" })
         </div>
     </div>
 
-    <footer>
-        <div class="row">
-            <div class="col-sm-12 flex-center">
-                <ul class="footer-nav">
-                    @if (Model.FooterConfigs != null)
-                    {
-                        foreach (var f in Model.FooterConfigs)
-                        {
-                            <li><a href="@f.Value">@f.Name</a></li>
-                        }
-                    }
-                </ul>
-            </div>
-            <div class="col-sm-12">
-                <div class="flex-center">
-                    <p>© 2020 Rosenstein. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    @await Component.InvokeAsync("Layout", new { viewName = "Footer" })
 
     <div class="move-on-top flex-center"><i class="fas fa-caret-up"></i></div>
 

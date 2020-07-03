@@ -5,6 +5,8 @@ namespace BlogNetCore.DataServices.Interfaces
 {
     public interface IFileHandler
     {
-        string SaveFile(IFormFile file, List<string> paths);
+        string SaveFile(IFormFile file, IEnumerable<string> paths);
+        IEnumerable<string> GetFiles(IEnumerable<string> paths);
+        IEnumerable<string> GetFiles(string paths);
     }
 }

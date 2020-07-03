@@ -30,6 +30,8 @@ namespace Services
                 mc.CreateMap<Tags, Tag>().ReverseMap();
                 mc.CreateMap<Categories, Category>().ReverseMap();
                 mc.CreateMap<Blogs, Blog>().ReverseMap();
+                mc.CreateMap<BlogUser, UserInfo>().ReverseMap();
+                mc.CreateMap<User, UserInfo>().ReverseMap();
                 mc.CreateMap<User, User>().ReverseMap()
                     .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
                 mc.CreateMap<BlogUser, User>().ReverseMap()

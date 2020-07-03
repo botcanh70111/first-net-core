@@ -3,7 +3,9 @@
   flex-direction: column;
   width: 100%;
   margin-bottom: 30px;
-
+  & img {
+    width: 100%;
+  }
   .blog {
     &-image {
       & img,

@@ -15,16 +15,17 @@
     <div class="col s12">
         <form asp-action="CreateOrUpdate" asp-controller="Blog" asp-area="Admin" method="post" enctype="multipart/form-data">
             <input type="hidden" name="Id" value="@Model.Blog.Id" />
+            <input type="hidden" name="ImageUrl" value="@Model.Blog.ImageUrl" />
             <div>
                 <label asp-for="@Model.Blog.Name"></label>
-                <input asp-for="@Model.Blog.Name" name="Name" required/>
+                <input asp-for="@Model.Blog.Name" name="Name" required />
             </div>
             <div>
                 <label asp-for="@Model.Blog.BlogUrl"></label>
                 <input asp-for="@Model.Blog.BlogUrl" name="BlogUrl" />
             </div>
             <div>
-                <label for="Image"></label>
+                <label for="Image">Header image</label>
                 <input type="file" name="Image" />
             </div>
             <div>
@@ -34,9 +35,13 @@
             <br />
             <div>
                 <label asp-for="@Model.Blog.Content">Content</label>
-                <textarea class="jsCkEditor" name="Content" rows="30">
+                <textarea class="jsTinyMCE" name="Content" rows="30">
                     @Model.Blog.Content
                 </textarea>
+            </div>
+            <div>
+                <label asp-for="@Model.Blog.PostScript">Post script</label>
+                <textarea  name="PostScript" rows="6">@Model.Blog.PostScript</textarea>
             </div>
             <div>
                 <label for="BlogTagIds">Select Tags</label>

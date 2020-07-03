@@ -1,17 +1,25 @@
 ﻿using BlogNetCore.DataServices;
 using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
 
 namespace BlogNetCore.Areas.Client.Controllers
 {
     public class BlogsController : BaseClientController
     {
-        public BlogsController(IUserManager userManager, ICookieService cookieService) : base(userManager, cookieService)
+        private readonly IBlogService _blogService;
+
+        public BlogsController(IUserManager userManager, 
+            ICookieService cookieService,
+            IBlogService blogService) : base(userManager, cookieService)
         {
+            _blogService = blogService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string slug)
         {
-            return View();
+            var bloggerId = _cookieService.BloggerId;
+            var model = _blogService.GetBlogBySlug(slug, bloggerId);
+            return View(model);
         }
     }
 }

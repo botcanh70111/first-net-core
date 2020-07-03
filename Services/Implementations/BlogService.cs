@@ -6,6 +6,7 @@ using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Services.Implementations
 {
@@ -25,10 +26,10 @@ namespace Services.Implementations
         {
             var model = new Blog();
             var entityBlog = (from blog in _context.Blogs
-                             join blogtag in _context.BlogsTags on blog.Id equals blogtag.BlogId into BlogTags
-                             from b in BlogTags.DefaultIfEmpty()
-                             where blog.Id == (Guid)id
-                             select new { Blog = blog, Tags = b })
+                              join blogtag in _context.BlogsTags on blog.Id equals blogtag.BlogId into BlogTags
+                              from b in BlogTags.DefaultIfEmpty()
+                              where blog.Id == (Guid)id
+                              select new { Blog = blog, Tags = b })
                              .ToLookup(x => x.Blog)
                              .Select(x => new { Blog = x.Key, Tags = x.Select(t => t.Tags).Where(t => t != null).ToList() })
                              .FirstOrDefault();
@@ -47,7 +48,7 @@ namespace Services.Implementations
             foreach (var t in model.BlogTagIds) blogTags.Add(new BlogsTags { BlogId = blog.Id, TagId = t });
             _context.BlogsTags.AddRange(blogTags);
             if (forceSave) _context.SaveChanges();
-            
+
             return GetById(blog.Id);
         }
 
@@ -86,6 +87,50 @@ namespace Services.Implementations
         {
             _context.BlogsTags.RemoveRange(_context.BlogsTags.Where(x => x.BlogId == (Guid)id));
             return base.Delete(id, forceSave);
+        }
+
+        public BlogInfo GetBlogBySlug(string slug, string bloggerId)
+        {
+            var model = new BlogInfo();
+            var infos = (from blog in _context.Blogs
+                         where blog.BlogUrl == slug && blog.BloggerId == bloggerId
+                         join user in _context.Users on blog.CreatedBy equals user.Id
+                         join blogTag in _context.BlogsTags on blog.Id equals blogTag.BlogId into blogTagTable
+                         from bt in blogTagTable.DefaultIfEmpty()
+                         join tag in _context.Tags on bt.TagId equals tag.Id into infoTagTable
+                         from t in infoTagTable.DefaultIfEmpty()
+                         join category in _context.Categories on blog.CategoryId equals category.Id into cateTable
+                         from inf in cateTable.DefaultIfEmpty()
+                         select new
+                         {
+                             Info = new
+                             {
+                                 Blog = blog,
+                                 Author = user
+                             },
+                             Category = inf,
+                             Tags = t
+                         });
+            var info = infos
+                     .ToLookup(x => x.Info)
+                     .Select(x => new {
+                         Info = x.Key,
+                         Tags = x.Select(t => t.Tags).Where(t => t != null).ToList(),
+                         Category = x.Select(c => c.Category).FirstOrDefault(c => c != null)
+                     })
+                     .FirstOrDefault();
+
+            if (info == null)
+            {
+                return model;
+            }
+
+            model.Blog = _mapper.Map<Blog>(info.Info.Blog);
+            model.Author = _mapper.Map<UserInfo>(info.Info.Author);
+            model.Category = _mapper.Map<Category>(info.Category);
+            model.Tags = _mapper.Map<IEnumerable<Tag>>(info.Tags);
+
+            return model;
         }
     }
 }

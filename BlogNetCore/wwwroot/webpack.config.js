@@ -58,7 +58,7 @@ module.exports = [{
             loader: 'sass-loader'
           }
         ]
-      }
+      },
     ]
   },
   plugins: [
@@ -77,6 +77,7 @@ module.exports = [{
     watchContentBase: true
   }
 },
+
 {
   entry: ["./Admin/js/index.js", "./Admin/css/main.scss"],
   output: {
@@ -129,7 +130,16 @@ module.exports = [{
             loader: 'sass-loader'
           }
         ]
-      }
+      },
+      
+      { // To process CKEditor CSS files.
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/,
+        use: ['css-loader'],
+      },
+      { // To process CKEditor CSS files.
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+        use: ['raw-loader'],
+      },
     ]
   },
   plugins: [

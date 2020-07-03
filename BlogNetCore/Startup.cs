@@ -63,6 +63,7 @@ namespace BlogNetCore
             services.AddTransient<ICookieService, CookieService>();
             services.AddTransient<IFileHandler, FileHandler>();
             services.AddTransient<IMenuViewModelService, MenuViewModelService>();
+            services.AddTransient<ILayoutViewModelService, LayoutViewModelService>();
             services.AddTransient<IHomeViewModelService, HomeViewModelService>();
             services.AddTransient<IRoleViewModelService, RoleViewModelService>();
             services.AddTransient<IUserViewModelService, UserViewModelService>();
@@ -115,6 +116,17 @@ namespace BlogNetCore
                     name: "default",
                     areaName: "Client",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute(
+                    name: "blogs",
+                    areaName: "Client",
+                    pattern: "blogs/{*slug}",
+                    defaults: new {controller = "Blogs", action= "Index"}
+                    );
+                endpoints.MapControllerRoute(
+                    name: "common",
+                    pattern: "request/{controller}/{action}/{id?}",
+                    defaults: new { controller = "FileManager", action = "GetBlogFiles" }
+                    );
 
                 endpoints.MapRazorPages();
             });

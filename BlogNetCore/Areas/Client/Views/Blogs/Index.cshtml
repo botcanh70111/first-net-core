@@ -1,0 +1,229 @@
+﻿@model BlogInfo
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="blog-page">
+            @if (!string.IsNullOrEmpty(Model.Blog.ImageUrl))
+            {
+                <div class="blog-image">
+                    <img src="@Model.Blog.ImageUrl" alt="">
+                </div>
+            }
+
+            <div class="blog-content">
+                <div class="item-tag">
+                    <a href="@Model.Category?.CategoryUrl">@Model.Category?.Name</a>
+                </div>
+                <h2 class="title">
+                    @Model.Blog.Name
+                </h2>
+                <div class="item-info">
+                    <span>By </span>
+                    <a href="#"> @Model.Author.FirstName @Model.Author.LastName</a>
+                    <span>@Model.Blog.Created.ToShortDateString()</span>
+                    <span>Edited at @Model.Blog.Edited.ToShortDateString()</span>
+                </div>
+
+                <div class="blog-post">
+                    @Html.Raw(Model.Blog.Content)
+                </div>
+
+                <div class="blog-tags">
+                    @if (Model.Tags != null)
+                    {
+                        foreach (var tag in Model.Tags)
+                        {
+                            <a href="@tag.TagUrl" class="tag">@tag.Name</a>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="blog-social flex-between">
+                <div>
+                    <a href="">0 comments</a>
+                    <span>2.1K views</span>
+                </div>
+                <div class="blog-share">
+                    <span>Share: </span>
+                    <a href=""><i class="fab fa-facebook-square"></i></a>
+                    <a href=""><i class="fab fa-linkedin"></i></a>
+                    <a href=""><i class="fab fa-twitter-square"></i></a>
+                    <a href=""><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <div class="blog-sign">
+                <div class="avatar">
+                    <img src="@Model.Author.Avatar" alt="">
+                </div>
+                <div class="blog-sign--content">
+                    <h4 class="title">@Model.Author.FirstName @Model.Author.LastName</h4>
+                    <p>
+                        @Model.Blog.PostScript
+                    </p>
+                    <div class="blog-share">
+                        <a href=""><i class="fab fa-facebook-square"></i></a>
+                        <a href=""><i class="fab fa-linkedin"></i></a>
+                        <a href=""><i class="fab fa-twitter-square"></i></a>
+                        <a href=""><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row flex">
+                <div class="col-xs-12 col-sm-6 ">
+                    <a class="blog-prev-post" href="">
+                        <span class="item-tag">Pre post</span>
+                        <h4>Nay was appear entire ladies</h4>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-6 ">
+                    <a class="blog-next-post" href="">
+                        <span class="item-tag">Next post</span>
+                        <h4>Rabbit far rhinoceros cuffed gosh connected.</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="blog-related panel">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Related Posts</h4>
+                </div>
+            </div>
+            <div class="row  slick" data-show="3">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="blog-item__vertical">
+                        <img src="~/images/zeen-chin-steamilk7.jpg" alt="">
+                        <div class="panel-small">
+                            <p class="item-tag">
+                                <a href="">Fashion</a>
+                            </p>
+                            <p class="title">This is fashion title</p>
+                            <div class="item-info">
+                                <span>Jun 14, 2020</span>
+                                <span>2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="blog-item__vertical">
+                        <img src="~/images/zeen-chin-steamilk7.jpg" alt="">
+                        <div class="panel-small">
+                            <p class="item-tag">
+                                <a href="">Fashion</a>
+                            </p>
+                            <p class="title">This is fashion title</p>
+                            <div class="item-info">
+                                <span>Jun 14, 2020</span>
+                                <span>2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="blog-item__vertical">
+                        <img src="~/images/zeen-chin-steamilk7.jpg" alt="">
+                        <div class="panel-small">
+                            <p class="item-tag">
+                                <a href="">Fashion</a>
+                            </p>
+                            <p class="title">This is fashion title</p>
+                            <div class="item-info">
+                                <span>Jun 14, 2020</span>
+                                <span>2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="blog-item__vertical">
+                        <img src="~/images/zeen-chin-steamilk7.jpg" alt="">
+                        <div class="panel-small">
+                            <p class="item-tag">
+                                <a href="">Fashion</a>
+                            </p>
+                            <p class="title">This is fashion title</p>
+                            <div class="item-info">
+                                <span>Jun 14, 2020</span>
+                                <span>2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="blog-item__vertical">
+                        <img src="~/images/zeen-chin-steamilk7.jpg" alt="">
+                        <div class="panel-small">
+                            <p class="item-tag">
+                                <a href="">Fashion</a>
+                            </p>
+                            <p class="title">This is fashion title</p>
+                            <div class="item-info">
+                                <span>Jun 14, 2020</span>
+                                <span>2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="blog-item__vertical">
+                        <img src="~/images/zeen-chin-steamilk7.jpg" alt="">
+                        <div class="panel-small">
+                            <p class="item-tag">
+                                <a href="">Fashion</a>
+                            </p>
+                            <p class="title">This is fashion title</p>
+                            <div class="item-info">
+                                <span>Jun 14, 2020</span>
+                                <span>2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="comment">
+            <h4>Leave a comment</h4>
+            <p>Your email address will not be published. Required fields are marked *</p>
+
+            <form class="row comment-form" action="">
+                <div class="col-xs-12">
+                    <textarea class="textbox" name="" required id="" rows="5" placeholder="Your comment ... "></textarea>
+                </div>
+                <div class="br"></div>
+                <div class="col-xs-12 col-md-4">
+                    <input class="textbox" type="text" required placeholder="Name">
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input class="textbox" type="email" required placeholder="Email">
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input class="textbox" type="text" placeholder="Phone">
+                </div>
+                <div class="col-xs-12">
+                    <label for="commitment">
+                        <input type="checkbox" name="commitment" id="">
+                        Save my name, email, and website in this browser for the next time I comment.
+                    </label>
+                </div>
+                <div class="col-xs-12">
+                    <button class="btn btn-default">Comment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

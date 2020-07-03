@@ -1,0 +1,9 @@
+﻿@model SiteConfig
+<div class="logo-center">
+    <a asp-controller="Home" asp-action="Index">
+        @if (Model != null)
+        {
+            <img src="@Model.Value" alt="">
+        }
+    </a>
+</div>

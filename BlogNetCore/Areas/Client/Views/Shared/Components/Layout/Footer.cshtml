@@ -1,0 +1,21 @@
+﻿@model IEnumerable<SiteConfig>
+<footer>
+    <div class="row">
+        <div class="col-sm-12 flex-center">
+            <ul class="footer-nav">
+                @if (Model != null)
+                {
+                    foreach (var f in Model)
+                    {
+                        <li><a href="@f.Value">@f.Name</a></li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            <div class="flex-center">
+                <p>© 2020 Rosenstein. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
