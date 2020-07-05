@@ -1,7 +1,9 @@
-﻿using BlogNetCore.DataServices;
+﻿using BlogNetCore.Client.Models.Login;
+using BlogNetCore.DataServices;
 using BlogNetCore.DataServices.Interfaces;
 using BlogNetCore.DataServices.Interfaces.Client;
 using Microsoft.AspNetCore.Mvc;
+using Services.Constants;
 using System.Threading.Tasks;
 
 namespace BlogNetCore.Areas.Client.Components
@@ -20,19 +22,19 @@ namespace BlogNetCore.Areas.Client.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string viewName)
         {
-            var viewModel = _viewModelFactory.GetService<ILayoutViewModelService>().CreateViewModel(_cookieService.BloggerId);
+            var viewModelService = _viewModelFactory.GetService<ILayoutViewModelService>();
             switch(viewName)
             {
                 case "Logo":
-                    return View(viewName, viewModel.LogoConfig);
+                    return View(viewName, viewModelService.CreateViewModelByType(_cookieService.BloggerId, Constants.SiteConfigTypes.Logo).LogoConfig);
                 case "Footer":
-                    return View(viewName, viewModel.FooterConfigs);
+                    return View(viewName, viewModelService.CreateViewModelByType(_cookieService.BloggerId, Constants.SiteConfigTypes.Footer).FooterConfigs);
                 case "LoginModal":
-                    return View(viewName, viewModel.Login);
+                    return View(viewName, new LoginModel());
                 case "RegisterModal":
-                    return View(viewName, viewModel.RegisterForm);
+                    return View(viewName, new RegisterModel());
                 default:
-                    return View(viewName, viewModel);
+                    return View(viewName, viewModelService.CreateViewModel(_cookieService.BloggerId));
             }
         }
     }

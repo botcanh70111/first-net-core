@@ -187,5 +187,12 @@ namespace Services.Implementations
             var users = _context.Users.Where(x => x.SupervisorId == supervisorId);
             return _mapper.Map<IEnumerable<User>>(users);
         }
+
+        public IEnumerable<UserInfo> GetBloggers()
+        {
+            var bloggers = _context.Users.Where(x => x.UserType == UserTypes.Blogger || x.UserType == UserTypes.Admin);
+            if (bloggers == null) return null;
+            return _mapper.Map<IEnumerable<UserInfo>>(bloggers);
+        }
     }
 }

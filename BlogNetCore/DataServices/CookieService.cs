@@ -15,11 +15,18 @@ namespace BlogNetCore.DataServices
         void Set(string key, string value, int? expireMinute = null);
         string Update(string key, string value, int? expireMinute = null);
         void Remove(string key);
+        bool VisitedBlog { get; }
     }
 
     public class CookieService : ICookieService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public bool VisitedBlog { get
+            {
+                return Get(CookieKeys.BloggerIdKey) != null;
+            } 
+        }
 
         public CookieService(IHttpContextAccessor httpContextAccessor)
         {

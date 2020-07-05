@@ -23,7 +23,7 @@
                             </small>
                         </div>
                         <div class="flex" style="position: absolute; right: 15px">
-                            <a asp-area="Client" asp-controller="Blogs" asp-action="Index" asp-route-slug="@b.BlogUrl"><i class="material-icons">visibility</i></a>
+                            <a asp-controller="Blog" asp-action="ViewBlog" asp-route-slug="@b.BlogUrl"><i class="material-icons">visibility</i></a>
                             <a asp-action="Detail" asp-route-id="@b.Id"><i class="material-icons">edit</i></a>
                             @if (userManager.HasPermission(Context, PermissionClaims.DeleteBlog))
                             {

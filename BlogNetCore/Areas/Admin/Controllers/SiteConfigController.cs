@@ -44,17 +44,19 @@ namespace BlogNetCore.Areas.Admin.Controllers
                 Id = model.Id,
                 Name = model.Name,
                 Type = Constants.SiteConfigTypes.Logo,
-                Value = filePath
+                Value = filePath,
+                OwnerId = model.OwnerId
             };
 
             if (model.Image != null && model.Image.Length > 0)
             {
-                var fileName = _fileHandler.SaveFile(model.Image, new List<string> { "images", "logos" });
+                var fileName = _fileHandler.SaveFile(model.Image, new List<string> { "images", "logos", _userManager.SupervisorId });
                 logo.Value = fileName;
             }
 
             if (model.Id == null || model.Id == Guid.Empty)
             {
+                logo.OwnerId = _userManager.SupervisorId;
                 _siteConfigService.Create(logo);
             } 
             else

@@ -12,7 +12,7 @@ namespace Services.Interfaces
         UserRolesClaims GetProfile(string email, string password);
         UserRolesClaims GetProfile(string userId);
         Task<UserRolesClaims> RegisterUser(User user, string password);
-
+        IEnumerable<UserInfo> GetBloggers();
         // Admin mode
         Task<UserRolesClaims> RegisterUserWithPermission(User user, string password, IEnumerable<string> roles, IEnumerable<string> userClaims, string supervisorId);
         IEnumerable<User> GetUsersBySupervisorId(string supervisorId);

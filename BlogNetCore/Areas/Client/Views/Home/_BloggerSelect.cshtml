@@ -1,0 +1,18 @@
+﻿@model IEnumerable<UserInfo>
+
+@if (Model != null)
+{
+
+    <ul>
+        @foreach (var u in Model)
+        {
+            <li>
+                <a asp-action="Index" asp-controller="Home" asp-route-bloggerId="@u.Id">@u.Email</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Đéo có ai viết bài cả.</p>
+}

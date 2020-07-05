@@ -25,7 +25,23 @@ namespace BlogNetCore.Api
             var supervisorId = _userManager.SupervisorId;
             var blogImagePath = new List<string> { "images", "blogs", supervisorId };
             var files = _fileHandler.GetFiles(blogImagePath);
-            return Json(new { File = files });
+            return Json(files);
+        }
+
+        public IActionResult GetLogos()
+        {
+            var supervisorId = _userManager.SupervisorId;
+            var blogImagePath = new List<string> { "images", "logos", supervisorId };
+            var files = _fileHandler.GetFiles(blogImagePath);
+            return Json(files);
+        }
+
+        public IActionResult GetAvatars()
+        {
+            var supervisorId = _userManager.SupervisorId;
+            var blogImagePath = new List<string> { "images", "avatars", supervisorId };
+            var files = _fileHandler.GetFiles(blogImagePath);
+            return Json(files);
         }
     }
 }

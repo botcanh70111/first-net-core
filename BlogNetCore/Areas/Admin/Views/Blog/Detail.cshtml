@@ -1,5 +1,19 @@
 ﻿@model BlogNetCore.Areas.Admin.Models.BlogModel
 
+@section OuterContainer {
+    <div class="manager-container unshow" id="fileManager" data-manager-url="/request/filemanager/getblogfiles">
+        <div class="manager-modal">
+            <div class="manager-body">
+                <div class="manager-images"></div>
+            </div>
+            <div class="manager-footer">
+                <button class="choose-image" value="">Select</button>
+                <button class="close-manager">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="row">
     <br />
     <div class="col s12">
@@ -15,7 +29,7 @@
     <div class="col s12">
         <form asp-action="CreateOrUpdate" asp-controller="Blog" asp-area="Admin" method="post" enctype="multipart/form-data">
             <input type="hidden" name="Id" value="@Model.Blog.Id" />
-            <input type="hidden" name="ImageUrl" value="@Model.Blog.ImageUrl" />
+            <input type="hidden" data-target-input="#fileManager" name="ImageUrl" value="@Model.Blog.ImageUrl" />
             <div>
                 <label asp-for="@Model.Blog.Name"></label>
                 <input asp-for="@Model.Blog.Name" name="Name" required />
@@ -24,9 +38,15 @@
                 <label asp-for="@Model.Blog.BlogUrl"></label>
                 <input asp-for="@Model.Blog.BlogUrl" name="BlogUrl" />
             </div>
-            <div>
-                <label for="Image">Header image</label>
-                <input type="file" name="Image" />
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                    <label for="Image">Header image</label>
+                    <input type="file" name="Image" />
+                </div>
+                <div>
+                    <span>Or</span>
+                    <button type="button" data-target="#fileManager">Select from uploaded</button>
+                </div>
             </div>
             <div>
                 <label asp-for="@Model.Blog.Description"></label>
@@ -41,7 +61,7 @@
             </div>
             <div>
                 <label asp-for="@Model.Blog.PostScript">Post script</label>
-                <textarea  name="PostScript" rows="6">@Model.Blog.PostScript</textarea>
+                <textarea name="PostScript" rows="6">@Model.Blog.PostScript</textarea>
             </div>
             <div>
                 <label for="BlogTagIds">Select Tags</label>

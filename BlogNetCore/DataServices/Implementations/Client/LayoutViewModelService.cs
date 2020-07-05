@@ -26,7 +26,7 @@ namespace BlogNetCore.DataServices.Implementations.Client
             return viewModel;
         }
 
-        public LayoutViewModel CreateViewModel(string ownerId, string type)
+        public LayoutViewModel CreateViewModelByType(string ownerId, string type)
         {
             var viewModel = new LayoutViewModel();
             switch (type)

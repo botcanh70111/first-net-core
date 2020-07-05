@@ -2,13 +2,13 @@
 
 <head>
   <title>Blog</title>
-  <link rel="stylesheet" href="./vendors/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./vendors/bootstrap/css/all.css">
-  <link rel="stylesheet" href="./vendors/slick/slick.css">
-  <link rel="stylesheet" href="./vendors/slick/slick-theme.css">
+  <link rel="stylesheet" href="./../vendors/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./../vendors/bootstrap/css/all.css">
+  <link rel="stylesheet" href="./../vendors/slick/slick.css">
+  <link rel="stylesheet" href="./../vendors/slick/slick-theme.css">
 
   <!-- <link rel="stylesheet" href="./vendors/css/bootstrap-theme.min.css"> -->
-  <link rel="stylesheet" href="./dist/main.css">
+  <link rel="stylesheet" href="./main.css">
 
   <link href="https://fonts.googleapis.com/css2?family=Karla&family=Source+Serif+Pro&display=swap" rel="stylesheet">
 </head>
@@ -488,6 +488,10 @@
 
   <footer>
     <div class="row">
+      <div class="col-xs-12">
+        <input type="text" value="" data-target-input='#fileManager' id="inputTest">
+        <button data-target="#fileManager">Open modal</button>
+      </div>
       <div class="col-sm-12 flex-center">
         <ul class="footer-nav">
           <li><a href="">Disclaimer</a></li>
@@ -503,14 +507,36 @@
       </div>
     </div>
   </footer>
-
+  <div class="manager-container hide" id="fileManager">
+    <div class="manager-modal">
+      <div class="manager-body">
+        <input type="file">
+        <br>
+        <div class="manager-images">
+          <img src="./images/zeen-chin- (1).jpg" class="active" alt="">
+          <img src="./images/zeen-chin- (11).jpg" alt="">
+          <img src="./images/zeen-chin- (10).jpg" alt="">
+          <img src="./images/zeen-chin-8 (1).jpg" alt="">
+          <img src="./images/zeen-chin- (7).jpg" alt="">
+          <img src="./images/zeen-chin- (6).jpg" alt="">
+          <img src="./images/zeen-chin- (5).jpg" alt="">
+          <img src="./images/zeen-chin- (8).jpg" alt="">
+          <img src="./images/zeen-chin-.jpg" alt="">
+        </div>
+      </div>
+      <div class="manager-footer">
+        <button class="choose-image" value="">Select</button>
+        <button class="close-manager">Close</button>
+      </div>
+    </div>
+  </div>
   <div class="move-on-top flex-center"><i class="fas fa-caret-up"></i></div>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"
     integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
     crossorigin="anonymous"></script>
-  <script src="./vendors/bootstrap/js/bootstrap.min.js"></script>
-  <script src="./vendors/slick/slick.js"></script>
-  <script src="./dist/app.min.js"></script>
+  <script src="./../vendors/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./../vendors/slick/slick.js"></script>
+  <script src="./app.min.js"></script>
 </body>
 
 </html>

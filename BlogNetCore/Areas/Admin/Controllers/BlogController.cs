@@ -20,17 +20,20 @@ namespace BlogNetCore.Areas.Admin.Controllers
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IModelMapper _mapper;
         private readonly IFileHandler _fileHandler;
+        private readonly ICookieService _cookieService;
 
         public BlogController(IBlogService blogService, 
             IUserManager userManager, 
             IViewModelFactory viewModelFactory,
             IModelMapper mapper,
-            IFileHandler fileHandler) : base(userManager)
+            IFileHandler fileHandler,
+            ICookieService cookieService) : base(userManager)
         {
             _blogService = blogService;
             _viewModelFactory = viewModelFactory;
             _mapper = mapper;
             _fileHandler = fileHandler;
+            _cookieService = cookieService;
         }
 
         public IActionResult Index()
@@ -98,6 +101,12 @@ namespace BlogNetCore.Areas.Admin.Controllers
         {
             _blogService.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult ViewBlog(string slug)
+        {
+            _cookieService.Set(CookieKeys.BloggerIdKey, _userManager.SupervisorId);
+            return Redirect("/blogs/" + slug);
         }
     }
 }

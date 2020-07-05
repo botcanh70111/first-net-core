@@ -2,6 +2,7 @@
 {
     public class UserInfo
     {
+        public virtual string Id { get; set; }
         public virtual string PhoneNumber { get; set; }
         public virtual bool EmailConfirmed { get; set; }
         public virtual string NormalizedEmail { get; set; }

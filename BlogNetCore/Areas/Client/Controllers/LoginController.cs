@@ -35,6 +35,7 @@ namespace BlogNetCore.Areas.Client.Controllers
         public IActionResult Logout()
         {
             _userManager.SignOut(HttpContext);
+            _cookieService.Remove(CookieKeys.BloggerIdKey);
             return Redirect("/");
         }
 

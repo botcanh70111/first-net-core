@@ -9,16 +9,12 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\css\**" />
-    <Compile Remove="wwwroot\js\**" />
     <Compile Remove="wwwroot\lib\**" />
     <Content Remove="wwwroot\css\**" />
-    <Content Remove="wwwroot\js\**" />
     <Content Remove="wwwroot\lib\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
-    <EmbeddedResource Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
     <None Remove="wwwroot\css\**" />
-    <None Remove="wwwroot\js\**" />
     <None Remove="wwwroot\lib\**" />
   </ItemGroup>
 
@@ -28,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Client\Views\Shared\_Login.cshtml" />
     <Content Remove="Areas\Client\Views\Shared\_LoginPartial.cshtml" />
+    <Content Remove="Areas\Client\Views\Shared\_Register.cshtml" />
     <Content Remove="Areas\Client\Views\Shared\_RightSideBar.cshtml" />
   </ItemGroup>
 
@@ -115,6 +113,8 @@
     <None Include="wwwroot\images\zeen-chin-8 %282%29.jpg" />
     <None Include="wwwroot\images\zeen-chin-8.jpg" />
     <None Include="wwwroot\images\zeen-chin-steamilk7.jpg" />
+    <None Include="wwwroot\js\fileManager.js" />
+    <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\Vendors\bootstrap\css\all.css" />
     <None Include="wwwroot\Vendors\bootstrap\css\bootstrap-theme.min.css" />
     <None Include="wwwroot\Vendors\bootstrap\css\bootstrap.min.css" />
