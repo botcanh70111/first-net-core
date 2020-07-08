@@ -10,7 +10,7 @@ using System;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
-    [UserAuthorizeAttributes(claims: PermissionClaims.ViewBlogs)]
+    [UserAuthorize(claims: PermissionClaims.ViewBlogs)]
     public class CategoryController : BaseAdminController
     {
         private readonly ICategoryService _categoryService;

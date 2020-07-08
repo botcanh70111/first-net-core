@@ -1,0 +1,121 @@
+.online-block {
+  position: fixed;
+  width: 300px;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  height: 35px;
+  transition: 0.2s linear;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+
+  .online-head {
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  ul.online-list {
+    list-style-type: none;
+    margin: 0;
+    li {
+      cursor: pointer;
+      padding: 5px;
+    }
+  }
+
+  &.expand {
+    height: 500px;
+    overflow-y: auto;
+    transition: 0.2s linear;
+  }
+}
+
+.online-sign {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: rgb(66, 183, 42);
+
+  &.offline {
+    background-color: grey;
+  }
+}
+
+.chat-block {
+  width: 300px;
+  height: 350px;
+  position: fixed;
+  right: 18%;
+  bottom: 0;
+  background-color: white;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  transition: 0.3s linear;
+
+  &.unshow {
+    height: 0;
+  }
+
+  .chat-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .chat-head {
+    display: flex;
+    padding: 15px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid whitesmoke;
+    margin-bottom: 5px;
+  }
+
+  .chat-body {
+    overflow-y: auto;
+    padding: 15px;
+    height: 100%;
+
+    .your-text, .my-text {
+      display: flex;
+      align-items: center;
+      
+      span {
+        display: flex;
+        align-items: center;
+        background-color: whitesmoke;
+        padding: 3px 10px;
+        border-radius: 20px;
+      }
+    }
+
+    .my-text {
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+
+      span {
+        background-color: rgba($color: #000000, $alpha: 0.5);
+        color: white;
+      }
+    }
+  }
+
+  .chat-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-top: 1px solid whitesmoke;
+  }
+
+  .chat-close {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20px;
+    height: 100%;
+    cursor: pointer;
+  }
+}

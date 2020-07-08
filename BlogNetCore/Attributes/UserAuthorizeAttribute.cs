@@ -10,24 +10,24 @@ using static Services.Constants.Constants;
 namespace BlogNetCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-    public class UserAuthorizeAttributes : ActionFilterAttribute
+    public class UserAuthorizeAttribute : ActionFilterAttribute
     {
         private readonly bool _isAuthorize;
         private readonly string _userType;
         private readonly string _claims;
         private readonly string _claimType;
 
-        public UserAuthorizeAttributes(bool isAuthorize = true)
+        public UserAuthorizeAttribute(bool isAuthorize = true)
         {
             _isAuthorize = isAuthorize;
         }
 
-        public UserAuthorizeAttributes(string claims)
+        public UserAuthorizeAttribute(string claims)
         {
             _claims = claims;
         }
 
-        public UserAuthorizeAttributes(string claimType = "", string claims = "", string userType = "", bool isAuthorize = false)
+        public UserAuthorizeAttribute(string claimType = "", string claims = "", string userType = "", bool isAuthorize = false)
         {
             _claims = claims;
             _claimType = claimType;

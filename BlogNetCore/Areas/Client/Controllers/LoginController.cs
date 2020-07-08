@@ -1,7 +1,11 @@
-﻿using BlogNetCore.Client.Models.Login;
+﻿using BlogNetCore.Attributes;
+using BlogNetCore.Client.Models.Login;
 using BlogNetCore.DataServices;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlogNetCore.Areas.Client.Controllers
@@ -44,6 +48,20 @@ namespace BlogNetCore.Areas.Client.Controllers
         {
             await _userManager.CreateAsync(HttpContext, register);
             return Redirect(register.ReturnUrl);
+        }
+
+
+        public IActionResult GoogleLogin()
+        {
+            var properties = _userManager.GetAuthenticationProperties("Google", "/login/GoogleCallback");
+            return new ChallengeResult("Google", properties);
+        }
+
+        public async Task<IActionResult> GoogleCallback()
+        {
+            var info = await _userManager.GetExternalLoginInfoAsync();
+            _userManager.ExternalSignIn(HttpContext, info);
+            return Redirect("/");
         }
     }
 }

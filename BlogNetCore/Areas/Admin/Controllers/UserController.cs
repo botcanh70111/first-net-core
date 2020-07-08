@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
-    [UserAuthorizeAttributes(claims: PermissionClaims.ViewUsers)]
+    [UserAuthorize(claims: PermissionClaims.ViewUsers)]
     public class UserController : BaseAdminController
     {
         private readonly IUserService _userService;
@@ -39,7 +39,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        [UserAuthorizeAttributes(claims: PermissionClaims.EditUser)]
+        [UserAuthorize(claims: PermissionClaims.EditUser)]
         public IActionResult Update(UserFormModel form)
         {
             _userService.Update(form.User, form.Roles, form.UserClaims);
@@ -48,7 +48,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        [UserAuthorizeAttributes(claims: PermissionClaims.CreateUser)]
+        [UserAuthorize(claims: PermissionClaims.CreateUser)]
         public async Task<IActionResult> CreateUser(UserFormModel form)
         {
             if (_userManager.Validate(form.User.Email, form.User.UserName, form.Password, form.ConfirmPassword))

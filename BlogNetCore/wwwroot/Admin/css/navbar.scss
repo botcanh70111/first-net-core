@@ -122,6 +122,9 @@ li .collapsible .avatar {
         min-width: 0 !important;
         color: white;
         border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 

@@ -16,7 +16,7 @@
         <div class="col s12 m12 l9 offset-l3">
             @await Component.InvokeAsync("SideBar")
 
-            <div id="notification" class="dropdown-content notification">
+            <div id="adminNotification" class="dropdown-content notification">
                 <ul>
                     <li>
                         <a href="#">
@@ -62,8 +62,8 @@
                         <label for="searchbox">Search ...</label>
                     </div>
                     <div class="">
-                        <a href="#" class="dropdown-trigger badge-div" data-target='notification'>
-                            <span class="badge red">4</span>
+                        <a href="#" class="dropdown-trigger badge-div" data-target='adminNotification'>
+                            <span class="badge red jsAdminNotificationBadge">4</span>
                             <i class="material-icons">notifications</i>
                         </a>
                     </div>
@@ -91,6 +91,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     @*<script src="~/Vendors/tinymce/tinymce.min.js"></script>*@
     <script src="https://cdn.tiny.cloud/1/k1h8nnoz2wedxgmxnn1acx115rjb3jbla9h8dbz7mlqisjh5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="~/Vendors/signalr/signalr.min.js"></script>
     <script src="~/Admin/adminApp.min.js"></script>
 </body>
 

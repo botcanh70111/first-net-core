@@ -8,7 +8,7 @@ using System;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
-    [UserAuthorizeAttributes(claims: PermissionClaims.CreateBlog + "," + PermissionClaims.EditBlog)]
+    [UserAuthorize(claims: PermissionClaims.CreateBlog + "," + PermissionClaims.EditBlog)]
     public class TagController : BaseAdminController
     {
         private readonly ITagService _tagService;

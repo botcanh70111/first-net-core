@@ -34,12 +34,30 @@
     @await Component.InvokeAsync("Layout", new { viewName = "Footer" })
 
     <div class="move-on-top flex-center"><i class="fas fa-caret-up"></i></div>
+    <div class="chat-block unshow">
+        <div class="chat-head">
+            <div>
+                <span class="online-sign"></span>
+                <span class="jsChatEmail">Email@email.email</span>
+            </div>
+            <div class="chat-close jsChatClose">
+                x
+            </div>
+        </div>
+        <div class="chat-body jsChatBody"></div>
+        <div class="chat-box">
+            <input type="text" placeholder="Type your message ... " class="textbox jsChatBox" />
+            <button class="btn jsChatSend">Send</button>
+        </div>
+    </div>
+    @await Component.InvokeAsync("OnlineBlock")
     @RenderSection("OuterContainer", false)
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
             integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
             crossorigin="anonymous"></script>
     <script src="~/Vendors/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Vendors/slick/slick.js"></script>
+    <script src="~/Vendors/signalr/signalr.min.js"></script>
     <script src="~/Client/app.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>

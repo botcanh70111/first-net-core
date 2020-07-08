@@ -81,7 +81,7 @@ namespace Services.Implementations
             return null;
         }
 
-        private UserRolesClaims GetProfile(IdentityUser user)
+        private UserRolesClaims GetProfile(BlogUser user)
         {
             var profile = new UserRolesClaims();
             var userRoles = _context.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId);
@@ -97,6 +97,10 @@ namespace Services.Implementations
                          .Select(x => new { Role = x.Key, Claims = x.Select(c => c.Claims).Where(c => c != null).ToList() });
                 
             var userClaims = _context.UserClaims.Where(x => x.UserId == user.Id);
+            var groupUserEmails = _context.Users.Where(x => 
+                user.SupervisorId == null ? 
+                    x.SupervisorId == user.Id : 
+                    (x.SupervisorId == user.SupervisorId || x.Id == user.SupervisorId) && x.Id != user.Id).Select(x => x.Email);
             var roleClaims = new List<RoleClaims>();
             foreach (var r in roles)
             {
@@ -109,6 +113,7 @@ namespace Services.Implementations
             profile.User = _mapper.Map<User>(user);
             profile.UserClaims = _mapper.Map<IEnumerable<UserClaim>>(userClaims);
             profile.Roles = roleClaims;
+            profile.GroupEmails = groupUserEmails;
 
             return profile;
         }

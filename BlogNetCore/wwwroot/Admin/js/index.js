@@ -1,4 +1,5 @@
 import FileManager from './../../js/fileManager';
+import AdminNotification from './notification';
 
 document.addEventListener('DOMContentLoaded', function () {
   // collapse menu
@@ -127,4 +128,9 @@ document.addEventListener('DOMContentLoaded', function () {
       fileManager.Init('#' + id, "#" + inputId, managerUrl);
     });
   }
+
+  // notifications
+  var notiSelectors = [".jsPostBlog"];
+  var adminNoti = new AdminNotification();
+  adminNoti.Init(notiSelectors);
 });

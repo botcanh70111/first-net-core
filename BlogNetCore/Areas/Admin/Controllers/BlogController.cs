@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
-    [UserAuthorizeAttributes(claims: PermissionClaims.ViewBlogs)]
+    [UserAuthorize(claims: PermissionClaims.ViewBlogs)]
     public class BlogController : BaseAdminController
     {
         private readonly IBlogService _blogService;
@@ -50,7 +50,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [UserAuthorizeAttributes(claims: PermissionClaims.CreateBlog)]
+        [UserAuthorize(claims: PermissionClaims.CreateBlog)]
         public IActionResult CreateOrUpdate(BlogFormModel blog)
         {
             if (_blogService.IsUrlExisted(blog.BlogUrl, blog.Id, _userManager.SupervisorId))
@@ -96,7 +96,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [UserAuthorizeAttributes(claims: PermissionClaims.DeleteBlog)]
+        [UserAuthorize(claims: PermissionClaims.DeleteBlog)]
         public IActionResult Delete(Guid id)
         {
             _blogService.Delete(id);

@@ -5,6 +5,9 @@ namespace Services.Models
     public class UserRolesClaims
     {
         public User User { get; set; }
+
+        // Users have the same supervisor Id
+        public IEnumerable<string> GroupEmails { get; set; }
         public IEnumerable<RoleClaims> Roles { get; set; }
         public IEnumerable<UserClaim> UserClaims { get; set; }
         public string Error { get; set; }

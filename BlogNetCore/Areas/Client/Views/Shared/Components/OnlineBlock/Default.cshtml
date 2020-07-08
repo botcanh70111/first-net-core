@@ -1,0 +1,18 @@
+﻿@model IEnumerable<User>
+
+<div class="online-block">
+    <div class="online-head">
+        <span class="online-sign"></span>
+        <span class="online-count">0</span>
+        <span> Online</span>
+    </div>
+    <ul class="online-list">
+        @foreach (var u in Model)
+        {
+            <li data-id="@u.Email" class="jsOpenChat">
+                <span class="online-sign offline"></span>
+                <span>@u.Email</span>
+            </li>
+        }
+    </ul>
+</div>

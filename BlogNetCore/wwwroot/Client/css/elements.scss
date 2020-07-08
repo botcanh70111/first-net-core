@@ -24,7 +24,9 @@
 }
 
 .flex {
-    display: flex;
+    @media screen and (min-width: 992px) {
+        display: flex;   
+    }
 }
 
 .flex-between {

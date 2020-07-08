@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
-    [UserAuthorizeAttributes(claims: PermissionClaims.EditConfigs)]
+    [UserAuthorize(claims: PermissionClaims.EditConfigs)]
     public class SiteConfigController : BaseAdminController
     {
         private IFileHandler _fileHandler;

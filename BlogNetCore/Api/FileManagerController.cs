@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace BlogNetCore.Api
 {
-    [UserAuthorizeAttributes(true)]
+    [UserAuthorize(true)]
     public class FileManagerController : Controller
     {
         private readonly IFileHandler _fileHandler;

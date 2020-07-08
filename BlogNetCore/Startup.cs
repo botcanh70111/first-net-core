@@ -7,6 +7,7 @@ using BlogNetCore.DataServices.Implementations.Client;
 using BlogNetCore.DataServices.Interfaces;
 using BlogNetCore.DataServices.Interfaces.Admin;
 using BlogNetCore.DataServices.Interfaces.Client;
+using BlogNetCore.SignalRHubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,8 +57,14 @@ namespace BlogNetCore
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
-
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddGoogle(options => {
+                    //options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.ClientId = "910859426143-uvqv4uglqgr96h5lghsd013thi4bfkgu.apps.googleusercontent.com";
+                    options.ClientSecret = "1dlWOhd1rQ-5intVMd1y2HDZ";
+                    //options.CallbackPath = "/google-signin";
+                });
+            services.AddSignalR();
             // Register services
             services.AddScoped<IUserManager, UserManager>();
             services.AddTransient<ICookieService, CookieService>();
@@ -91,7 +98,7 @@ namespace BlogNetCore
 
             var cookiePolicyOptions = new CookiePolicyOptions
             {
-                MinimumSameSitePolicy = SameSiteMode.Strict,
+                MinimumSameSitePolicy = SameSiteMode.None,
             };
             app.UseCookiePolicy(cookiePolicyOptions);
             app.UseHttpsRedirection();
@@ -129,6 +136,9 @@ namespace BlogNetCore
                     );
 
                 endpoints.MapRazorPages();
+                endpoints.MapHub<AdminNotificationHub>("/admin/notification");
+                endpoints.MapHub<OnlineHub>("/client/online");
+                endpoints.MapHub<ChatHub>("/client/chat");
             });
         }
     }

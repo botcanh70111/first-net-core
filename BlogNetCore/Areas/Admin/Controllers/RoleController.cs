@@ -10,7 +10,7 @@ using static Services.Constants.Constants;
 
 namespace BlogNetCore.Areas.Admin.Controllers
 {
-    [UserAuthorizeAttributes(claims: PermissionClaims.ViewRoles, userType: UserTypes.Admin)]
+    [UserAuthorize(claims: PermissionClaims.ViewRoles, userType: UserTypes.Admin)]
     public class RoleController : BaseAdminController
     {
         private readonly IRoleService _roleService;
@@ -37,7 +37,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        [UserAuthorizeAttributes(claims: PermissionClaims.CreateRoles + "," + PermissionClaims.EditRoles)]
+        [UserAuthorize(claims: PermissionClaims.CreateRoles + "," + PermissionClaims.EditRoles)]
         public IActionResult CreateOrUpdate(RoleFormModel form)
         {
             _roleService.CreateOrUpdate(form.Role, form.AssignedClaims);
@@ -47,7 +47,7 @@ namespace BlogNetCore.Areas.Admin.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        [UserAuthorizeAttributes(claims: PermissionClaims.DeleteRoles)]
+        [UserAuthorize(claims: PermissionClaims.DeleteRoles)]
         public IActionResult Delete(string id)
         {
             _roleService.Delete(id);
