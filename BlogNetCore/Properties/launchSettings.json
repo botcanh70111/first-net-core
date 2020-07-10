@@ -27,7 +27,7 @@
       },
       "sqlDebugging": false,
       "nativeDebugging": false,
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:5004"
     },
     "Docker": {
       "commandName": "Docker",

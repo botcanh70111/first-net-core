@@ -380,3 +380,6 @@ dist
 .vscode-test
 
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,node
+react-client/yarn.lock
+react-client/.vscode/
+react-client/package-lock.json

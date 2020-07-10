@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using BlogNetCore.Attributes;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,9 @@ namespace BlogNetCore.SignalRHubs
     {
         public static List<string> Emails = new List<string>();
     }
+
+
+    [Authorize]
     public class OnlineHub : Hub
     {
         public void CheckOnline()

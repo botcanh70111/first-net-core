@@ -15,7 +15,7 @@
         <form method="post" asp-controller="Menu"
               asp-action="@(Model.Menu.Id == null || Guid.Empty == Model.Menu.Id ? "Create" : "Update")">
             @Html.Hidden("Id", Model.Menu.Id)
-            @Html.Hidden("Id", Model.Menu.OwnerId)
+            @Html.Hidden("OwnerId", Model.Menu.OwnerId)
 
             <div>
                 <label asp-for="@Model.Menu.Name"></label>

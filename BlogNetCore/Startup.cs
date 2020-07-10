@@ -108,7 +108,7 @@ namespace BlogNetCore
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors(x => x.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowCredentials().AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(
