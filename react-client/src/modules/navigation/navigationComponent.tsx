@@ -19,7 +19,7 @@ const NavigationComponent = (props: NavigationProps) => {
 
   const renderMenu = (menu: Menu, isRoot = false) => {
     return menu !== undefined && <li key={menu.id}>
-      <Link to={menu.urlLink}>
+      <Link to={menu.urlLink ?? "/"}>
         {menu.name}
         {menu.childMenus.length > 0 && isRoot && <span className="menu-icon"><i className="fa fa-caret-right"></i></span>}
       </Link>
@@ -36,7 +36,7 @@ const NavigationComponent = (props: NavigationProps) => {
     <header>
       <div className="logo-center">
         <Link to="/">
-          <img src="./logo192.png" alt="" />
+          <img src="/logo192.png" alt="" />
         </Link>
       </div>
 
