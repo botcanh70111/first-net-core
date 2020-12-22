@@ -20,11 +20,15 @@ namespace Infrastructure
 
                     if (env.IsDevelopment())
                     {
-                        options.UseSqlServer("Server=.;Database=blognetcore;User ID=sa;Password=1;Trusted_Connection=False;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
+                        options.UseSqlServer("Server=.;Database=blognetcorev2;User ID=sa;Password=1;Trusted_Connection=False;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
                     }
                     if (env.IsEnvironment("Release"))
                     {
                         options.UseSqlServer("Server=10.120.105.118,1433\\MSSQLSERVER;Database=blognetcore;User ID=sa;Password=1;Trusted_Connection=False;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
+                    }
+                    if (env.IsEnvironment("Debug"))
+                    {
+                        options.UseSqlServer("Server=.;Database=blognetcore;User ID=sa;Password=1;Trusted_Connection=False;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
                     }
                 }
             );

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.IO;
 
 namespace BlogNetCore
@@ -14,10 +15,12 @@ namespace BlogNetCore
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hosting, config) => {
+                .ConfigureAppConfiguration((hosting, config) =>
+                {
                     var env = hosting.HostingEnvironment;
-
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    Console.WriteLine("EnvironmentName: " + env.EnvironmentName);
+                    config.SetBasePath(env.ContentRootPath)
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                         .AddEnvironmentVariables();
                 })

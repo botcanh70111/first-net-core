@@ -97,8 +97,10 @@ namespace BlogNetCore
             var path = Directory.GetCurrentDirectory();
             loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
+            Console.WriteLine("Environment Startup: " + env.EnvironmentName);
             if (env.IsDevelopment())
             {
+                Console.WriteLine("ExceptionHandler Development: " + env.EnvironmentName);
                 app.UseExceptionHandler(errorApp =>
                 {
                     errorApp.Run(async context =>
@@ -131,6 +133,7 @@ namespace BlogNetCore
             }
             else
             {
+                Console.WriteLine("ExceptionHandler Release: " + env.EnvironmentName);
                 app.UseExceptionHandler(errorApp =>
                 {
                     errorApp.Run(async context =>
@@ -138,9 +141,9 @@ namespace BlogNetCore
                         loggerFactory.CreateLogger("Error").LogError(context.Features.Get<IExceptionHandlerFeature>().Error.Message);
                     });
                 });
-                app.UseExceptionHandler("/Home/Error");
+                // app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                // app.UseHsts();
             }
 
             var cookiePolicyOptions = new CookiePolicyOptions
