@@ -103,7 +103,7 @@ namespace BlogNetCore
                 {
                     errorApp.Run(async context =>
                     {
-                        loggerFactory.CreateLogger("Error").LogError(context.Features.Get<Exception>().Message);
+                        loggerFactory.CreateLogger("Error").LogError(context.Features.Get<IExceptionHandlerFeature>().Error.Message);
                         context.Response.StatusCode = 500;
                         context.Response.ContentType = "text/html";
 
@@ -135,7 +135,7 @@ namespace BlogNetCore
                 {
                     errorApp.Run(async context =>
                     {
-                        loggerFactory.CreateLogger("Error").LogError(context.Features.Get<Exception>().Message);
+                        loggerFactory.CreateLogger("Error").LogError(context.Features.Get<IExceptionHandlerFeature>().Error.Message);
                     });
                 });
                 app.UseExceptionHandler("/Home/Error");

@@ -27,7 +27,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Release"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "sqlDebugging": false,
       "nativeDebugging": false,
