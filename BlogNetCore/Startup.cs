@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Services;
 using Services.Models;
 using System;
@@ -91,14 +92,18 @@ namespace BlogNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            var path = Directory.GetCurrentDirectory();
+            loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseExceptionHandler(errorApp =>
                 {
                     errorApp.Run(async context =>
                     {
+                        loggerFactory.CreateLogger("Error").LogError(context.Features.Get<Exception>().Message);
                         context.Response.StatusCode = 500;
                         context.Response.ContentType = "text/html";
 
@@ -126,6 +131,13 @@ namespace BlogNetCore
             }
             else
             {
+                app.UseExceptionHandler(errorApp =>
+                {
+                    errorApp.Run(async context =>
+                    {
+                        loggerFactory.CreateLogger("Error").LogError(context.Features.Get<Exception>().Message);
+                    });
+                });
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
