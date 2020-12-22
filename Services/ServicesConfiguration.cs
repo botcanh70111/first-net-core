@@ -16,10 +16,10 @@ namespace Services
 {
     public class ServicesConfiguration
     {
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, Action<IMapperConfigurationExpression> mapperConfig)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env, Action<IMapperConfigurationExpression> mapperConfig)
         {
             var infrastructureConfig = new InfrastructureConfiguration();
-            infrastructureConfig.ConfigureServices(services, configuration);
+            infrastructureConfig.ConfigureServices(services, configuration, env);
 
             // Register service
             var mappingConfig = new MapperConfiguration(mc =>

@@ -32,11 +32,13 @@ namespace BlogNetCore.Areas.Client.Controllers
         {
             if (bloggerId != null)
             {
+                Response.Cookies.Append(CookieKeys.BloggerIdKey, bloggerId);
                 _cookieService.Set(CookieKeys.BloggerIdKey, bloggerId);
                 return RedirectToAction("Index");
             }
             else
             {
+                var b = Request.Cookies[CookieKeys.BloggerIdKey];
                 bloggerId = _cookieService.BloggerId;
             }
 

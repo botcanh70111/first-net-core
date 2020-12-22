@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace BlogNetCore
 {
@@ -16,8 +17,9 @@ namespace BlogNetCore
                 {
                     webBuilder
                     //.UseKestrel()
-                    //.UseContentRoot(Directory.GetCurrentDirectory())
-                    //.UseIISIntegration()
+                    //.UseUrls("http://localhost:5001/")
+                    .UseContentRoot(Directory.GetCurrentDirectory())
+                    .UseIISIntegration()
                     .UseStartup<Startup>();
                 });
     }

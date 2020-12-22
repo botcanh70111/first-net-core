@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogNetCore", "BlogNetCore\BlogNetCore.csproj", "{59E7FC82-7E64-450E-91BA-3DC0993955E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogNetCore", "BlogNetCore\BlogNetCore.csproj", "{59E7FC82-7E64-450E-91BA-3DC0993955E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "DbContext\Infrastructure.csproj", "{49C4CC33-EE9E-4391-A977-18DC270F3295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "DbContext\Infrastructure.csproj", "{49C4CC33-EE9E-4391-A977-18DC270F3295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{36036ADB-24AE-437B-8D94-C05D36C87915}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{36036ADB-24AE-437B-8D94-C05D36C87915}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,8 +25,8 @@ Global
 		{49C4CC33-EE9E-4391-A977-18DC270F3295}.Release|Any CPU.Build.0 = Release|Any CPU
 		{36036ADB-24AE-437B-8D94-C05D36C87915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36036ADB-24AE-437B-8D94-C05D36C87915}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36036ADB-24AE-437B-8D94-C05D36C87915}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36036ADB-24AE-437B-8D94-C05D36C87915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36036ADB-24AE-437B-8D94-C05D36C87915}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{36036ADB-24AE-437B-8D94-C05D36C87915}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

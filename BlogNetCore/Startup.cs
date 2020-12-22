@@ -10,6 +10,7 @@ using BlogNetCore.DataServices.Interfaces.Client;
 using BlogNetCore.SignalRHubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Services;
 using Services.Models;
 using System;
+using System.IO;
 
 namespace BlogNetCore
 {
@@ -30,12 +32,14 @@ namespace BlogNetCore
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -46,7 +50,7 @@ namespace BlogNetCore
                configure.CreateMap<Blog, BlogFormModel>().ReverseMap();
             };
 
-            servicesConfig.ConfigureServices(services, Configuration, mapperConfig);
+            servicesConfig.ConfigureServices(services, Configuration, WebHostEnvironment, mapperConfig);
             //services.Configure<IISOptions>(options =>
             //{
             //    options.ForwardClientCertificate = false;
@@ -65,6 +69,11 @@ namespace BlogNetCore
                     //options.CallbackPath = "/google-signin";
                 });
             services.AddSignalR();
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+
             // Register services
             services.AddScoped<IUserManager, UserManager>();
             services.AddTransient<ICookieService, CookieService>();
@@ -78,6 +87,7 @@ namespace BlogNetCore
             services.AddTransient<IBlogViewModelService, BlogViewModelService>();
             services.AddTransient<IViewModelFactory, ViewModelFactory>();
             services.AddTransient(typeof(Lazy<>), typeof(LazyLoader<>));
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,7 +95,32 @@ namespace BlogNetCore
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler(errorApp =>
+                {
+                    errorApp.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        context.Response.ContentType = "text/html";
+
+                        await context.Response.WriteAsync("<html lang=\"en\"><body>\r\n");
+                        await context.Response.WriteAsync("ERROR!<br><br>\r\n");
+
+                        var exceptionHandlerPathFeature =
+                            context.Features.Get<IExceptionHandlerPathFeature>();
+
+                        if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
+                        {
+                            await context.Response.WriteAsync(
+                                                      "File error thrown!<br><br>\r\n");
+                        }
+
+                        await context.Response.WriteAsync(
+                                                      "<a href=\"/\">Home</a><br>\r\n");
+                        await context.Response.WriteAsync("</body></html>\r\n");
+                        await context.Response.WriteAsync(new string(' ', 512));
+                    });
+                });
+                //app.UseDeveloperExceptionPage();
                 var servicesConfig = new ServicesConfiguration();
                 servicesConfig.Configure(app, env);
             }
@@ -98,7 +133,7 @@ namespace BlogNetCore
 
             var cookiePolicyOptions = new CookiePolicyOptions
             {
-                MinimumSameSitePolicy = SameSiteMode.None,
+                MinimumSameSitePolicy = SameSiteMode.Unspecified,
             };
             app.UseCookiePolicy(cookiePolicyOptions);
             app.UseHttpsRedirection();

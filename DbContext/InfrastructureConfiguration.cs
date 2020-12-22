@@ -5,18 +5,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure
 {
     public class InfrastructureConfiguration
     {
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
             services.AddDbContext<ApplicationDbContext>(
                 options =>
                 {
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                    options.UseSqlServer("Server=.;Database=blognetcore;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
+
+                    if (env.IsDevelopment())
+                    {
+                        options.UseSqlServer("Server=.;Database=blognetcore;User ID=sa;Password=1;Trusted_Connection=False;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
+                    }
+                    if (env.IsEnvironment("Release"))
+                    {
+                        options.UseSqlServer("Server=10.120.105.118,1433\\MSSQLSERVER;Database=blognetcore;User ID=sa;Password=1;Trusted_Connection=False;MultipleActiveResultSets=true", b => b.MigrationsAssembly("BlogNetCore"));
+                    }
                 }
             );
 

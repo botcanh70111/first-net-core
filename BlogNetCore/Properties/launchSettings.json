@@ -1,29 +1,33 @@
 {
   "iisSettings": {
-    "windowsAuthentication": false,
+    "windowsAuthentication": true,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/BlogNetCore",
+      "applicationUrl": "http://netcore.local",
       "sslPort": 0
     },
     "iisExpress": {
       "applicationUrl": "http://blog.tanvu/",
-      "sslPort": 44340
+      "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "sqlDebugging": false,
+      "ancmHostingModel": "OutOfProcess",
+      "nativeDebugging": false,
+      "applicationUrl": "http://blog.tanvu"
     },
     "BlogNetCore": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Release"
       },
       "sqlDebugging": false,
       "nativeDebugging": false,
@@ -35,6 +39,12 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true,
       "useSSL": true
+    },
+    "Release": {
+      "commandName": "IIS",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Release"
+      }
     }
   }
 }
